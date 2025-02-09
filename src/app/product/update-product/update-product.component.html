@@ -1,0 +1,52 @@
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Update Product</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <mat-toolbar>
+                <mat-form-field class="create-product">
+                    <mat-label>Product Name</mat-label>
+                    <input matInput  class="form-control" id="name" 
+                    [(ngModel)]="product.name" name="name">
+                    <mat-icon matSuffix>inventory</mat-icon>
+                  </mat-form-field>
+
+                  <mat-form-field class="create-product">
+                    <mat-label>Product Category</mat-label>
+                    <input matInput  class="form-control" id="category" 
+                    [(ngModel)]="product.category" name="category">
+                    <mat-icon matSuffix>category</mat-icon>
+                    
+                  </mat-form-field>
+                 
+            </mat-toolbar>
+            <mat-toolbar>
+                <mat-form-field class="create-product">
+                    <mat-label>Product Price</mat-label>
+                    <input matInput  class="form-control" id="price" 
+                    [(ngModel)]="product.price" name="price">
+                    <mat-icon matSuffix>paid</mat-icon>
+                    
+                  </mat-form-field>
+                 
+
+                  <mat-form-field  class="create-product">
+                    <mat-label>Product Quantity</mat-label>
+                    <mat-icon matSuffix>balance</mat-icon>
+                    <input matInput  class="form-control" id="qty" 
+                    [(ngModel)]="product.qty" name="qty">
+                  </mat-form-field>
+                  
+            </mat-toolbar>
+            <mat-card-actions class="button-product">
+                <button mat-flat-button color="primary" (click)="updateProduct()" >
+                    <mat-icon matSuffix>done</mat-icon>
+                    Update Product</button>
+            </mat-card-actions>
+            
+        </mat-card-content>
+    </mat-card>
+</div>
+

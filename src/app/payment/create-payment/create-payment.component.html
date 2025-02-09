@@ -1,0 +1,69 @@
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>New Payment</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          
+            <mat-toolbar>
+                <mat-form-field class="create-payment">
+                    <mat-label>Select payment mode</mat-label>
+                    <mat-icon matSuffix>attach_money</mat-icon>
+                    <mat-select [(ngModel)]="payment.paymentMode" name="mode" (change)="modeChange(mode)">
+                      @for (mod of modes; track mod) {
+                        <mat-option [value]="mod.name">{{mod.name}}</mat-option>
+                      }
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="create-payment">
+                  <mat-label>Customer Name</mat-label>
+                  <input matInput  class="form-control" id="customerName" readonly
+                  [(ngModel)]="customer.name" name="customerName">
+                  <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+            
+            </mat-toolbar>
+
+            <mat-toolbar>
+              <mat-form-field class="create-payment">
+                <mat-label>Tax</mat-label>
+                <input matInput  class="form-control" id="tax" readonly
+                [(ngModel)]="amountDto.tax" name="tax">
+                <mat-icon matSuffix>paid</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field class="create-payment">
+                <mat-label>Discount</mat-label>
+                <input matInput  class="form-control" id="discount" readonly
+                [(ngModel)]="amountDto.discount" name="discount">
+                <mat-icon matSuffix>paid</mat-icon>
+              </mat-form-field>
+            </mat-toolbar>
+
+            <mat-toolbar>
+              <mat-form-field class="create-payment">
+                <mat-label>Amount</mat-label>
+                <input matInput  class="form-control" id="amount" readonly
+                [(ngModel)]="amountDto.amount" name="amount">
+                <mat-icon matSuffix>paid</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field class="create-payment">
+                <mat-label>Total Amount</mat-label>
+                <input matInput  class="form-control" id="totalAmount" readonly
+                [(ngModel)]="amountDto.totalAmount" name="totalAmount">
+                <mat-icon matSuffix>paid</mat-icon>
+              </mat-form-field>
+            </mat-toolbar>
+       
+            <mat-card-actions class="button-payment">
+                <button mat-flat-button color="primary" (click)="printPayment()">Pay Now</button>
+            </mat-card-actions>
+          
+        </mat-card-content>
+    </mat-card>
+</div>
+
+

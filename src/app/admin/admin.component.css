@@ -1,0 +1,23 @@
+.spacer{
+    flex: auto;
+}
+
+mat-toolbar{
+    background-color: rgb(103, 103, 203);
+    
+}
+
+mat-card-footero{
+    background-color: rgb(103, 103, 203);
+    
+}
+
+mat-card-footer {
+    text-align: center;
+    padding: 1rem 0;
+    background: rgb(103, 103, 203);
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

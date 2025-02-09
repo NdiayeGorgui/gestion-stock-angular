@@ -1,0 +1,14 @@
+mat-form-field{
+    display: block;
+}
+
+.login-container{
+    width: 600px;
+    justify-content: center;
+    margin: auto;
+}
+
+.login{
+   
+    margin-top: 20px;
+}

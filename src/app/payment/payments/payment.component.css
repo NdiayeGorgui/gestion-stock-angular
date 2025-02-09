@@ -1,0 +1,26 @@
+.create-payment{
+    
+    margin-top: 60px;
+    margin-right: 60px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+.button-payment{
+    
+    margin-top: 60px;
+    margin-right: 60px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+
+.search{
+   
+    margin-top: 20px;
+}
+
+.icon-button{
+    
+    display:inline-block;
+    margin:5px;
+}

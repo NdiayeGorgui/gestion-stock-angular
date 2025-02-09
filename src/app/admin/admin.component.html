@@ -1,0 +1,92 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <button  mat-button routerLink="/admin/home">
+        <mat-icon matSuffix>home</mat-icon>
+        Home</button>
+    <button  mat-button routerLink="/admin/profile">
+        <mat-icon matSuffix>portrait</mat-icon>
+        Profile</button>
+    <button mat-button [matMenuTriggerFor]="importMenu">
+        <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
+       
+        Orders List
+    </button>
+    <mat-menu #importMenu>
+        <button  mat-menu-item routerLink="/admin/order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Created Order List</button>
+        <button  mat-menu-item routerLink="/admin/completed-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Completed Order List</button>
+        <button  mat-menu-item routerLink="/admin/cancel-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Cancelled Order List</button>
+        
+    </mat-menu>
+        <button mat-button *ngIf="authService.authenticated==true">
+            <mat-icon matSuffix>person</mat-icon>
+            {{authService.username}}
+        </button>
+    <button routerLink="/login" mat-flat-button color="accent" (click)="logout()">
+        <mat-icon matSuffix>logout</mat-icon>Logout
+    </button>
+</mat-toolbar>
+<mat-drawer-container>
+    <mat-drawer #drawer mode="side" position="start" opened="true">
+        <mat-nav-list>
+            <mat-list-item>
+                <button routerLink="/admin/dashboard" mat-button>
+                    <mat-icon>dashboard</mat-icon>
+                    Dashboard
+                </button>
+            </mat-list-item>
+            <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
+                <button  routerLink="/admin/product" mat-button>
+                    <mat-icon>inventory</mat-icon>
+                    Products
+                </button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="/admin/customer" mat-button>
+                    <mat-icon>person</mat-icon>
+                    Customers
+                </button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="/admin/create-order" mat-button>
+                    <mat-icon>shopping</mat-icon>
+                    Orders
+                </button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="/admin/bill" mat-button>
+                    <mat-icon>money</mat-icon>
+                    Invoices
+                </button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="/admin/payment" mat-button>
+                    <mat-icon>paid</mat-icon>
+                    Payments
+                </button>
+            </mat-list-item>
+        </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div style="min-height: 600px">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
+<footer class="bg-light text-center text-lg-start">
+    <!-- Copyright -->
+    <div class="text-center p-3" style="text-align: center;
+    padding: 1rem 0;
+    background: rgb(103, 103, 203);
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;">
+      © 2025 Copyright:
+      <a class="text-dark" href="https:/gorgui.com/">gorgui.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+
