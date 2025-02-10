@@ -5,4 +5,5 @@ export class Custom{
     address!:string;
     phone!: string; 
     email!:string;
+    status!:string;
 }

@@ -1,0 +1,131 @@
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Bill details</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+
+            <mat-toolbar>
+                
+
+                <mat-form-field class="create-payment">
+                  <mat-label>Bill id</mat-label>
+                  <input matInput  class="form-control" id="id" readonly
+                  [(ngModel)]="bill.id" name="id">
+                  <mat-icon matSuffix>check_circle</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="create-payment">
+                    <mat-label>Order ref</mat-label>
+                    <mat-icon matSuffix>check_circle</mat-icon>
+                    <input matInput [(ngModel)]="bill.orderRef" name="orderRef" id="orderRef"  readonly
+                    />
+                     
+                </mat-form-field>
+            
+            </mat-toolbar>
+
+            <mat-toolbar>
+                
+
+                <mat-form-field class="create-payment">
+                  <mat-label>Customer IdEvent</mat-label>
+                  <input matInput  class="form-control" id="customerIdEvent" readonly
+                  [(ngModel)]="bill.customerIdEvent" name="customerIdEvent">
+                  <mat-icon matSuffix>check_circle</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="create-payment">
+                    <mat-label>Product IdEvent</mat-label>
+                    <mat-icon matSuffix>check_circle</mat-icon>
+                    <input matInput [(ngModel)]="bill.productIdEvent" name="productIdEvent" id="productIdEvent" readonly
+                    />
+                     
+                </mat-form-field>
+            
+            </mat-toolbar>
+
+            <mat-toolbar>
+
+                <mat-form-field class="create-payment">
+                    <mat-label>Customer Name</mat-label>
+                    <input matInput  class="form-control" id="customerName" readonly
+                    [(ngModel)]="bill.customerName" name="customerName">
+                    <mat-icon matSuffix>person</mat-icon>
+                  </mat-form-field>
+
+                <mat-form-field class="create-payment">
+                    <mat-label>Product name</mat-label>
+                    <mat-icon matSuffix>inventory</mat-icon>
+                    <input matInput [(ngModel)]="bill.productName" name="productName" id="productName" readonly
+                    />
+                     
+                </mat-form-field>
+
+                
+            
+            </mat-toolbar>
+          
+            <mat-toolbar>
+                <mat-form-field class="create-payment">
+                    <mat-label>Customer Phone</mat-label>
+                    <mat-icon matSuffix>phone</mat-icon>
+                    <input matInput [(ngModel)]="bill.customerPhone" name="customerPhone" id="customerPhone" readonly
+                    />
+                     
+                </mat-form-field>
+
+                <mat-form-field class="create-payment">
+                    <mat-label>Product price</mat-label>
+                    <mat-icon matSuffix>attach_money</mat-icon>
+                    <input matInput [(ngModel)]="bill.price" name="price" id="price"
+                    />
+                     
+                </mat-form-field>
+            
+            </mat-toolbar>
+
+            <mat-toolbar>
+              
+
+              <mat-form-field class="create-payment">
+                <mat-label>Discount</mat-label>
+                <input matInput  class="form-control" id="discount" readonly
+                [(ngModel)]="bill.discount" name="discount">
+                <mat-icon matSuffix>paid</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field class="create-payment">
+                <mat-label>Quantity</mat-label>
+                <input matInput  class="form-control" id="quantity" readonly
+                [(ngModel)]="bill.quantity" name="quantity">
+                <mat-icon matSuffix>balance</mat-icon>
+              </mat-form-field>
+            </mat-toolbar>
+
+            <mat-toolbar>
+              <mat-form-field class="create-payment">
+                <mat-label>Date</mat-label>
+                <input matInput  class="form-control" id="billingDate" readonly
+                [(ngModel)]="bill.billingDate" name="billingDate">
+                <mat-icon matSuffix>schedule</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field class="create-payment">
+                <mat-label>Status</mat-label>
+                <input matInput  class="form-control" id="status" readonly
+                [(ngModel)]="bill.status" name="status">
+                <mat-icon matSuffix>check_small</mat-icon>
+              </mat-form-field>
+            </mat-toolbar>
+       
+           
+          
+        </mat-card-content>
+    </mat-card>
+</div>
+
+
+
+

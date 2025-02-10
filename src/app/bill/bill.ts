@@ -1,4 +1,5 @@
 export class Bill{
+    id!:number;
     billingDate!:Date
     customerIdEvent!: string;
     customerName!:string;

@@ -57,11 +57,15 @@
                 <mat-icon matSuffix>paid</mat-icon>
               </mat-form-field>
             </mat-toolbar>
-       
+            <mat-toolbar class="form-group">
             <mat-card-actions class="button-payment">
                 <button mat-flat-button color="primary" (click)="printPayment()">Pay Now</button>
             </mat-card-actions>
-          
+
+            <mat-card-actions class="button-payment">
+              <button mat-flat-button color="primary" (click)="goBack()">Go back</button>
+          </mat-card-actions>
+        </mat-toolbar>
         </mat-card-content>
     </mat-card>
 </div>

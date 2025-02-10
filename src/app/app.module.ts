@@ -42,6 +42,11 @@ import { UpdateCustomerComponent } from './customer/update-customer/update-custo
 import { UpdateProductComponent } from './product/update-product/update-product.component';
 import { CancelOrderComponent } from './order/cancel-order/cancel-order.component';
 import { CompletedOrderComponent } from './order/completed-order/completed-order.component';
+import { ProductDetailsComponent } from './product/product-details/product-details.component';
+import { CustomerDetailsComponent } from './customer/customer-details/customer-details.component';
+import { PaymentDetailsComponent } from './payment/payment-details/payment-details.component';
+import { BillDetailsComponent } from './bill/bill-details/bill-details.component';
+import { OrderDetailsComponent } from './order/order-details/order-details.component';
 
 
 @NgModule({
@@ -65,7 +70,12 @@ import { CompletedOrderComponent } from './order/completed-order/completed-order
     UpdateCustomerComponent,
     UpdateProductComponent,
     CancelOrderComponent,
-    CompletedOrderComponent
+    CompletedOrderComponent,
+    ProductDetailsComponent,
+    CustomerDetailsComponent,
+    PaymentDetailsComponent,
+    BillDetailsComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,

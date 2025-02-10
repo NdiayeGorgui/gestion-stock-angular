@@ -58,7 +58,7 @@ export class BillComponent implements OnInit {
                 }
               
                 getBill(orderRef:string){
-                 
+                  this.router.navigate(['/admin/bill-details',orderRef]);
                 }
               
                 deleteBill(orderRef:string){

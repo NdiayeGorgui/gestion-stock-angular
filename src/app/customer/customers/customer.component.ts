@@ -74,8 +74,8 @@ export class CustomerComponent implements OnInit {
     }
     
   
-    getCustomer(element:any){
-     
+    getCustomer(customerIdEvent:string){
+      this.router.navigate(['/admin/customer-details',customerIdEvent]);
     }
   
 

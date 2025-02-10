@@ -11,7 +11,8 @@ export const environment = {
     backendOrderUpdateHost:"http://localhost:8888/order-service/api/v1/orders/update",
     backendOrderCancelHost:"http://localhost:8888/order-service/api/v1/orders/order",
     backendOrderStatusHost:"http://localhost:8888/order-service/api/v1/orders/status",
-    backendBillHost:"http://localhost:8888/bill-service/api/v1/bills",
+    backendBillHost:"http://localhost:8888/billing-service/api/v1/bills",
+    backendBillHostId:"http://localhost:8888/billing-service/api/v1/bills/bill",
     backendBillExportHost:"http://localhost:8888/billing-service/api/v1/bills/export"
     
 };

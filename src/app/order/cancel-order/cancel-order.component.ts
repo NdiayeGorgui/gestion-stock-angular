@@ -69,8 +69,8 @@ export class CancelOrderComponent implements OnInit {
         this.dataSource.filter = value;
       }
     
-      getOrder(customerIdEvent:string){
-       
+      getOrder(orderIdEvent:string){
+        this.router.navigate(['/admin/order-details',orderIdEvent]);
       }
     
       deleteOrder(orderIdEvent:string){

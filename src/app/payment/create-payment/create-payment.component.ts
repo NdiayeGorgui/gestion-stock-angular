@@ -117,4 +117,9 @@ export class CreatePaymentComponent implements OnInit{
         saveAs(data, `${fileName}.xlsx`);
       }
 
+      goBack(){
+  
+        this.router.navigate(['/admin/order']);
+      }
+
 }

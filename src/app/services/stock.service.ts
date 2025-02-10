@@ -138,13 +138,13 @@ export class StockService {
     return this.httpClient.get<Payment>(`${environment.backendPaymentHost}/${paymentIdEvent}`);
   }
 
-  getBillList():Observable<Payment[]>{
-    return this.httpClient.get<(Payment[])> (`${environment.backendPaymentBillHost}`) ;
+  getBillList():Observable<Bill[]>{
+    return this.httpClient.get<(Bill[])> (`${environment.backendBillHost}`) ;
   }
 
-  getBillById(orderIdEvent:string):Observable<Payment>{
+  getBillById(orderIdEvent:string):Observable<Bill>{
     
-    return this.httpClient.get<Payment>(`${environment.backendPaymentBillHost}/${orderIdEvent}`);
+    return this.httpClient.get<Bill>(`${environment.backendBillHostId}/${orderIdEvent}`);
   }
   
 }

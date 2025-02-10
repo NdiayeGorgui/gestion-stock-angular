@@ -18,6 +18,7 @@ export class CompletedOrderComponent implements OnInit{
   orderEvent:OrderEvent=new OrderEvent();
     order:OrderEvent=new OrderEvent();
     status='COMPLETED';
+    nom!:string;
   
   
      public orders:any;
@@ -74,7 +75,7 @@ export class CompletedOrderComponent implements OnInit{
     }
   
     getOrder(orderIdEvent:string){
-     
+      this.router.navigate(['/admin/order-details',orderIdEvent]);
     }
   
     newOrder(){
@@ -90,6 +91,17 @@ export class CompletedOrderComponent implements OnInit{
       });
       alert('Product saved successfuly !');
       this.router.navigate(['/admin/order']);
+    }
+
+    searchTitle(){
+      if(this.nom!=""){
+        this.orders=this.orders.filter((res: { custom: { name: string; }; })=>{
+          return res.custom.name.toLowerCase().match(this.nom.toLowerCase());
+        });
+      }else if(this.nom==""){
+        this.ngOnInit();
+      }
+    
     }
 
 }

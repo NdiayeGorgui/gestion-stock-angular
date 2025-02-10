@@ -89,8 +89,8 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/{
   
   }
 
-  getProduct(element:any){
-   
+  getProduct(productIdEvent:string){
+    this.router.navigate(['/admin/product-details',productIdEvent]);
   }
 
   createProduct(){

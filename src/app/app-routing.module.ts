@@ -22,6 +22,11 @@ import { UpdateProductComponent } from './product/update-product/update-product.
 import { UpdateCustomerComponent } from './customer/update-customer/update-customer.component';
 import { CancelOrderComponent } from './order/cancel-order/cancel-order.component';
 import { CompletedOrderComponent } from './order/completed-order/completed-order.component';
+import { ProductDetailsComponent } from './product/product-details/product-details.component';
+import { CustomerDetailsComponent } from './customer/customer-details/customer-details.component';
+import { PaymentDetailsComponent } from './payment/payment-details/payment-details.component';
+import { BillDetailsComponent } from './bill/bill-details/bill-details.component';
+import { OrderDetailsComponent } from './order/order-details/order-details.component';
 
 
 
@@ -35,18 +40,23 @@ const routes: Routes = [
     {path:"product",component:ProductComponent,canActivate:[AuthorizationGuard],data :{roles:['ADMIN']}},
     {path:"create-product",component:CreateProductComponent},
     {path:"update-product/:productIdEvent",component:UpdateProductComponent},
+    {path:"product-details/:productIdEvent",component:ProductDetailsComponent},
     {path:"customer",component:CustomerComponent},
     {path:"create-customer",component:CreateCustomerComponent},
     {path:"update-customer/:customerIdEvent",component:UpdateCustomerComponent},
+    {path:"customer-details/:customerIdEvent",component:CustomerDetailsComponent},
     {path:"order",component:OrderComponent},
     {path:"create-order",component:CreateOrderComponent},
     {path:"cancel-order",component:CancelOrderComponent},
     {path:"completed-order",component:CompletedOrderComponent},
+    {path:"order-details/:orderIdEvent",component:OrderDetailsComponent},
     {path:"create-payment/:customerIdEvent",component:CreatePaymentComponent},
     {path:"dashboard",component:DashboardComponent},
     {path:"bill",component:BillComponent},
     {path:"create-bill",component:CreateBillComponent},
-    {path:"payment",component:PaymentComponent,canActivate:[AuthorizationGuard],data :{roles:['ADMIN']}}
+    {path:"bill-details/:orderRef",component:BillDetailsComponent},
+    {path:"payment",component:PaymentComponent,canActivate:[AuthorizationGuard],data :{roles:['ADMIN']}},
+    {path:"payment-details/:paymentIdEvent",component:PaymentDetailsComponent},
   ]},
 ];
 
