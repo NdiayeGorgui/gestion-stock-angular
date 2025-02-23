@@ -25,20 +25,24 @@ export class CreateProductComponent implements OnInit{
    this.router.navigateByUrl("/admin/create-product");
  }
 
-  newProduct(){
-    this.stockService.createProduct(this.product).subscribe({
-      next:prod=>{
-       // alert('Product saved successfuly !');
-       // this.goToProductList();
-      },
-      error:err=>{
-        console.log(err);
-      }
-   
-    });
-    alert('Product saved successfuly !');
-    this.router.navigate(['/admin/product']);
+ newProduct() {
+  if (!this.product.name || !this.product.category || this.product.price == null || this.product.qty == null) {
+    alert('Veuillez remplir tous les champs requis.');
+    return;
   }
+
+  this.stockService.createProduct(this.product).subscribe({
+    next: (prod) => {
+      alert('Product saved successfully!');
+      this.router.navigate(['/admin/product']);
+    },
+    error: (err) => {
+      console.error('Erreur lors de l\'ajout du produit:', err);
+      alert('Erreur lors de l\'ajout du produit. Veuillez réessayer.');
+    }
+  });
+}
+
 
   onSubmit(){
  

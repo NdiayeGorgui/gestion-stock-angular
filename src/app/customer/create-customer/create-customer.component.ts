@@ -71,20 +71,35 @@ export class CreateCustomerComponent implements OnInit {
     });
   }*/
 
-  newCustomer(){
-    this.stockService.createCustomer(this.customer).subscribe({
-      next:cust=>{
-       // alert('Customer saved successfuly !');
-      },
-      error:err=>{
-        console.log(err);
+
+    
+      newCustomer() {
+        if (!this.customer.name || !this.customer.address || !this.customer.phone || !this.customer.email) {
+          alert('Please fill in all required fields.');
+          return;
+        }
+    
+        this.stockService.createCustomer(this.customer).subscribe({
+          next: (res) => {
+            console.log('Réponse du serveur:', res);
+            alert('Customer saved successfully!');
+            
+            console.log('Navigation en cours...');
+            this.router.navigate(['/admin/customer'])
+                .then(success => console.log('Navigation réussie:', success))
+                .catch(err => console.error('Erreur de navigation:', err));
+        
+            
+          },
+          error: (err) => {
+            console.error('Error:', err);
+            alert('Error while saving customer. Please try again.');
+          }
+        });
+       
       }
+    
+    
 
-    });
-
-    alert('Customer saved successfuly !');
-    this.router.navigate(['/admin/customer']);
-   
-  }
 }
 

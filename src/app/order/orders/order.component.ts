@@ -62,7 +62,7 @@ export class OrderComponent implements OnInit{
         }
       };
     
-      public displayedColumns=["customerName","productName","price","qty","amount","discount","date","status","payment","order"]
+      public displayedColumns=["customerName","productName","price","qty","amount","discount","status","payment","cancel","details"]
       
       @ViewChild(MatPaginator) paginator!:MatPaginator;
       @ViewChild(MatSort) sort!:MatSort;
@@ -93,7 +93,9 @@ export class OrderComponent implements OnInit{
     
   }
 
-
+  getOrder(orderIdEvent:string){
+    this.router.navigate(['/admin/order-details',orderIdEvent]);
+  }
 
   filterOrder(event:Event){
     let value=(event.target as HTMLInputElement).value;
@@ -111,16 +113,15 @@ export class OrderComponent implements OnInit{
     if(conf){
       this.stockService.cancelOrder(orderIdEvent).subscribe({
         next:data=>{
+
+          alert('Order canceled successfuly !');
+          this.ngOnInit();
          //this.order=data;
          console.log(data);
         },error:err=>{
          console.log(err);
        }
-       });
-       alert('Order canceled successfuly !');
-     this.ngOnInit();
-    
-    
+       }); 
   }
   }
 

@@ -5,3 +5,13 @@
     margin-bottom: 20px;
     justify-content: center;
 }
+
+
+.create-payment input[readonly][value="Order"],
+.create-payment input[readonly][value="Customer"],
+.create-payment input[readonly][value="Product"] {
+    background-color: #d1e7fd ; /* Bleu clair, ajuste la couleur selon ton besoin */
+    font-weight: bold; /* Texte en gras */
+   
+    
+}

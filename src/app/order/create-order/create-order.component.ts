@@ -57,23 +57,37 @@ export class CreateOrderComponent implements OnInit {
       this.getProducts();
     }
   
-    newOrder(){
-  
+    newOrder() {
+      if (!this.orderEvent.customer.customerIdEvent || 
+          !this.orderEvent.product.productIdEvent || 
+          !this.orderEvent.productItem.productQty) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+    
       this.stockService.createOrder(this.orderEvent).subscribe({
-        next:prod=>{
-         
+        next: (prod) => {
           console.log(prod);
-        
+          alert('Order saved successfully!');
+    
+          // Réinitialiser le formulaire après ajout
+          this.orderEvent = {
+            customer: { customerIdEvent: null },
+            product: { productIdEvent: null },
+            productItem: { productQty: null }
+           
+          };
+    
+          // ✅ Navigation après le succès de l'opération
+          this.router.navigate(['/admin/oreder']);
         },
-        error:err=>{
+        error: (err) => {
           console.log(err);
+          alert('Error while saving order.');
         }
-     
-      });
-      alert('Order saved successfuly !');
-     
-      //this.router.navigate(['/admin/order']);
+      }); 
     }
+    
 
     finish(){
   

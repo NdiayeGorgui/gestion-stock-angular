@@ -32,7 +32,7 @@ export class CancelOrderComponent implements OnInit {
             }
           };
         
-          public displayedColumns=["customerName","productName","price","qty","amount","discount","date","status","action"]
+          public displayedColumns=["customerName","productName","price","qty","amount","discount","date","status","details"]
           
           @ViewChild(MatPaginator) paginator!:MatPaginator;
           @ViewChild(MatSort) sort!:MatSort;

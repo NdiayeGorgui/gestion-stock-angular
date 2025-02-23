@@ -59,14 +59,15 @@ export class CreatePaymentComponent implements OnInit{
         this.payment.customerIdEvent=this.customerIdEvent;
         this.stockService.createPayment(this.payment).subscribe({
           next:prod=>{
+            alert('Payment created successfuly !');
+            this.router.navigate(['/admin/payment']);
            
           },
           error:err=>{
             console.log(err);
           }
         });
-        alert('Payment created successfuly !');
-        this.router.navigate(['/admin/payment']);
+       
       }
 
       getAmount() {
@@ -118,8 +119,8 @@ export class CreatePaymentComponent implements OnInit{
       }
 
       goBack(){
-  
         this.router.navigate(['/admin/order']);
+        //window.location.href = '/admin/order';  // Redirection forcée
       }
 
 }

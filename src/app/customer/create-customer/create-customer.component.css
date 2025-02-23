@@ -1,15 +1,36 @@
-
-.create-customer{
-    
-    margin-top: 60px;
-    margin-right: 60px;
-    margin-bottom: 20px;
-    justify-content: center;
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.button-customer{
-    
-    margin-top: 60px;
-   
+
+mat-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; /* Espacement uniforme entre les champs */
+    margin-bottom: 20px; /* Ajoute un espace entre les lignes */
+}
+
+.create-customer {
+    margin-top: 20px; /* Réduit l'espace entre le haut et le bas */
     margin-bottom: 20px;
-    
+    width: 48%; /* Assure que les champs sont alignés en deux colonnes */
+}
+
+mat-form-field {
+    width: 100%; /* Assure que les champs remplissent bien leur conteneur */
+}
+
+.button-customer {
+    margin-top: 40px; /* Espacement entre le formulaire et le bouton */
+    text-align: center;
+}
+
+button {
+    width: 100%;
+    max-width: 300px; /* Ajuste la taille du bouton */
+}
+mat-card-header {
+    margin-bottom: 20px; /* Ajoute un espace sous le titre */
 }

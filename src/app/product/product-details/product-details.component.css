@@ -1,14 +1,35 @@
-.create-product{
-    
-    margin-top: 60px;
-    margin-right: 60px;
+.create-product {
+    margin-top: 20px; /* Réduit l'espace entre le haut et le bas */
     margin-bottom: 20px;
-    justify-content: center;
+    width: 48%; /* Assure que les champs sont alignés en deux colonnes */
 }
-.button-product{
-    
-    margin-top: 60px;
-   
-    margin-bottom: 20px;
-   
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+mat-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; /* Espacement uniforme entre les champs */
+    margin-bottom: 20px; /* Espace entre les lignes */
+}
+
+.button-product {
+    margin-top: 40px; /* Espacement amélioré entre le formulaire et le bouton */
+    text-align: center;
+}
+
+mat-form-field {
+    width: 100%; /* Assure que les champs s'adaptent bien */
+}
+
+button {
+    width: 100%;
+    max-width: 300px; /* Ajuste la taille du bouton */
+}
+
+

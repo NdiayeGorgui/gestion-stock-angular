@@ -47,6 +47,7 @@ import { CustomerDetailsComponent } from './customer/customer-details/customer-d
 import { PaymentDetailsComponent } from './payment/payment-details/payment-details.component';
 import { BillDetailsComponent } from './bill/bill-details/bill-details.component';
 import { OrderDetailsComponent } from './order/order-details/order-details.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { OrderDetailsComponent } from './order/order-details/order-details.compo
     MatFormFieldModule,
     MatTabsModule,
     BrowserAnimationsModule,
+    RouterModule
     
   
   ],

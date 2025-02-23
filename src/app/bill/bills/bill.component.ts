@@ -20,7 +20,7 @@ export class BillComponent implements OnInit {
   
      bill:Bill=new Bill();
   
-      public displayedColumns=["orderRef","customerName","productName","quantity","price","discount","billingDate","status","action"]
+      public displayedColumns=["customerName","productName","quantity","price","discount","billingDate","status","details"]
                
                @ViewChild(MatPaginator) paginator!:MatPaginator;
                @ViewChild(MatSort) sort!:MatSort;

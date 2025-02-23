@@ -25,7 +25,7 @@ export class PaymentComponent implements OnInit{
 
    payment:Payment=new Payment();
 
-    public displayedColumns=["customerId","paymentMode","amount","timeStamp","paymentStatus","action"]
+    public displayedColumns=["customerId","paymentMode","amount","timeStamp","paymentStatus","details"]
              
              @ViewChild(MatPaginator) paginator!:MatPaginator;
              @ViewChild(MatSort) sort!:MatSort;
@@ -43,8 +43,10 @@ export class PaymentComponent implements OnInit{
     public getPayments() {
       this.stockService.getPaymentList().subscribe({
          next: payments => {
+        
           this.stockService.getCustomersList().subscribe({
             next: customers => {
+             
               // Créer un mapping ID → Nom
               const customerMap = new Map(customers.map(c => [c.customerIdEvent, c.name]));
         
@@ -53,7 +55,7 @@ export class PaymentComponent implements OnInit{
                 ...payment,
                 customerName: customerMap.get(payment.customerIdEvent) || 'Unknown'
               }));
-        
+              
               this.dataSource = new MatTableDataSource(this.payments);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;

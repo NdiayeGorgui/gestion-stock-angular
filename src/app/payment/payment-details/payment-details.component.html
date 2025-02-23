@@ -19,7 +19,7 @@
                 <mat-form-field class="create-payment">
                     <mat-label>Payment Date</mat-label>
                     <mat-icon matSuffix>schedule</mat-icon>
-                    <input matInput [(ngModel)]="payment.timeStamp" name="timeStamp" id="timeStamp"
+                    <input matInput [(ngModel)]="payment.timeStamp" name="timeStamp" id="timeStamp" readonly
                     />
                      
                 </mat-form-field>
@@ -32,7 +32,7 @@
                 <mat-form-field class="create-payment">
                     <mat-label>Payment mode</mat-label>
                     <mat-icon matSuffix>attach_money</mat-icon>
-                    <input matInput [(ngModel)]="payment.paymentMode" name="paymentMode" id="paymentMode"
+                    <input matInput [(ngModel)]="payment.paymentMode" name="paymentMode" id="paymentMode" readonly
                     />
                      
                 </mat-form-field>
@@ -40,7 +40,7 @@
                 <mat-form-field class="create-payment">
                     <mat-label>Payment status</mat-label>
                     <mat-icon matSuffix>check_small</mat-icon>
-                    <input matInput [(ngModel)]="payment.paymentStatus" name="paymentStatus" id="paymentStatus"
+                    <input matInput [(ngModel)]="payment.paymentStatus" name="paymentStatus" id="paymentStatus" readonly
                     />
                      
                 </mat-form-field>
