@@ -1,0 +1,62 @@
+name: CI/CD Angular + Docker
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.12.0
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🏗 Build Angular App
+        run: npm run build -- --configuration=production
+
+      - name: 📂 Upload Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: angular-build
+          path: dist/
+  
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 📂 Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: angular-build
+          path: dist/
+
+      - name: 🔨 Build Docker Image
+        run: |
+          docker build -t gorgui/stock-web-app:latest .
+      
+      - name: 🔑 Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+      
+      - name: 📤 Push Docker Image
+        run: |
+          docker tag gorgui/stock-web-app:latest gorgui/stock-web-app:${{ github.sha }}
+          docker push gorgui/stock-web-app:${{ github.sha }}
+          docker push gorgui/stock-web-app:latest
