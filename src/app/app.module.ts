@@ -48,6 +48,7 @@ import { PaymentDetailsComponent } from './payment/payment-details/payment-detai
 import { BillDetailsComponent } from './bill/bill-details/bill-details.component';
 import { OrderDetailsComponent } from './order/order-details/order-details.component';
 import { RouterModule } from '@angular/router';
+import { ChatBotComponent } from './ai/chat-bot/chat-bot.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { RouterModule } from '@angular/router';
     CustomerDetailsComponent,
     PaymentDetailsComponent,
     BillDetailsComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    ChatBotComponent
   ],
   imports: [
     BrowserModule,

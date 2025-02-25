@@ -27,6 +27,7 @@ import { CustomerDetailsComponent } from './customer/customer-details/customer-d
 import { PaymentDetailsComponent } from './payment/payment-details/payment-details.component';
 import { BillDetailsComponent } from './bill/bill-details/bill-details.component';
 import { OrderDetailsComponent } from './order/order-details/order-details.component';
+import { ChatBotComponent } from './ai/chat-bot/chat-bot.component';
 
 
 
@@ -37,6 +38,7 @@ const routes: Routes = [
     children:[
     {path:"home",component:HomeComponent},
     {path:"profile",component:ProfileComponent},
+    {path:"chat-bot",component:ChatBotComponent},
     {path:"product",component:ProductComponent,canActivate:[AuthorizationGuard],data :{roles:['ADMIN']}},
     {path:"create-product",component:CreateProductComponent},
     {path:"update-product/:productIdEvent",component:UpdateProductComponent},
