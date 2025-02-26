@@ -79,10 +79,14 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/{
        //this.ngOnInit();
        
      });
+     alert('Product deleted successfuly !');
+     this.ngOnInit();
     }
-    alert('Product deleted successfuly !');
-    this.ngOnInit();
+   
   }
+
+
+
 
   editProduct(productIdEvent:string){
     this.router.navigate(['/admin/update-product',productIdEvent]);
