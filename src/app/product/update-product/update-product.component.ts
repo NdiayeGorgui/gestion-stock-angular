@@ -35,12 +35,13 @@ export class UpdateProductComponent implements OnInit {
     this.stockService.updateProduct(this.productIdEvent,this.product).subscribe({
       next:data=>{
         alert("Product updated successfuly!");
+        this.router.navigate(['/admin/product']);
        },error:err=>{
         console.log(err);
+        console.error('Erreur lors de la modification du produit:', err);
+        alert('Erreur lors de la modification  du produit. Veuillez réessayer.');
       }
       });
-      alert('Product updated successfuly !');
-      this.router.navigateByUrl("/admin/product");
   }
  
 }

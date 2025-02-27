@@ -52,14 +52,16 @@ export class UpdateCustomerComponent implements OnInit {
     updateCustomer(){
       this.stockService.updateCustomer(this.customerIdEvent,this.customer).subscribe({
         next:data=>{
-         // alert("Customer updated successfuly!");
+          console.log('Réponse du serveur:', data);
+          alert('Customer updated successfuly !');
+          this.router.navigateByUrl("/admin/customer");
          },error:err=>{
-          console.log(err);
+          console.error('Error:', err);
+          alert('Error while updating customer. Please try again.');
         }
         });
-
-        alert('Customer updated successfuly !');
-        this.router.navigateByUrl("/admin/customer");
     }
 
 }
+
+
