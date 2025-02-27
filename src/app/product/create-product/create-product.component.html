@@ -47,7 +47,7 @@
                         <mat-icon matSuffix>balance</mat-icon>
                         <mat-error *ngIf="qtyCtrl.invalid && qtyCtrl.touched">
                             <span *ngIf="qtyCtrl.errors?.['required']">Quantity is required.</span>
-                            <span *ngIf="qtyCtrl.errors?.['min']">Quantity must be a positive number.</span>
+                            <span *ngIf="qtyCtrl.errors?.['min']">Quantity must be at least 1.</span>
                         </mat-error>
                     </mat-form-field>
                 </mat-toolbar>
