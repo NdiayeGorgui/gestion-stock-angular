@@ -37,9 +37,8 @@ export class UpdateProductComponent implements OnInit {
         alert("Product updated successfuly!");
         this.router.navigate(['/admin/product']);
        },error:err=>{
-        console.log(err);
-        console.error('Erreur lors de la modification du produit:', err);
-        alert('Erreur lors de la modification  du produit. Veuillez réessayer.');
+        console.error('Error:', err);
+          alert('Error while updating product. Please try again.');
       }
       });
   }
