@@ -43,31 +43,31 @@
             <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
                 <button  routerLink="/admin/product" mat-button>
                     <mat-icon>inventory</mat-icon>
-                    Products
+                    Manage Products
                 </button>
             </mat-list-item>
             <mat-list-item>
                 <button routerLink="/admin/customer" mat-button>
                     <mat-icon>person</mat-icon>
-                    Customers
+                    Manage Customers
                 </button>
             </mat-list-item>
             <mat-list-item>
                 <button routerLink="/admin/create-order" mat-button>
                     <mat-icon>shopping</mat-icon>
-                    Orders
+                    Create Orders
                 </button>
             </mat-list-item>
             <mat-list-item>
                 <button routerLink="/admin/bill" mat-button>
                     <mat-icon>money</mat-icon>
-                    Bills
+                    View Bills
                 </button>
             </mat-list-item>
             <mat-list-item>
                 <button routerLink="/admin/payment" mat-button>
                     <mat-icon>paid</mat-icon>
-                    Payments
+                    View Payments
                 </button>
             </mat-list-item>
         </mat-nav-list>
