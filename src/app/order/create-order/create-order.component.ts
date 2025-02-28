@@ -23,7 +23,7 @@ import { Products } from '../../product/products';
 export class CreateOrderComponent implements OnInit {
 
 
-
+  status='CREATED';
   customer:Custom=new Custom();
   product:Product=new Product();
   productItem:ProductItem=new ProductItem();
@@ -35,6 +35,7 @@ export class CreateOrderComponent implements OnInit {
    
     public customers:any;
     public products:any;
+    public orders:any;
    
     orderEvent:any= {
       customer:{},
@@ -55,6 +56,12 @@ export class CreateOrderComponent implements OnInit {
     ngOnInit(): void {
       this.getCustomers();
       this.getProducts();
+      this.getOrders();
+     
+    }
+
+    refreshComponent() {
+      this.cd.detectChanges(); // Force la détection de changement
     }
   
     newOrder() {
@@ -66,20 +73,27 @@ export class CreateOrderComponent implements OnInit {
       }
     
       this.stockService.createOrder(this.orderEvent).subscribe({
+        
         next: (prod) => {
           console.log(prod);
           alert('Order saved successfully!');
+          this.router.navigate(['/admin/create-order']);
+           // ✅ Navigation après le succès de l'opération
+           this.refreshComponent();
+
+
+          // this.ngOnInit();
+          
     
           // Réinitialiser le formulaire après ajout
-          this.orderEvent = {
+        /*  this.orderEvent = {
             customer: { customerIdEvent: null },
             product: { productIdEvent: null },
             productItem: { productQty: null }
            
-          };
+          };*/
     
-          // ✅ Navigation après le succès de l'opération
-          this.router.navigate(['/admin/oreder']);
+         
         },
         error: (err) => {
           console.log(err);
@@ -99,6 +113,20 @@ export class CreateOrderComponent implements OnInit {
         next: data=>{
           this.customers=data;
          
+        },
+        error:err=>{
+          console.log(err);
+        }
+  
+      });
+      
+    }
+
+    public getOrders(){
+      this.stockService.getCreatedOrders(this.status).subscribe({
+        next: data=>{
+          this.orders=data;
+          this.refreshComponent();
         },
         error:err=>{
           console.log(err);

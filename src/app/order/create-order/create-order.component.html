@@ -1,7 +1,16 @@
 <div class="container">
   <mat-card>
       <mat-card-header>
+        <mat-toolbar class="form-group">
           <mat-card-title>New Order</mat-card-title>
+          <mat-card-actions class="form-group">
+            <button mat-flat-button color="primary" (click)="newOrder()" [disabled]="orderForm.invalid">
+              <mat-icon matSuffix>shopping_cart</mat-icon>
+              Add order to list
+            </button>
+           
+        </mat-card-actions>
+      </mat-toolbar>
       </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content>
@@ -21,6 +30,32 @@
               </mat-error>
             </mat-form-field>
 
+            <mat-form-field  class="create-order">
+              <mat-label>Customer Address</mat-label>
+              <mat-icon matSuffix>home</mat-icon>
+              <input matInput  [value]="selectedCustomer?.address" readonly 
+               >
+            </mat-form-field>
+            <mat-form-field class="create-order">
+              <mat-label>Customer email</mat-label>
+              <input
+                matInput  class="form-control" id="email" 
+                 [value]="selectedCustomer?.email" readonly 
+                placeholder="gorgui@example.com"/>
+             
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>             
+            <mat-form-field class="create-order">
+              <mat-label>Customer Phone</mat-label>
+              <input matInput  class="form-control" id="customerPhone" [value]="selectedCustomer?.phone" readonly 
+             name="customerPhone">
+              <mat-icon matSuffix>phone</mat-icon>                
+            </mat-form-field>
+ 
+          </mat-toolbar>
+         
+
+          <mat-toolbar class="form-group">
 
             <mat-form-field  class="create-order">
               <mat-label>Select Product </mat-label>
@@ -35,20 +70,6 @@
               </mat-error>
             </mat-form-field>
 
-           
-              
-          </mat-toolbar>
-         
-
-          <mat-toolbar class="form-group">
-
-            <mat-form-field  class="create-order">
-              <mat-label>Customer Address</mat-label>
-              <mat-icon matSuffix>home</mat-icon>
-              <input matInput  [value]="selectedCustomer?.address" readonly 
-               >
-            </mat-form-field>
-
             <mat-form-field  class="create-order">
               <mat-label>Product Category</mat-label>
               <mat-icon matSuffix>category</mat-icon>
@@ -56,71 +77,64 @@
                
             </mat-form-field>
            
-           
-
-          </mat-toolbar>
-
-          <mat-toolbar class="form-group">            
-
-            <mat-form-field class="create-order">
-              <mat-label>Customer email</mat-label>
-              <input
-                matInput  class="form-control" id="email" 
-                 [value]="selectedCustomer?.email" readonly 
-                placeholder="gorgui@example.com"/>
-             
-              <mat-icon matSuffix>email</mat-icon>
-            </mat-form-field>             
-             
             <mat-form-field class="create-order">
               <mat-label>Remaining Qty</mat-label>
               <input matInput  class="form-control" id="productQty" [value]="selectedProduct?.qty" readonly
               name="productQty">
               <mat-icon matSuffix>production_quantity_limits</mat-icon>
-            </mat-form-field>          
-            
-          </mat-toolbar>
-          <mat-toolbar class="form-group">
+            </mat-form-field> 
 
-            <mat-form-field class="create-order">
-              <mat-label>Customer Phone</mat-label>
-              <input matInput  class="form-control" id="customerPhone" [value]="selectedCustomer?.phone" readonly 
-             name="customerPhone">
-              <mat-icon matSuffix>phone</mat-icon>                
-            </mat-form-field>
-              
             <mat-form-field  class="create-order">
               <mat-label>Product price</mat-label>
               <mat-icon matSuffix>paid</mat-icon>
               <input matInput  class="form-control" id="productPrice" [value]="selectedProduct?.price" readonly 
               name="productPrice">
-            </mat-form-field>
-         
+            </mat-form-field>    
+
+            
+
           </mat-toolbar>
-          <mat-toolbar class="form-group">
 
-          <mat-card-actions class="button-order">
-              <button mat-flat-button color="primary" (click)="newOrder()" [disabled]="orderForm.invalid">
-                <mat-icon matSuffix>shopping_cart</mat-icon>
-                Place order to cart
-              </button>
-             
-          </mat-card-actions>
+          
+         
+         
+  <mat-toolbar>
+    <mat-form-field  class="create-order">
+      <mat-label>Product Item qty</mat-label>
+      <mat-icon matSuffix>balance</mat-icon>
+      <input matInput type="number" class="form-control" id="productItemQty"  [(ngModel)]="orderEvent.productItem.productQty" name="productItemQty"
+       name="productItemQty"   required min="1" 
+       #qtyCtrl="ngModel">
+<mat-error *ngIf="qtyCtrl.invalid && qtyCtrl.touched">
+  <span *ngIf="qtyCtrl.errors?.['required']">Quantity is required.</span>
+  <span *ngIf="qtyCtrl.errors?.['min']">Quantity must be at least 1.</span>
+</mat-error>
+</mat-form-field>
 
-          <mat-form-field  class="button-order">
-            <mat-label>Product Item qty</mat-label>
-            <mat-icon matSuffix>balance</mat-icon>
-            <input matInput type="number" class="form-control" id="productItemQty"  [(ngModel)]="orderEvent.productItem.productQty" name="productItemQty"
-             name="productItemQty"   required min="1" 
-             #qtyCtrl="ngModel">
-      <mat-error *ngIf="qtyCtrl.invalid && qtyCtrl.touched">
-        <span *ngIf="qtyCtrl.errors?.['required']">Quantity is required.</span>
-        <span *ngIf="qtyCtrl.errors?.['min']">Quantity must be at least 1.</span>
-      </mat-error>
-      </mat-form-field>
+<mat-form-field  class="create-order">
+  <mat-label>Discount</mat-label>
+  <mat-icon matSuffix>paid</mat-icon>
+  <input matInput  class="form-control" id="productPrice" [value]="" readonly 
+  name="productPrice">
+</mat-form-field>    
+<mat-form-field  class="create-order">
+  <mat-label>Tax</mat-label>
+  <mat-icon matSuffix>paid</mat-icon>
+  <input matInput  class="form-control" id="productPrice" [value]="" readonly 
+  name="productPrice">
+</mat-form-field>    
+<mat-form-field  class="create-order">
+  <mat-label>Amount</mat-label>
+  <mat-icon matSuffix>paid</mat-icon>
+  <input matInput  class="form-control" id="productPrice" [value]="" readonly 
+  name="productPrice">
+</mat-form-field>    
+         
           
       </mat-toolbar>
     </form>
       </mat-card-content>
   </mat-card>
+  <app-order></app-order>
+
 </div>   

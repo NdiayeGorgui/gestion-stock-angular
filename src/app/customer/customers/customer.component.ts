@@ -60,12 +60,13 @@ export class CustomerComponent implements OnInit {
       let conf=confirm("Are you sure ?")
       if(conf){
        this.stockService.deleteCustomer(id).subscribe(data => {
-       // alert("Customer deleted successfuly !");
+        alert("Customer deleted successfully !");
          console.log(data);
-        // this.ngOnInit();
-       });
-       alert('Customer deleted successfuly !');
-       this.ngOnInit();
+         this.ngOnInit();
+       }, () => {
+        alert('Error while deleting customer. Please try again.');
+      });
+       
       }
     }
   

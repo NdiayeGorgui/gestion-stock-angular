@@ -74,13 +74,14 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/{
     let conf=confirm("Are you sure ?")
     if(conf){
      this.stockService.deleteProduct(id).subscribe(data => {
-      //alert("Suppression effectuée avec succés !");
+      alert("Product deleted successfully !");
        console.log(data);
-       //this.ngOnInit();
+       this.ngOnInit();
        
-     });
-     alert('Product deleted successfuly !');
-     this.ngOnInit();
+     }, () => {
+      alert('Error while deleting product. Please try again.');
+    });
+     
     }
    
   }
