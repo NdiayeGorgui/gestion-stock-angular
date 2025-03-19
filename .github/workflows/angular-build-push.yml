@@ -50,7 +50,7 @@ jobs:
 
       - name: 🔨 Build Docker Image
         run: |
-          docker build -t gorgui/stock-web-app:v1 .
+          docker build -t gorgui/stock-web-app:latest .
       
       - name: 🔑 Login to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
@@ -59,4 +59,4 @@ jobs:
         run: |
           docker tag gorgui/stock-web-app:latest gorgui/stock-web-app:${{ github.sha }}
           docker push gorgui/stock-web-app:${{ github.sha }}
-          docker push gorgui/stock-web-app:v1
+          docker push gorgui/stock-web-app:latest
