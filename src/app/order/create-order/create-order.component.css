@@ -5,13 +5,21 @@
     margin-bottom: 20px;
     justify-content: center;
 }
-.button-order{
-    
-    margin-top: 40px;
-    margin-right: 600px;
-    margin-bottom: 20px;
-    justify-content: center;
-    min-width: 90px;
+/* Bouton "Add Order" à gauche */
+.button-order {
+    flex: 1;
+    max-width: 200px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Pousse les boutons aux extrémités */
+    align-items: center;
+    width: 100%;
+}
+
+.spacer {
+    flex-grow: 1; /* Crée un espace entre les boutons */
 }
 
 
@@ -26,4 +34,45 @@ mat-toolbar {
     margin-bottom: 20px; /* Espace entre les lignes */
 }
 
+.total-cart-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff; /* Bleu */
+    background: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: right; /* Aligner le texte à droite */
+    min-width: 150px; /* Ajuste la taille pour l'alignement */
+}
 
+/* Conteneur de "Total Cart" pour assurer l'alignement */
+.total-cart-container {
+    display: flex;
+    justify-content: flex-end; /* Alignement à droite */
+    flex-grow: 1; /* Prend l'espace disponible */
+}
+
+/* Ajustement du toolbar */
+.toolbar-container {
+    display: flex;
+    justify-content: space-between; /* Espacement entre les boutons */
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+
+/* Bouton "Cart" à droite */
+.button-cart {
+    flex: 1;
+    max-width: 200px;
+    text-align: right;
+}
+
+.button-order {
+    flex: 2; /* Prend plus d'espace */
+    min-width: 470px; /* Ajuste la largeur à celle des inputs */
+    height: 56px; /* Même hauteur que les champs */
+    align-self: stretch; /* S'étire pour occuper l'espace */
+}

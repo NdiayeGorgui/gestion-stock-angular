@@ -59,4 +59,4 @@ jobs:
         run: |
           docker tag gorgui/stock-web-app:latest gorgui/stock-web-app:${{ github.sha }}
           docker push gorgui/stock-web-app:${{ github.sha }}
-          docker push gorgui/stock-web-app:latest
+          docker push gorgui/stock-web-app:v1

@@ -12,6 +12,10 @@ import { Payment } from '../payment/payment';
 import { Bill } from '../bill/bill';
 import { ProductItem } from '../order/productItem';
 import { AmountDto } from '../payment/create-payment/amountDto';
+import { Deliverd } from '../deliver/Delivered';
+import { Ship } from '../ship/Ship';
+import { OrderEventSourcing } from '../order/OrderEventSourcing';
+import { ProductStatDTO } from '../order/ProductStatDTO';
 
 
 @Injectable({
@@ -145,6 +149,41 @@ export class StockService {
   getBillById(orderIdEvent:string):Observable<Bill>{
     
     return this.httpClient.get<Bill>(`${environment.backendBillHostId}/${orderIdEvent}`);
+  }
+
+  getDeliveredQueryList():Observable<Deliverd[]>{
+    return this.httpClient.get<(Deliverd[])> (`${environment.backendDeliveredQuerytHost}`) ;
+  }
+
+  createDeliveredCommand(delivered:Deliverd):Observable<Object>{
+
+    return this.httpClient.post<(Deliverd)>(`${environment.backendDeliveredCommandtHost}`,delivered);
+  }
+
+  getDeliveredById(orderId:string):Observable<Deliverd>{
+    
+    return this.httpClient.get<Deliverd>(`${environment.backendDeliveredQuerytHost}/${orderId}`);
+  }
+
+  getShippingList():Observable<Ship[]>{
+    return this.httpClient.get<(Ship[])> (`${environment.backendShippingtHost}`) ;
+  }
+
+  createShip(ship:Ship):Observable<Object>{
+
+    return this.httpClient.post<(Ship)>(`${environment.backendShippingtHost}`,ship);
+  }
+
+  getShipById(orderId:string):Observable<Ship>{
+    
+    return this.httpClient.get<Ship>(`${environment.backendShippingtHost}/${orderId}`);
+  }
+
+  getOrderEventSourcingList():Observable<OrderEventSourcing[]>{
+    return this.httpClient.get<(OrderEventSourcing[])> (`${environment.backendOrderEventtHost}`) ;
+  }
+  getMostOrderedProducts():Observable<ProductStatDTO[]>{
+    return this.httpClient.get<(ProductStatDTO[])> (`${environment.backendProductMostOrderedHost}`) ;
   }
   
 }

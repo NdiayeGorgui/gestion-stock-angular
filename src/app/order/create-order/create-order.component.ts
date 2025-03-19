@@ -21,7 +21,12 @@ import { Products } from '../../product/products';
 
 
 export class CreateOrderComponent implements OnInit {
+  discount: number = 0;
+  tax: number = 0;
+  amount: number = 0;
+  totalCartAmount: number = 0;
 
+  
 
   status='CREATED';
   customer:Custom=new Custom();
@@ -49,8 +54,12 @@ export class CreateOrderComponent implements OnInit {
     selectedProductId: string = '';
     selectedProduct: Products | null = null;
     
-    constructor(private stockService:StockService,private router:Router,private fb:FormBuilder,private cd: ChangeDetectorRef){
+    constructor(private stockService:StockService,private router:Router){
 
+    }
+
+    goToPayment(){
+      this.router.navigate(['/admin/order']);
     }
   
     ngOnInit(): void {
@@ -60,10 +69,11 @@ export class CreateOrderComponent implements OnInit {
      
     }
 
-    refreshComponent() {
-      this.cd.detectChanges(); // Force la détection de changement
-    }
-  
+   
+
+    cartCount: number = 0;  // Initialisation du compteur
+    isCardButtonEnabled: boolean = false;  // Désactivé par défaut
+
     newOrder() {
       if (!this.orderEvent.customer.customerIdEvent || 
           !this.orderEvent.product.productIdEvent || 
@@ -77,9 +87,14 @@ export class CreateOrderComponent implements OnInit {
         next: (prod) => {
           console.log(prod);
           alert('Order saved successfully!');
+          // ✅ Ajout du montant de la commande au total du panier
+          this.totalCartAmount += this.amount; 
           this.router.navigate(['/admin/create-order']);
            // ✅ Navigation après le succès de l'opération
-           this.refreshComponent();
+          
+           this.cartCount++; // Incrémente le compteur à chaque ajout d'une commande
+           this.isCardButtonEnabled = true; // Active le bouton "Card"
+           
 
 
           // this.ngOnInit();
@@ -100,13 +115,10 @@ export class CreateOrderComponent implements OnInit {
           alert('Error while saving order.');
         }
       }); 
+      
     }
     
 
-    finish(){
-  
-      this.router.navigate(['/admin/order']);
-    }
   
     public getCustomers(){
       this.stockService.getCustomersOrderList().subscribe({
@@ -126,7 +138,7 @@ export class CreateOrderComponent implements OnInit {
       this.stockService.getCreatedOrders(this.status).subscribe({
         next: data=>{
           this.orders=data;
-          this.refreshComponent();
+          
         },
         error:err=>{
           console.log(err);
@@ -165,7 +177,7 @@ export class CreateOrderComponent implements OnInit {
           this.customer.customerIdEvent=this.selectedCustomerId;
 
           console.log('📌 Selected CustomerIdEvent:', this.customer.customerIdEvent);
-          this.cd.detectChanges(); // Force la mise à jour
+          
         }, error => {
           console.error('Erreur lors de la récupération du client', error);
         });
@@ -186,7 +198,8 @@ export class CreateOrderComponent implements OnInit {
               this.selectedProduct = product;
               this.orderEvent.product.productIdEvent=this.selectedProductId;
               this.product.productIdEvent=this.selectedProductId;
-              this.cd.detectChanges(); // Force la mise à jour
+              this.calculateAmount(); // 🔥 Recalcul du montant dès qu'un produit est sélectionné
+              
             }, error => {
               console.error('Erreur lors de la récupération du produit', error);
             });
@@ -195,4 +208,34 @@ export class CreateOrderComponent implements OnInit {
           }
          
             }
+            onQuantityChange() {
+              this.calculateAmount();
+            }
+            
+            calculateAmount() {
+              if (this.selectedProduct && this.orderEvent.productItem.productQty > 0) {
+                const price: number = Number(this.selectedProduct.price); // ✅ Conversion explicite en `number`
+                const qty: number = Number(this.orderEvent.productItem.productQty);
+            
+                const total: number = qty * price;
+                this.tax = total * 0.2; // 20% de taxe
+            
+                // Application de la remise en fonction du total
+                if (total < 100) {
+                  this.discount = 0;
+                } else if (total < 200) {
+                  this.discount = 0.005 * total; // 0.5% de remise
+                } else {
+                  this.discount = 0.01 * total; // 1% de remise
+                }
+            
+                this.amount = total + this.tax - this.discount;
+              } else {
+                this.tax = 0;
+                this.discount = 0;
+                this.amount = 0;
+              }
+            }
+            
+            
 }

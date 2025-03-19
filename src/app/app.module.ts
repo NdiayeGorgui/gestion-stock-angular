@@ -19,6 +19,7 @@ import { MatTableModule} from '@angular/material/table';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatTabsModule} from '@angular/material/tabs';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AdminComponent } from './admin/admin.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -49,6 +50,12 @@ import { BillDetailsComponent } from './bill/bill-details/bill-details.component
 import { OrderDetailsComponent } from './order/order-details/order-details.component';
 import { RouterModule } from '@angular/router';
 import { ChatBotComponent } from './ai/chat-bot/chat-bot.component';
+import { DeliverOrderComponent } from './deliver/deliver-order/deliver-order.component';
+import { DeliveredOrdersComponent } from './deliver/delivered-orders/delivered-orders.component';
+import { OrderEventsComponent } from './order/order-events/order-events.component';
+import { ShipOrderComponent } from './ship/ship-order/ship-order.component';
+import { ShippedOrdersComponent } from './ship/shipped-orders/shipped-orders.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @NgModule({
@@ -78,7 +85,13 @@ import { ChatBotComponent } from './ai/chat-bot/chat-bot.component';
     PaymentDetailsComponent,
     BillDetailsComponent,
     OrderDetailsComponent,
-    ChatBotComponent
+    ChatBotComponent,
+    DeliverOrderComponent,
+    DeliveredOrdersComponent,
+    OrderEventsComponent,
+    ShipOrderComponent,
+    ShippedOrdersComponent,
+    OrderEventsComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +114,9 @@ import { ChatBotComponent } from './ai/chat-bot/chat-bot.component';
     MatFormFieldModule,
     MatTabsModule,
     BrowserAnimationsModule,
-    RouterModule
+    RouterModule,
+    NgxChartsModule,
+    MatGridListModule
     
   
   ],

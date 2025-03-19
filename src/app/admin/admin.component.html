@@ -21,7 +21,7 @@
         <button  mat-menu-item routerLink="/admin/order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Created Orders List</button>
         <button  mat-menu-item routerLink="/admin/completed-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Completed Orders List</button>
         <button  mat-menu-item routerLink="/admin/cancel-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Cancelled Orders List</button>
-        
+        <button  mat-menu-item routerLink="/admin/order-events"><mat-icon matSuffix>format_list_bulleted</mat-icon>Event-Orders List</button>
     </mat-menu>
         <button mat-button *ngIf="authService.authenticated==true">
             <mat-icon matSuffix>person</mat-icon>
@@ -56,6 +56,19 @@
                 <button routerLink="/admin/create-order" mat-button>
                     <mat-icon>shopping</mat-icon>
                     Create Orders
+                </button>
+            </mat-list-item>
+
+            <mat-list-item>
+                <button routerLink="/admin/shipped-orders" mat-button>
+                    <mat-icon>shopping</mat-icon>
+                    Ship Orders
+                </button>
+            </mat-list-item>
+            <mat-list-item>
+                <button routerLink="/admin/delivered-orders" mat-button>
+                    <mat-icon>shopping</mat-icon>
+                    Deliver Orders
                 </button>
             </mat-list-item>
             <mat-list-item>

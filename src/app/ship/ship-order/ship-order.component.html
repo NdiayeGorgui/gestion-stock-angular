@@ -1,0 +1,79 @@
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>New Ship</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <form #customerForm="ngForm">
+                <mat-toolbar>
+                    <mat-form-field class="create-ship">
+                        <mat-label>Customer Name</mat-label>
+                        <input matInput class="form-control" id="customerName"
+                               [(ngModel)]="ship.customerName" name="customerName" readonly
+                               >
+                        <mat-icon matSuffix>person</mat-icon>
+                        
+                    </mat-form-field>
+  
+                    <mat-form-field class="create-ship">
+                        <mat-label>Customer Email</mat-label>
+                        <input matInput class="form-control" id="customerMail"
+                               [(ngModel)]="ship.customerMail" name="customerMail" readonly
+                              />
+                        <mat-icon matSuffix>email</mat-icon>
+                        
+                    </mat-form-field>
+                </mat-toolbar>
+  
+                <mat-toolbar>
+                    <mat-form-field class="create-ship">
+                        <mat-label>Order Id</mat-label>
+                        <input matInput class="form-control" id="orderId"
+                               [(ngModel)]="ship.orderId" name="orderId" readonly
+                              >
+                              <mat-icon matSuffix>check_circle</mat-icon>
+                        
+                    </mat-form-field>
+  
+                    <mat-form-field class="create-ship">
+                        <mat-label>Customer Id</mat-label>
+                        <input matInput class="form-control" id="customerId"
+                               [(ngModel)]="ship.customerId" name="customerId" readonly
+                              >
+                              <mat-icon matSuffix>check_circle</mat-icon>
+                        
+                    </mat-form-field>
+                </mat-toolbar>
+
+                <mat-toolbar>
+                    <mat-form-field class="create-ship">
+                        <mat-label>Created Date</mat-label>
+                        <input matInput class="form-control" id="eventTimeStamp"
+                               [(ngModel)]="ship.eventTimeStamp" name="eventTimeStamp" readonly
+                              >
+                        <mat-icon matSuffix>date</mat-icon>
+                        
+                    </mat-form-field>
+  
+                    <mat-form-field class="create-ship">
+                        <mat-label>Status</mat-label>
+                        <input matInput class="form-control" id="status"
+                               [(ngModel)]="ship.status" name="status" readonly
+                              >
+                        <mat-icon matSuffix>pending</mat-icon>
+                        
+                    </mat-form-field>
+                </mat-toolbar>
+  
+                <mat-card-actions class="button-ship">
+                    <button mat-flat-button color="primary" (click)="newShip()"   [disabled]="ship.status === 'SHIPPED'">
+                        <mat-icon matSuffix>balance</mat-icon>
+                        Ship Order
+                    </button>
+                </mat-card-actions>
+            </form>
+        </mat-card-content>
+    </mat-card>
+  </div>
+  

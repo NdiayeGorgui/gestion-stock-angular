@@ -28,6 +28,11 @@ import { PaymentDetailsComponent } from './payment/payment-details/payment-detai
 import { BillDetailsComponent } from './bill/bill-details/bill-details.component';
 import { OrderDetailsComponent } from './order/order-details/order-details.component';
 import { ChatBotComponent } from './ai/chat-bot/chat-bot.component';
+import { ShipOrderComponent } from './ship/ship-order/ship-order.component';
+import { ShippedOrdersComponent } from './ship/shipped-orders/shipped-orders.component';
+import { DeliverOrderComponent } from './deliver/deliver-order/deliver-order.component';
+import { DeliveredOrdersComponent } from './deliver/delivered-orders/delivered-orders.component';
+import { OrderEventsComponent } from './order/order-events/order-events.component';
 
 
 
@@ -59,6 +64,11 @@ const routes: Routes = [
     {path:"bill-details/:orderRef",component:BillDetailsComponent},
     {path:"payment",component:PaymentComponent,canActivate:[AuthorizationGuard],data :{roles:['ADMIN']}},
     {path:"payment-details/:paymentIdEvent",component:PaymentDetailsComponent},
+    {path:"ship-order/:orderId",component:ShipOrderComponent},
+    {path:"shipped-orders",component:ShippedOrdersComponent},
+    {path:"deliver-order/:orderId",component:DeliverOrderComponent},
+    {path:"delivered-orders",component:DeliveredOrdersComponent},
+    {path:"order-events",component:OrderEventsComponent},
   ]},
 ];
 

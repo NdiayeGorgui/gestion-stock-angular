@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   templateUrl: './create-customer.component.html',
   styleUrl: './create-customer.component.css'
 })
-export class CreateCustomerComponent implements OnInit {
+export class CreateCustomerComponent implements OnInit{
  // customerFormGroup!:FormGroup;
   customer:Custom=new Custom();
 
@@ -40,39 +40,9 @@ export class CreateCustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  /*  this.customerFormGroup=this.fb.group({
-     
-      name:this.fb.control(''),
-      address:this.fb.control(''),
-      email:this.fb.control(''),
-      phone:this.fb.control('')
-    
 
-
-    });*/
   }
 
-  /*newCustomer1(){
-    let formData:FormData=new FormData();
-   
-    formData.set('name',this.customerFormGroup.value.name);
-    formData.set('address',this.customerFormGroup.value.address);
-    formData.set('phone',this.customerFormGroup.value.phone);
-    formData.set('email',this.customerFormGroup.value.email);
-  
-    this.stockService.createCustomer(formData).subscribe({
-      next:cust=>{
-        alert('Customer saved successfuly !')
-
-      },
-      error:err=>{
-        console.log(err);
-      }
-    });
-  }*/
-
-
-    
       newCustomer() {
         if (!this.customer.name || !this.customer.address || !this.customer.phone || !this.customer.email) {
           alert('Please fill in all required fields.');
