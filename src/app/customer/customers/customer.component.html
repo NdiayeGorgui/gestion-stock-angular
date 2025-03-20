@@ -1,93 +1,98 @@
-<div class="container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Customers</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        
-        <mat-card-content>
-          <mat-toolbar>
-            <mat-form-field appearance="outline" class="search">
-              <mat-label>
-                <mat-icon matSuffix>search</mat-icon>
-                search</mat-label>
-              <input matInput (change)="filterCustomer($event)">
+<div class="container mt-4">
+  <mat-card>
+<mat-card-header>
+  <div class="mb-3">
+    <mat-card-title>Customers</mat-card-title>
+  </div>
+</mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+
+      <!-- Barre de recherche et bouton "New Customer" -->
+      <div class="row align-items-center mb-3">
+        <div class="col-md-6 mb-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>
+              <mat-icon matSuffix>search</mat-icon>
+              Search
+            </mat-label>
+            <input matInput (keyup)="filterCustomer($event)">
           </mat-form-field>
-          <mat-card-actions >
-            <button  mat-flat-button color="primary" (click)="createCustomer()">
-              <mat-icon matSuffix>person_add</mat-icon>
-              New Customer</button>
-        </mat-card-actions>
-          </mat-toolbar>
-            
-           
-            <table matSort mat-table  [dataSource]="dataSource" class="mat-elevation-z8">
+        </div>
+        <div class="col-md-6 text-md-end">
+          <button mat-flat-button color="primary" (click)="createCustomer()">
+            <mat-icon>person_add</mat-icon>
+            New Customer
+          </button>
+        </div>
+      </div>
 
-                <!--- Note that these columns can be defined in any order.
-                      The actual rendered columns are set as a property on the row definition" -->
-              
-              
-              
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                </ng-container>
-                <!-- Address Column -->
-                <ng-container matColumnDef="address">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
-                    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
-                  </ng-container>
+      <!-- Tableau des clients -->
+      <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100">
 
-               <!-- Email Column -->
-               <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-              </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
 
-                <!-- Phone Column -->
-                <ng-container matColumnDef="phone">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
-                  <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
-                </ng-container>
+        <!-- Address Column -->
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+          <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+        </ng-container>
 
-                 <!-- Status Column -->
-                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-                  </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
 
-                   <!-- Quantity status Column -->
-                 <ng-container matColumnDef="qtyStatus">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity Status </th>
-                  <td mat-cell *matCellDef="let element"> {{element.qtyStatus}} </td>
-                </ng-container>
+        <!-- Phone Column -->
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+          <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+        </ng-container>
 
-                <ng-container matColumnDef="action">
-                  <th mat-header-cell *matHeaderCellDef> Action </th>
-                  <td mat-cell *matCellDef="let element" >
-                    <button (click)="deleteCustomer(element.customerIdEvent)" mat-mini-fab aria-label="Example icon button with a delete icon" class="icon-button">
-                       <mat-icon>delete</mat-icon>
-                    </button>
-                      <button (click)="editCustomer(element.customerIdEvent)" mat-mini-fab aria-label class="icon-button">
-                          <mat-icon>edit</mat-icon>
-                        </button>
-                      <button (click)="getCustomer(element.customerIdEvent)" mat-mini-fab aria-label class="icon-button"> 
-                         <mat-icon>info</mat-icon>
-                        </button>
-                  </td>
-                </ng-container>
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
 
-                
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-              
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                    showFirstLastButtons
-                    aria-label="Select page of periodic elements">
-              </mat-paginator>
-        </mat-card-content>
-    </mat-card>
+        <!-- Quantity Status Column -->
+        <ng-container matColumnDef="qtyStatus">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity Status </th>
+          <td mat-cell *matCellDef="let element"> {{element.qtyStatus}} </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <button (click)="deleteCustomer(element.customerIdEvent)" mat-icon-button color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button (click)="editCustomer(element.customerIdEvent)" mat-icon-button color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="getCustomer(element.customerIdEvent)" mat-icon-button color="accent">
+              <mat-icon>info</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Affichage des lignes -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <!-- Pagination -->
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Pagination">
+      </mat-paginator>
+
+    </mat-card-content>
+  </mat-card>
 </div>
-

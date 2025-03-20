@@ -9,3 +9,12 @@
     margin:5px;
 }
 
+mat-divider {
+    margin-bottom: 20px;
+  }
+  
+  mat-card-header {
+    padding-bottom: 15px;
+  }
+  
+

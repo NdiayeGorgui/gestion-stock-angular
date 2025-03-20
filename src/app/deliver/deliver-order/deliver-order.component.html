@@ -6,75 +6,70 @@
         <mat-divider></mat-divider>
         <mat-card-content>
             <form #customerForm="ngForm">
-                <mat-toolbar>
-                    <mat-form-field class="create-ship">
-                        <mat-label>Customer Name</mat-label>
-                        <input matInput class="form-control" id="customerName"
-                               [(ngModel)]="delivered.customerName" name="customerName" readonly
-                               >
-                        <mat-icon matSuffix>person</mat-icon>
-                        
-                    </mat-form-field>
-  
-                    <mat-form-field class="create-ship">
-                        <mat-label>Customer Email</mat-label>
-                        <input matInput class="form-control" id="customerMail"
-                               [(ngModel)]="delivered.customerMail" name="customerMail" readonly
-                              />
-                        <mat-icon matSuffix>email</mat-icon>
-                        
-                    </mat-form-field>
-                </mat-toolbar>
-  
-                <mat-toolbar>
-                    <mat-form-field class="create-ship">
-                        <mat-label>Order Id</mat-label>
-                        <input matInput class="form-control" id="orderId"
-                               [(ngModel)]="delivered.orderId" name="orderId" readonly
-                              >
-                              <mat-icon matSuffix>check_circle</mat-icon>
-                        
-                    </mat-form-field>
-  
-                    <mat-form-field class="create-ship">
-                        <mat-label>Customer Id</mat-label>
-                        <input matInput class="form-control" id="customerId"
-                               [(ngModel)]="delivered.customerId" name="customerId" readonly
-                              >
-                              <mat-icon matSuffix>check_circle</mat-icon>
-                        
-                    </mat-form-field>
-                </mat-toolbar>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Customer Name</mat-label>
+                            <input matInput class="form-control" id="customerName"
+                                   [(ngModel)]="delivered.customerName" name="customerName" readonly>
+                            <mat-icon matSuffix>person</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Customer Email</mat-label>
+                            <input matInput class="form-control" id="customerMail"
+                                   [(ngModel)]="delivered.customerMail" name="customerMail" readonly>
+                            <mat-icon matSuffix>email</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-                <mat-toolbar>
-                    <mat-form-field class="create-ship">
-                        <mat-label>Created Date</mat-label>
-                        <input matInput class="form-control" id="eventTimeStamp"
-                               [(ngModel)]="delivered.eventTimeStamp" name="eventTimeStamp" readonly
-                              >
-                        <mat-icon matSuffix>date</mat-icon>
-                        
-                    </mat-form-field>
-  
-                    <mat-form-field class="create-ship">
-                        <mat-label>Status</mat-label>
-                        <input matInput class="form-control" id="status"
-                               [(ngModel)]="delivered.status" name="status" readonly
-                              >
-                        <mat-icon matSuffix>pending</mat-icon>
-                        
-                    </mat-form-field>
-                </mat-toolbar>
-  
-                <mat-card-actions class="button-ship">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Order Id</mat-label>
+                            <input matInput class="form-control" id="orderId"
+                                   [(ngModel)]="delivered.orderId" name="orderId" readonly>
+                            <mat-icon matSuffix>check_circle</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Customer Id</mat-label>
+                            <input matInput class="form-control" id="customerId"
+                                   [(ngModel)]="delivered.customerId" name="customerId" readonly>
+                            <mat-icon matSuffix>check_circle</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Created Date</mat-label>
+                            <input matInput class="form-control" id="eventTimeStamp"
+                                   [(ngModel)]="delivered.eventTimeStamp" name="eventTimeStamp" readonly>
+                            <mat-icon matSuffix>date</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Status</mat-label>
+                            <input matInput class="form-control" id="status"
+                                   [(ngModel)]="delivered.status" name="status" readonly>
+                            <mat-icon matSuffix>pending</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
                     <button mat-flat-button color="primary" (click)="newDeliver()" [disabled]="delivered.status === 'DELIVERED'">
                         <mat-icon matSuffix>balance</mat-icon>
                         Deliver Order
                     </button>
-                </mat-card-actions>
+                </div>
             </form>
         </mat-card-content>
     </mat-card>
-  </div>
-  
-
+</div>

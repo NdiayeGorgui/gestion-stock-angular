@@ -1,7 +1,7 @@
 <div class="container">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Order Event List</mat-card-title>
+            <mat-card-title>Order Events List</mat-card-title>
         </mat-card-header>
         <mat-divider></mat-divider>
         
@@ -11,7 +11,7 @@
               <mat-label>
                 <mat-icon matSuffix>search</mat-icon>
                 search</mat-label>
-              <input matInput (change)="filterOrderEvents($event)">
+              <input matInput (keyup)="filterOrderEvents($event)">
           </mat-form-field>
           
           </mat-toolbar>

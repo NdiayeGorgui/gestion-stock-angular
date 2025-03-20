@@ -31,5 +31,10 @@ button {
     width: 100%;
     max-width: 300px; /* Ajuste la taille du bouton */
 }
-
+mat-card-header {
+    margin-bottom: 20px; /* Ajoute un espace sous le titre */
+}
+mat-divider {
+    margin-bottom: 20px;
+  }
 

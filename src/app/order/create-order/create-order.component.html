@@ -1,168 +1,152 @@
-<div class="container">
+<div class="container-fluid create-order">
   <mat-card>
-      <mat-card-header>
-        <mat-toolbar class="form-group toolbar-container">
-          <!-- Bouton Add Order -->
-          <div class="order-container">
-            <button mat-flat-button color="primary" class="button-order" (click)="newOrder()" [disabled]="orderForm.invalid">
-              <mat-icon matSuffix>production_quantity_limits</mat-icon>
-              Add order
-            </button>
-          </div>
+    <mat-card-header>
+      <div class="row g-3 w-100 align-items-center">
         
-          <!-- Label Total Cart -->
-          <div class="total-cart-container">
-            <span class="total-cart-label">
-              Total Cart: <strong>{{ totalCartAmount | number:'1.2-2' }} $</strong>
-            </span>
-          </div>
-        
-          <!-- Bouton Cart -->
-          <div class="cart-container">
-            <button mat-flat-button color="primary" class="button-cart" (click)="goToPayment()" [disabled]="!isCardButtonEnabled">
-              <mat-icon matSuffix>shopping_cart</mat-icon>
-              <span *ngIf="cartCount > 0">({{ cartCount }})</span>
-            </button>
-          </div>
-        </mat-toolbar>
-        
-        
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <form #orderForm="ngForm">
-          <mat-toolbar class="form-group">
+        <!-- Bouton "Add Order" à gauche -->
+        <div class="col-md-6 col-12 d-flex">
+          <button mat-flat-button color="primary" 
+                  class="btn btn-primary w-100 button-order"
+                  (click)="newOrder()" [disabled]="orderForm.invalid">
+            <mat-icon matSuffix>production_quantity_limits</mat-icon> Add Order
+          </button>
+        </div>
+    
+        <!-- Total Cart au centre gauche -->
+        <div class="col-md-4 col-12 d-flex justify-content-center">
+          <span class="total-cart-label">
+            Total Cart: <strong>{{ totalCartAmount | number:'1.2-2' }} $</strong>
+          </span>
+        </div>
+    
+        <!-- Bouton Panier complètement à droite -->
+       <!-- 🟢 Bouton Panier complètement à droite avec une largeur réduite -->
+<div class="col-md-2 col-12 d-flex justify-content-end">
+  <button mat-flat-button color="primary" class="btn btn-success button-cart w-50"
+          (click)="goToPayment()" [disabled]="!isCardButtonEnabled">
+    <mat-icon matSuffix>shopping_cart</mat-icon> 
+    <span *ngIf="cartCount > 0">({{ cartCount }})</span>
+  </button>
+</div>
 
-            <mat-form-field  class="create-order">
-              <mat-label>Select Customer </mat-label>
-              <mat-select [(ngModel)]="orderEvent.customer.customerIdEvent" id="customerIdEvent" name="customerIdEvent" required #customerCtrl="ngModel" class="form-control" (selectionChange)="onCustomerChange($event.value)">
+    
+      </div>
+    </mat-card-header>
+    
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <form #orderForm="ngForm">
+
+        <!-- 🟢 Ligne 1 : Informations Client -->
+        <div class="row g-3">
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
+              <mat-label>Select Customer</mat-label>
+              <mat-select [(ngModel)]="orderEvent.customer.customerIdEvent" 
+                          name="customerIdEvent" required
+                          (selectionChange)="onCustomerChange($event.value)">
                 @for (customer of customers; track customer) {
                   <mat-option [value]="customer.customerIdEvent">{{customer.name}}</mat-option>
                 }
               </mat-select>
-              <mat-icon matSuffix>person</mat-icon>
-              <mat-error *ngIf="customerCtrl.invalid && customerCtrl.touched">
-                Customer is required.
-              </mat-error>
             </mat-form-field>
+          </div>
 
-            <mat-form-field  class="create-order">
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
               <mat-label>Customer Address</mat-label>
-              <mat-icon matSuffix>home</mat-icon>
-              <input matInput  [value]="selectedCustomer?.address" readonly 
-               >
+              <input matInput [value]="selectedCustomer?.address" readonly>
             </mat-form-field>
-            <mat-form-field class="create-order">
-              <mat-label>Customer email</mat-label>
-              <input
-                matInput  class="form-control" id="email" 
-                 [value]="selectedCustomer?.email" readonly 
-                placeholder="gorgui@example.com"/>
-             
-              <mat-icon matSuffix>email</mat-icon>
-            </mat-form-field>             
-            <mat-form-field class="create-order">
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
+              <mat-label>Customer Email</mat-label>
+              <input matInput [value]="selectedCustomer?.email" readonly>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
               <mat-label>Customer Phone</mat-label>
-              <input matInput  class="form-control" id="customerPhone" [value]="selectedCustomer?.phone" readonly 
-             name="customerPhone">
-              <mat-icon matSuffix>phone</mat-icon>                
+              <input matInput [value]="selectedCustomer?.phone" readonly>
             </mat-form-field>
- 
-          </mat-toolbar>
-         
+          </div>
+        </div>
 
-          <mat-toolbar class="form-group">
-
-            <mat-form-field  class="create-order">
-              <mat-label>Select Product </mat-label>
-              <mat-select [(ngModel)]="orderEvent.product.productIdEvent" name="productIdEvent" required  #productCtrl="ngModel" class="form-control" (selectionChange)="onProductChange($event.value)">
+        <!-- 🟢 Ligne 2 : Informations Produit -->
+        <div class="row g-3">
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
+              <mat-label>Select Product</mat-label>
+              <mat-select [(ngModel)]="orderEvent.product.productIdEvent" 
+                          name="productIdEvent" required
+                          (selectionChange)="onProductChange($event.value)">
                 @for (product of products; track product) {
                   <mat-option [value]="product.productIdEvent">{{product.name}}</mat-option>
                 }
               </mat-select>
-               <mat-icon matSuffix>inventory</mat-icon>
-               <mat-error *ngIf="productCtrl.invalid && productCtrl.touched">
-                Product is required.
-              </mat-error>
             </mat-form-field>
+          </div>
 
-            <mat-form-field  class="create-order">
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
               <mat-label>Product Category</mat-label>
-              <mat-icon matSuffix>category</mat-icon>
-              <input matInput  id="productCategory" [value]="selectedProduct?.category" readonly>
-               
+              <input matInput [value]="selectedProduct?.category" readonly>
             </mat-form-field>
-           
-            <mat-form-field class="create-order">
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
               <mat-label>Remaining Qty</mat-label>
-              <input matInput  class="form-control" id="productQty" [value]="selectedProduct?.qty" readonly
-              name="productQty">
-              <mat-icon matSuffix>production_quantity_limits</mat-icon>
-            </mat-form-field> 
+              <input matInput [value]="selectedProduct?.qty" readonly>
+            </mat-form-field>
+          </div>
 
-            <mat-form-field  class="create-order">
-              <mat-label>Product price</mat-label>
-              <mat-icon matSuffix>paid</mat-icon>
-              <input matInput  class="form-control" id="productPrice" [value]="selectedProduct?.price" readonly 
-              name="productPrice">
-            </mat-form-field>    
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
+              <mat-label>Product Price</mat-label>
+              <input matInput [value]="selectedProduct?.price" readonly>
+            </mat-form-field>
+          </div>
+        </div>
 
-            
+        <!-- 🟢 Ligne 3 : Product Item, Discount, Tax, Amount -->
+        <div class="row g-3">
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
+              <mat-label>Product Item Qty</mat-label>
+              <input matInput type="number" [(ngModel)]="orderEvent.productItem.productQty"
+                     name="productItemQty" required min="1"
+                     (input)="onQuantityChange()">
+            </mat-form-field>
+          </div>
 
-          </mat-toolbar>
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
+              <mat-label>Discount</mat-label>
+              <input matInput [value]="discount | number:'1.2-2'" readonly>
+            </mat-form-field>
+          </div>
 
-          
-         
-         
-  <mat-toolbar>
-    <mat-form-field class="create-order">
-      <mat-label>Product Item qty</mat-label>
-      <mat-icon matSuffix>balance</mat-icon>
-      <input matInput type="number" class="form-control" 
-             id="productItemQty" 
-             [(ngModel)]="orderEvent.productItem.productQty" 
-             name="productItemQty"
-             required min="1" 
-             #qtyCtrl="ngModel"
-             (input)="onQuantityChange()">
-      <mat-error *ngIf="qtyCtrl.invalid && qtyCtrl.touched">
-        <span *ngIf="qtyCtrl.errors?.['required']">Quantity is required.</span>
-        <span *ngIf="qtyCtrl.errors?.['min']">Quantity must be at least 1.</span>
-      </mat-error>
-    </mat-form-field>
-    
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
+              <mat-label>Tax</mat-label>
+              <input matInput [value]="tax | number:'1.2-2'" readonly>
+            </mat-form-field>
+          </div>
 
-    <mat-form-field class="create-order">
-      <mat-label>Discount</mat-label>
-      <mat-icon matSuffix>paid</mat-icon>
-      <input matInput class="form-control" 
-             id="discount" 
-             [value]="discount | number:'1.2-2'" 
-             readonly>
-    </mat-form-field>    
-    
-    <mat-form-field class="create-order">
-      <mat-label>Tax</mat-label>
-      <mat-icon matSuffix>paid</mat-icon>
-      <input matInput class="form-control" 
-             id="tax" 
-             [value]="tax | number:'1.2-2'" 
-             readonly>
-    </mat-form-field>    
-    
-    <mat-form-field class="create-order">
-      <mat-label>Amount</mat-label>
-      <mat-icon matSuffix>paid</mat-icon>
-      <input matInput class="form-control" 
-             id="amount" 
-             [value]="amount | number:'1.2-2'" 
-             readonly>
-    </mat-form-field>
-    
-      </mat-toolbar>
-    </form>
-      </mat-card-content>
+          <div class="col-md-3">
+            <mat-form-field class="w-100">
+              <mat-label>Amount</mat-label>
+              <input matInput [value]="amount | number:'1.2-2'" readonly>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </form>
+    </mat-card-content>
   </mat-card>
-  
-
-</div>   
+</div>

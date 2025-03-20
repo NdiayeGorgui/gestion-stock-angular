@@ -22,6 +22,12 @@ mat-toolbar {
     margin-top: 40px; /* Espacement amélioré entre le formulaire et le bouton */
     text-align: center;
 }
+mat-card-header {
+    margin-bottom: 20px; /* Ajoute un espace sous le titre */
+}
+mat-divider {
+    margin-bottom: 20px;
+  }
 
 mat-form-field {
     width: 100%; /* Assure que les champs s'adaptent bien */

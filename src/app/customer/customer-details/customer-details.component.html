@@ -1,56 +1,67 @@
-<div class="container">
+<div class="container mt-4">
   <mat-card>
     <mat-card-header>
       <mat-card-title>Customer details</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-      <mat-toolbar>
 
-        <mat-form-field class="create-customer">
-          <mat-label>Customer IdEvent</mat-label>
-          <mat-icon matSuffix>remember_me</mat-icon>
-          <input matInput class="form-control" id="customerIdEvent" readonly [(ngModel)]="customer.customerIdEvent" 
-            name="customerIdEvent">
-        </mat-form-field>
+      <!-- Ligne 1 : ID Event & Status -->
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <mat-form-field class="w-100">
+            <mat-label>Customer IdEvent</mat-label>
+            <mat-icon matSuffix>remember_me</mat-icon>
+            <input matInput class="form-control" id="customerIdEvent" readonly [(ngModel)]="customer.customerIdEvent" name="customerIdEvent">
+          </mat-form-field>
+        </div>
 
-        <mat-form-field class="create-customer">
-          <mat-label>Customer status</mat-label>
-          <input matInput class="form-control" id="status" readonly [(ngModel)]="customer.status" name="status" >
-          <mat-icon matSuffix>check_circle</mat-icon>
-        </mat-form-field>
-      </mat-toolbar>
-      <mat-toolbar>
-        <mat-form-field class="create-customer">
-          <mat-label>Customer Name</mat-label>
-          <input matInput class="form-control" id="name" [(ngModel)]="customer.name" name="name" readonly>
-          <mat-icon matSuffix>person</mat-icon>
-        </mat-form-field>
-        <mat-form-field class="create-customer">
-          <mat-label>Customer Address</mat-label>
-          <mat-icon matSuffix>home</mat-icon>
-          <input matInput class="form-control" id="address" readonly [(ngModel)]="customer.address" name="address" >
-        </mat-form-field>
-      </mat-toolbar>
-      <mat-toolbar>
-        <mat-form-field class="create-customer">
-          <mat-label>Customer Phone</mat-label>
-          <input matInput class="form-control" id="phone" readonly [(ngModel)]="customer.phone" name="phone" >
-          <mat-icon matSuffix>phone</mat-icon>
+        <div class="col-sm-12 col-md-6">
+          <mat-form-field class="w-100">
+            <mat-label>Customer status</mat-label>
+            <input matInput class="form-control" id="status" readonly [(ngModel)]="customer.status" name="status">
+            <mat-icon matSuffix>check_circle</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
 
-        </mat-form-field>
+      <!-- Ligne 2 : Name & Address -->
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <mat-form-field class="w-100">
+            <mat-label>Customer Name</mat-label>
+            <input matInput class="form-control" id="name" [(ngModel)]="customer.name" name="name" readonly>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+        </div>
 
+        <div class="col-sm-12 col-md-6">
+          <mat-form-field class="w-100">
+            <mat-label>Customer Address</mat-label>
+            <mat-icon matSuffix>home</mat-icon>
+            <input matInput class="form-control" id="address" readonly [(ngModel)]="customer.address" name="address">
+          </mat-form-field>
+        </div>
+      </div>
 
-        <mat-form-field class="create-customer">
-          <mat-label>Customer email</mat-label>
-          <input matInput class="form-control" id="email" readonly [(ngModel)]="customer.email" name="email" />
+      <!-- Ligne 3 : Phone & Email -->
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <mat-form-field class="w-100">
+            <mat-label>Customer Phone</mat-label>
+            <input matInput class="form-control" id="phone" readonly [(ngModel)]="customer.phone" name="phone">
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
+        </div>
 
-          <mat-icon matSuffix>email</mat-icon>
-        </mat-form-field>
-
-
-      </mat-toolbar>
-
+        <div class="col-sm-12 col-md-6">
+          <mat-form-field class="w-100">
+            <mat-label>Customer Email</mat-label>
+            <input matInput class="form-control" id="email" readonly [(ngModel)]="customer.email" name="email">
+            <mat-icon matSuffix>email</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
 
     </mat-card-content>
   </mat-card>

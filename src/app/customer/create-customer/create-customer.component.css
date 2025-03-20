@@ -34,3 +34,6 @@ button {
 mat-card-header {
     margin-bottom: 20px; /* Ajoute un espace sous le titre */
 }
+mat-divider {
+    margin-bottom: 20px;
+  }

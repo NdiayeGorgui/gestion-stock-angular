@@ -1,85 +1,97 @@
-<div class="container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Product details</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
+<div class="container mt-4">
+  <mat-card>
+      <mat-card-header>
+          <mat-card-title>Product Details</mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+          <div class="row">
+              <!-- Product ID -->
+              <div class="col-sm-12 col-md-6">
+                  <mat-form-field class="w-100">
+                      <mat-label>Product ID</mat-label>
+                      <input matInput class="form-control" id="id" readonly
+                             [(ngModel)]="product.id" name="id">
+                      <mat-icon matSuffix>check_circle</mat-icon>
+                  </mat-form-field>
+              </div>
 
-            <mat-toolbar>
-                <mat-form-field class="create-product">
-                    <mat-label>Product id</mat-label>
-                    <input matInput  class="form-control" id="id" readonly
-                    [(ngModel)]="product.id" name="id">
-                    <mat-icon matSuffix>check_circle</mat-icon>
+              <!-- Product IdEvent -->
+              <div class="col-sm-12 col-md-6">
+                  <mat-form-field class="w-100">
+                      <mat-label>Product IdEvent</mat-label>
+                      <input matInput class="form-control" id="productIdEvent" readonly
+                             [(ngModel)]="product.productIdEvent" name="productIdEvent">
+                      <mat-icon matSuffix>check_circle</mat-icon>
                   </mat-form-field>
+              </div>
+          </div>
 
-                  <mat-form-field class="create-product">
-                    <mat-label>Product IdEvent</mat-label>
-                    <input matInput  class="form-control" id="productIdEvent" readonly
-                    [(ngModel)]="product.productIdEvent" name="productIdEvent">
-                    <mat-icon matSuffix>check_circle</mat-icon>
-                    
+          <div class="row">
+              <!-- Product Name -->
+              <div class="col-sm-12 col-md-6">
+                  <mat-form-field class="w-100">
+                      <mat-label>Product Name</mat-label>
+                      <input matInput class="form-control" id="name" readonly
+                             [(ngModel)]="product.name" name="name">
+                      <mat-icon matSuffix>inventory</mat-icon>
                   </mat-form-field>
-                 
-            </mat-toolbar>
-            <mat-toolbar>
-                <mat-form-field class="create-product">
-                    <mat-label>Product Name</mat-label>
-                    <input matInput  class="form-control" id="name" readonly
-                    [(ngModel)]="product.name" name="name">
-                    <mat-icon matSuffix>inventory</mat-icon>
-                  </mat-form-field>
+              </div>
 
-                  <mat-form-field class="create-product">
-                    <mat-label>Product Category</mat-label>
-                    <input matInput  class="form-control" id="category" readonly
-                    [(ngModel)]="product.category" name="category">
-                    <mat-icon matSuffix>category</mat-icon>
-                    
+              <!-- Product Category -->
+              <div class="col-sm-12 col-md-6">
+                  <mat-form-field class="w-100">
+                      <mat-label>Product Category</mat-label>
+                      <input matInput class="form-control" id="category" readonly
+                             [(ngModel)]="product.category" name="category">
+                      <mat-icon matSuffix>category</mat-icon>
                   </mat-form-field>
-                 
-            </mat-toolbar>
-            <mat-toolbar>
-                <mat-form-field class="create-product">
-                    <mat-label>Product Price</mat-label>
-                    <input matInput  class="form-control" id="price" readonly
-                    [(ngModel)]="product.price" name="price">
-                    <mat-icon matSuffix>paid</mat-icon>
-                    
-                  </mat-form-field>
-                 
+              </div>
+          </div>
 
-                  <mat-form-field  class="create-product">
-                    <mat-label>Product Quantity</mat-label>
-                    <mat-icon matSuffix>balance</mat-icon>
-                    <input matInput  class="form-control" id="qty" readonly
-                    [(ngModel)]="product.qty" name="qty">
+          <div class="row">
+              <!-- Product Price -->
+              <div class="col-sm-12 col-md-6">
+                  <mat-form-field class="w-100">
+                      <mat-label>Product Price</mat-label>
+                      <input matInput class="form-control" id="price" readonly
+                             [(ngModel)]="product.price" name="price">
+                      <mat-icon matSuffix>paid</mat-icon>
                   </mat-form-field>
-                  
-            </mat-toolbar>
+              </div>
 
-            <mat-toolbar>
-                <mat-form-field class="create-product">
-                    <mat-label>Quantity status</mat-label>
-                    <input matInput  class="form-control" id="qtyStatus" readonly
-                    [(ngModel)]="product.qtyStatus" name="qtyStatus">
-                    <mat-icon matSuffix>event_available</mat-icon>
-                    
+              <!-- Product Quantity -->
+              <div class="col-sm-12 col-md-6">
+                  <mat-form-field class="w-100">
+                      <mat-label>Product Quantity</mat-label>
+                      <input matInput class="form-control" id="qty" readonly
+                             [(ngModel)]="product.qty" name="qty">
+                      <mat-icon matSuffix>balance</mat-icon>
                   </mat-form-field>
-                 
+              </div>
+          </div>
 
-                  <mat-form-field  class="create-product">
-                    <mat-label>Product Status</mat-label>
-                    <mat-icon matSuffix>check_small</mat-icon>
-                    <input matInput  class="form-control" id="status" readonly
-                    [(ngModel)]="product.status" name="status">
+          <div class="row">
+              <!-- Quantity Status -->
+              <div class="col-sm-12 col-md-6">
+                  <mat-form-field class="w-100">
+                      <mat-label>Quantity Status</mat-label>
+                      <input matInput class="form-control" id="qtyStatus" readonly
+                             [(ngModel)]="product.qtyStatus" name="qtyStatus">
+                      <mat-icon matSuffix>event_available</mat-icon>
                   </mat-form-field>
-                  
-            </mat-toolbar>
+              </div>
 
-        </mat-card-content>
-    </mat-card>
+              <!-- Product Status -->
+              <div class="col-sm-12 col-md-6">
+                  <mat-form-field class="w-100">
+                      <mat-label>Product Status</mat-label>
+                      <input matInput class="form-control" id="status" readonly
+                             [(ngModel)]="product.status" name="status">
+                      <mat-icon matSuffix>check_small</mat-icon>
+                  </mat-form-field>
+              </div>
+          </div>
+      </mat-card-content>
+  </mat-card>
 </div>
-
-
