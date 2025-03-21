@@ -12,15 +12,20 @@
     margin-bottom: 20px;
     justify-content: center;
 }
-
-
-.search{
-   
+mat-divider {
     margin-top: 20px;
-}
+    margin-bottom: 20px;
+    
+  }
+
+
 
 .icon-button{
     
     display:inline-block;
     margin:5px;
+}
+.search{
+   
+    margin-top: 20px;
 }

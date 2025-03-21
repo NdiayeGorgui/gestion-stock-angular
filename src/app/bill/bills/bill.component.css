@@ -16,3 +16,8 @@
     display:inline-block;
     margin:5px;
 }
+mat-divider {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+  }
