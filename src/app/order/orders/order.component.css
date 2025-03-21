@@ -12,6 +12,10 @@
     margin-bottom: 20px;
     justify-content: center;
 }
+.red-button {
+    background-color: red !important;
+    color: white !important;
+  }
 
 .search{
    

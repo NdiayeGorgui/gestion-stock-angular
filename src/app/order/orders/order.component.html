@@ -75,7 +75,7 @@
                   <span *ngIf="shouldShowRowSpan(i)" [attr.rowspan]="getRowSpan(i)">
                     <button (click)="makePayment(element.order.customer.customerIdEvent)" mat-raised-button>
                       <mat-icon matSuffix>monetization_on</mat-icon>
-                      Payment
+                      
                     </button>
                   </span>
                 </td>
@@ -85,9 +85,9 @@
               <ng-container matColumnDef="cancel">
                 <th mat-header-cell *matHeaderCellDef> Cancel </th>
                 <td mat-cell *matCellDef="let element" >
-                    <button (click)="cancelOrder(element.orderIdEvent)"  mat-raised-button>
+                    <button (click)="cancelOrder(element.orderIdEvent)"  mat-raised-button >
                       <mat-icon matSuffix>cancel</mat-icon>
-                       Cancel
+                       
                       </button>
                 </td>
               </ng-container>
@@ -97,7 +97,7 @@
                 <td mat-cell *matCellDef="let element" >
                     <button (click)="getOrder(element.orderIdEvent)"  mat-raised-button>
                       <mat-icon matSuffix>details</mat-icon>
-                       Details
+                       
                       </button>
                 </td>
               </ng-container>

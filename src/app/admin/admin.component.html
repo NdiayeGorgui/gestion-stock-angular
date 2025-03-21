@@ -33,7 +33,7 @@
 <mat-drawer-container>
     <mat-drawer #drawer mode="side" position="start" opened="true">
         <mat-nav-list>
-            <mat-list-item>
+            <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
                 <button routerLink="/admin/dashboard" mat-button>
                     <mat-icon>dashboard</mat-icon>
                     Dashboard
@@ -58,15 +58,15 @@
                 </button>
             </mat-list-item>
 
-            <mat-list-item>
+            <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
                 <button routerLink="/admin/shipped-orders" mat-button>
-                    <mat-icon>shopping</mat-icon>
+                    <mat-icon>hail</mat-icon>
                     Ship Orders
                 </button>
             </mat-list-item>
-            <mat-list-item>
+            <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
                 <button routerLink="/admin/delivered-orders" mat-button>
-                    <mat-icon>shopping</mat-icon>
+                    <mat-icon>local_shipping</mat-icon>
                     Deliver Orders
                 </button>
             </mat-list-item>
@@ -84,7 +84,7 @@
             </mat-list-item>
                 <mat-list-item>
                     <button routerLink="/admin/order-events" mat-button>
-                        <mat-icon>paid</mat-icon>
+                        <mat-icon>low_priority</mat-icon>
                         View Order events
                     </button>
                 </mat-list-item>
