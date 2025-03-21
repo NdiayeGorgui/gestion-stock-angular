@@ -16,5 +16,6 @@ export const environment = {
     backendDeliveredQuerytHost:"http://localhost:8888/delivered-query-service/api/v1/delivers",
     backendShippingtHost:"http://localhost:8888/shipping-service/api/v1/ships",
     backendOrderEventtHost:"http://localhost:8888/order-service/api/v1/orders/events/all",
-    backendProductMostOrderedHost:"http://localhost:8888/order-service/api/v1/orders/most-ordered-products"
+    backendProductMostOrderedHost:"http://localhost:8888/order-service/api/v1/orders/most-ordered-products",
+    backendTop10CustomersMostOrderedHost:"http://localhost:8888/order-service/api/v1/orders/top10"
 };

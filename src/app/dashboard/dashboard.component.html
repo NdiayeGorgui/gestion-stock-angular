@@ -22,6 +22,24 @@
               [roundEdges]="true">
             </ngx-charts-bar-vertical>
           </div>
+
+          <div class="chart-container">
+            <h3>The best customers</h3>
+            <ngx-charts-bar-vertical
+              [view]="[800, 450]"
+              [results]="mostOrderedCustomers"
+              [scheme]="colorScheme"
+              [gradient]="true"
+              [xAxis]="true"
+              [yAxis]="true"
+              [legend]="true"
+              [showDataLabel]="true"
+              [barPadding]="20"
+              [animations]="true"
+              [roundEdges]="true">
+            </ngx-charts-bar-vertical>
+          </div>
+
           <div class="chart-container">
             <h3>Products with their remaining quantities</h3>
             <ngx-charts-bar-vertical

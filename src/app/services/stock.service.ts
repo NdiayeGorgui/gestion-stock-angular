@@ -16,6 +16,7 @@ import { Deliverd } from '../deliver/Delivered';
 import { Ship } from '../ship/Ship';
 import { OrderEventSourcing } from '../order/OrderEventSourcing';
 import { ProductStatDTO } from '../order/ProductStatDTO';
+import { CustomerDto } from '../order/customerDto';
 
 
 @Injectable({
@@ -184,6 +185,10 @@ export class StockService {
   }
   getMostOrderedProducts():Observable<ProductStatDTO[]>{
     return this.httpClient.get<(ProductStatDTO[])> (`${environment.backendProductMostOrderedHost}`) ;
+  }
+
+  getTop10CustomerMostOrdered():Observable<CustomerDto[]>{
+    return this.httpClient.get<(CustomerDto[])> (`${environment.backendTop10CustomersMostOrderedHost}`) ;
   }
   
 }

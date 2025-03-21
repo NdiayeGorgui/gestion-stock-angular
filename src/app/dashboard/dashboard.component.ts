@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit{
   public customers:any;
   public products:any;
   public mostOrderedProducts:any;
+  public mostOrderedCustomers:any;
 
  
   
@@ -27,7 +28,7 @@ export class DashboardComponent implements OnInit{
 
   ngOnInit(): void {
     this.getMostOrderedProducts();
-   // this.getCustomers();
+    this.getTop10CustomersMostOrdered();
     this.getProducts();
      
   }
@@ -73,6 +74,23 @@ export class DashboardComponent implements OnInit{
           this.mostOrderedProducts = data.map(item => ({
             name: item.name,
             value: item.totalQuantite // Changer totalQuantite en value
+          }));
+    
+          console.log(this.mostOrderedProducts); // Vérifier que les données sont correctes
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
+    }
+
+    public getTop10CustomersMostOrdered() {
+      this.stockService.getTop10CustomerMostOrdered().subscribe({
+        next: data => {
+          // Transformer les données pour respecter le format attendu par ngx-charts
+          this.mostOrderedCustomers = data.map(item => ({
+            name: item.name,
+            value: item.totalOrder // Changer totalOrder en value
           }));
     
           console.log(this.mostOrderedProducts); // Vérifier que les données sont correctes
