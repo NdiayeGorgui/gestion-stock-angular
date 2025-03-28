@@ -37,7 +37,10 @@
                       <mat-form-field class="w-100">
                           <mat-label>Tax</mat-label>
                           <input matInput class="form-control" id="tax" readonly
-                                 [(ngModel)]="amountDto.tax" name="tax">
+                     [ngModel]="amountDto.tax | number:'1.2-2'"
+                     (ngModelChange)="amountDto.tax = $event"
+                     name="tax">
+
                           <mat-icon matSuffix>paid</mat-icon>
                       </mat-form-field>
                   </div>
@@ -45,7 +48,8 @@
                       <mat-form-field class="w-100">
                           <mat-label>Discount</mat-label>
                           <input matInput class="form-control" id="discount" readonly
-                                 [(ngModel)]="amountDto.discount" name="discount">
+                                 [(ngModel)]="amountDto.discount" name="discount"
+                                 (ngModelChange)="amountDto.discount = $event">
                           <mat-icon matSuffix>paid</mat-icon>
                       </mat-form-field>
                   </div>
@@ -56,7 +60,10 @@
                       <mat-form-field class="w-100">
                           <mat-label>Amount</mat-label>
                           <input matInput class="form-control" id="amount" readonly
-                                 [(ngModel)]="amountDto.amount" name="amount">
+                     [ngModel]="amountDto.amount | number:'1.2-2'"
+                     (ngModelChange)="amountDto.amount = $event"
+                     name="amount">
+
                           <mat-icon matSuffix>paid</mat-icon>
                       </mat-form-field>
                   </div>
@@ -64,7 +71,10 @@
                       <mat-form-field class="w-100">
                           <mat-label>Total Amount</mat-label>
                           <input matInput class="form-control" id="totalAmount" readonly
-                                 [(ngModel)]="amountDto.totalAmount" name="totalAmount">
+                     [ngModel]="amountDto.totalAmount | number:'1.2-2'"
+                     (ngModelChange)="amountDto.totalAmount = $event"
+                     name="totalAmount">
+
                           <mat-icon matSuffix>paid</mat-icon>
                       </mat-form-field>
                   </div>
