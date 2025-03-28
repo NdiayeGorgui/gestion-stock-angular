@@ -109,6 +109,9 @@ export class StockService {
   getCreatedOrders(status:string):Observable<ProductItem[]>{
     return this.httpClient.get<(ProductItem[])> (`${environment.backendOrderStatusHost}/${status}`) ;
   }
+  getCreatedOrdersByCustomer(customerIdEvent:string,status:string):Observable<ProductItem[]>{
+    return this.httpClient.get<(ProductItem[])> (`${environment.backendOrderCreatedHost}/${customerIdEvent}/${status}`)
+  }
 
   cancelOrder(orderIdEvent:string):Observable<Object>{
     

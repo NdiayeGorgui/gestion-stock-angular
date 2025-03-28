@@ -33,6 +33,7 @@ import { ShippedOrdersComponent } from './ship/shipped-orders/shipped-orders.com
 import { DeliverOrderComponent } from './deliver/deliver-order/deliver-order.component';
 import { DeliveredOrdersComponent } from './deliver/delivered-orders/delivered-orders.component';
 import { OrderEventsComponent } from './order/order-events/order-events.component';
+import { OrderCreatedCompletedDetailsComponent } from './order/order-created-completed-details/order-created-completed-details.component';
 
 
 
@@ -56,7 +57,8 @@ const routes: Routes = [
     {path:"create-order",component:CreateOrderComponent},
     {path:"cancel-order",component:CancelOrderComponent},
     {path:"completed-order",component:CompletedOrderComponent},
-    {path:"order-details/:orderIdEvent",component:OrderDetailsComponent},
+    {path:"order-details/:customerIdEvent",component:OrderDetailsComponent},
+    {path:"order-created-completed-details/:orderIdEvent",component:OrderCreatedCompletedDetailsComponent},
     {path:"create-payment/:customerIdEvent",component:CreatePaymentComponent},
     {path:"dashboard",component:DashboardComponent,canActivate:[AuthorizationGuard],data :{roles:['ADMIN']}},
     {path:"bill",component:BillComponent},

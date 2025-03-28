@@ -75,7 +75,7 @@ export class CompletedOrderComponent implements OnInit{
     }
   
     getOrder(orderIdEvent:string){
-      this.router.navigate(['/admin/order-details',orderIdEvent]);
+      this.router.navigate(['/admin/order-created-completed-details',orderIdEvent]);
     }
   
     newOrder(){

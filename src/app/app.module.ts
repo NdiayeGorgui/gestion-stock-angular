@@ -56,6 +56,7 @@ import { OrderEventsComponent } from './order/order-events/order-events.componen
 import { ShipOrderComponent } from './ship/ship-order/ship-order.component';
 import { ShippedOrdersComponent } from './ship/shipped-orders/shipped-orders.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { OrderCreatedCompletedDetailsComponent } from './order/order-created-completed-details/order-created-completed-details.component';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     OrderEventsComponent,
     ShipOrderComponent,
     ShippedOrdersComponent,
-    OrderEventsComponent
+    OrderEventsComponent,
+    OrderCreatedCompletedDetailsComponent
   ],
   imports: [
     BrowserModule,

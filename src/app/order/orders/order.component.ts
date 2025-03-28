@@ -62,7 +62,7 @@ export class OrderComponent implements OnInit{
         }
       };
     
-      public displayedColumns=["customerName","productName","price","qty","amount","discount","status","payment","cancel","details"]
+      public displayedColumns=["customerName","productName","price","qty","payment","details","cancel"]
       
       @ViewChild(MatPaginator) paginator!:MatPaginator;
       @ViewChild(MatSort) sort!:MatSort;
@@ -93,9 +93,13 @@ export class OrderComponent implements OnInit{
     
   }
 
-  getOrder(orderIdEvent:string){
+  /*getOrder(orderIdEvent:string){
     this.router.navigate(['/admin/order-details',orderIdEvent]);
-  }
+  }*/
+
+    getOrder(customerIdEvent:string){
+      this.router.navigate(['/admin/order-details',customerIdEvent]);
+    }
 
   filterOrder(event:Event){
     let value=(event.target as HTMLInputElement).value;
