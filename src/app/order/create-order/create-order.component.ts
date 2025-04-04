@@ -127,11 +127,12 @@ export class CreateOrderComponent implements OnInit {
     
 // Fonction pour réinitialiser le formulaire
 resetOrderForm() {
-  this.selectedCustomerId = '';
-  this.selectedCustomer = null;
+ // this.selectedCustomerId = '';
+ // this.selectedCustomer = null;
+ this.orderEvent.product.productIdEvent = null;
   this.selectedProductId = '';
   this.selectedProduct = null;
-  this.orderEvent.productItem.productQty = 1;
+  this.orderEvent.productItem.productQty = 0;
   this.amount = 0;
   this.tax = 0;
   this.discount = 0;
