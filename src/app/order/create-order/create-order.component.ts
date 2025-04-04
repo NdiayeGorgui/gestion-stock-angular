@@ -63,6 +63,8 @@ export class CreateOrderComponent implements OnInit {
     }
   
     ngOnInit(): void {
+      
+      
       this.getCustomers();
       this.getProducts();
       this.getOrders();
@@ -83,42 +85,57 @@ export class CreateOrderComponent implements OnInit {
       }
     
       this.stockService.createOrder(this.orderEvent).subscribe({
-        
         next: (prod) => {
-          console.log(prod);
+          console.log("✅ Commande créée :", prod);
           alert('Order saved successfully!');
+    
           // ✅ Ajout du montant de la commande au total du panier
           this.totalCartAmount += this.amount; 
+          
+          // ✅ Mettre à jour la liste des commandes pour récupérer l'ID
+          this.getOrdersCreatedListByCustomer();
+    
+          // ✅ Navigation après succès
           this.router.navigate(['/admin/create-order']);
-           // ✅ Navigation après le succès de l'opération
-          
-           this.cartCount++; // Incrémente le compteur à chaque ajout d'une commande
-           this.isCardButtonEnabled = true; // Active le bouton "Card"
-           
-
-
-          // this.ngOnInit();
-          
     
-          // Réinitialiser le formulaire après ajout
-        /*  this.orderEvent = {
-            customer: { customerIdEvent: null },
-            product: { productIdEvent: null },
-            productItem: { productQty: null }
-           
-          };*/
+          // ✅ Mise à jour du compteur du panier
+          this.cartCount++; 
+          this.isCardButtonEnabled = true; 
     
-         
+          // ✅ Ajouter à `orders` avec `orderIdEvent`
+          this.orders.push({
+            orderIdEvent: (prod as any).orderIdEvent, // ✅ Forcer l'accès à la propriété
+            customer: this.selectedCustomer?.name,
+            product: this.selectedProduct?.name,
+            qty: this.orderEvent.productItem.productQty,
+            basePrice: this.selectedProduct?.price, // 🆕
+            price: this.amount,
+           
+            
+          });
+    
+          // ✅ Réinitialiser les champs
+          this.resetOrderForm();
         },
         error: (err) => {
-          console.log(err);
+          console.log("❌ Erreur :", err);
           alert('Error while saving order.');
         }
-      }); 
-      
+      });
     }
     
-
+    
+// Fonction pour réinitialiser le formulaire
+resetOrderForm() {
+  this.selectedCustomerId = '';
+  this.selectedCustomer = null;
+  this.selectedProductId = '';
+  this.selectedProduct = null;
+  this.orderEvent.productItem.productQty = 1;
+  this.amount = 0;
+  this.tax = 0;
+  this.discount = 0;
+}
   
     public getCustomers(){
       this.stockService.getCustomersOrderList().subscribe({
@@ -236,6 +253,114 @@ export class CreateOrderComponent implements OnInit {
                 this.amount = 0;
               }
             }
+
+            recalculateTotalCartAmount() {
+              console.log("🔄 Recalcul du total...");
+              this.totalCartAmount = 0;
             
+              this.orders.forEach((order: { basePrice: any; qty: any; }) => {
+                const basePrice = Number(order.basePrice);
+                const qty = Number(order.qty);
+            
+                if (isNaN(basePrice) || isNaN(qty)) {
+                  console.warn("❗ Données manquantes pour le calcul :", order);
+                  return; // ignore cet ordre si données incorrectes
+                }
+            
+                const total = basePrice * qty;
+                const tax = total * 0.2;
+            
+                let discount = 0;
+                if (total >= 200) {
+                  discount = 0.01 * total;
+                } else if (total >= 100) {
+                  discount = 0.005 * total;
+                }
+            
+                const finalAmount = total + tax - discount;
+                this.totalCartAmount += finalAmount;
+              });
+            
+              console.log("✅ Total recalculé avec taxes/remises :", this.totalCartAmount);
+            }
+            
+
+            recalculateTotal() {
+              console.log("🔄 Recalcul du total...");
+              this.totalCartAmount = 0;
+            
+              this.orders.forEach((order: { price: number; }) => {
+                console.log("➕ Ajout du montant (TTC - Remise) :", order.price);
+                this.totalCartAmount += order.price;
+              });
+            
+              console.log("✅ Total recalculé :", this.totalCartAmount);
+            }
+            
+            
+            
+
+            removeOrder(index: number) {
+              const orderToDelete = this.orders[index];
+            
+              if (!orderToDelete || !orderToDelete.orderIdEvent) {
+                console.warn("❗ Order introuvable ou ID manquant");
+                return;
+              }
+            
+              const orderIdEvent = orderToDelete.orderIdEvent;
+              console.log("🔍 Tentative d'annulation de :", orderToDelete);
+            
+              this.stockService.cancelOrder(orderIdEvent).subscribe({
+                next: (data) => {
+                  console.log("✅ Commande annulée :", data);
+            
+                  const orderIndex = this.orders.findIndex((o: { orderIdEvent: any; }) => o.orderIdEvent === orderIdEvent);
+                  if (orderIndex > -1) {
+                    console.log("🧹 Suppression de l'ordre à l'index :", orderIndex);
+                    this.orders.splice(orderIndex, 1);
+            
+                    // ✅ Recalcul total propre
+                    this.recalculateTotalCartAmount();
+            
+                    // ✅ Mise à jour visuelle
+                    this.cartCount = this.orders.length;
+                    this.isCardButtonEnabled = this.cartCount > 0;
+                    //this.recalculateTotal(); 
+            
+                    // Log d’état après suppression
+                    console.log("🛒 Panier après suppression :", this.orders);
+                    console.log("💰 Nouveau total :", this.totalCartAmount);
+                  }
+                },
+                error: (err) => {
+                  console.error("❌ Erreur lors de l'annulation :", err);
+                  alert("Erreur lors de l'annulation de la commande.");
+                }
+              });
+            }
+            
+          
+          getOrdersCreatedListByCustomer() {
+            this.stockService.getCreatedOrdersByCustomer(this.orderEvent.customer.customerIdEvent, this.status).subscribe({
+              next: data => {
+                console.log("🔍 Commandes récupérées :", data);
+            
+                this.orders = data.map((orderItem: any) => ({
+                  orderIdEvent: orderItem.orderIdEvent,
+                  customer: orderItem.order.customer.name, // Tu peux récupérer le nom s’il est là
+                  product: orderItem.product.name,
+                  qty: orderItem.quantity,
+                  price: orderItem.price,
+                  basePrice: orderItem.product.price, // ✅ pour le recalcul taxes/remises
+                }));
+              },
+              error: err => {
+                console.log(err);
+              }
+            });
+            
+          }
+          
             
 }

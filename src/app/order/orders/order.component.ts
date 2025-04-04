@@ -49,7 +49,6 @@ export class OrderComponent implements OnInit{
   order:OrderEvent=new OrderEvent();
   status='CREATED';
 
-
    public orders:any;
       public dataSource:any;
       //customerIdEvent!:string;
@@ -62,7 +61,7 @@ export class OrderComponent implements OnInit{
         }
       };
     
-      public displayedColumns=["customerName","productName","price","qty","payment","details","cancel"]
+      public displayedColumns=["customerName","productName","price","qty","payment","details"]
       
       @ViewChild(MatPaginator) paginator!:MatPaginator;
       @ViewChild(MatSort) sort!:MatSort;
@@ -110,7 +109,7 @@ export class OrderComponent implements OnInit{
     this.router.navigate(['/admin/create-payment',customerIdEvent]);
   }
 
-  cancelOrder(orderIdEvent:string){
+ /* cancelOrder(orderIdEvent:string){
    // this.router.navigate(['/admin/cancel-order',customerIdEvent]);
   
     let conf=confirm("Are you sure ?")
@@ -127,7 +126,7 @@ export class OrderComponent implements OnInit{
        }
        }); 
   }
-  }
+  }*/
 
   newOrder(){
 

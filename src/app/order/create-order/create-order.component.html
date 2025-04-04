@@ -149,4 +149,36 @@
       </form>
     </mat-card-content>
   </mat-card>
+
+  <mat-card class="mt-4">
+    <mat-card-title>Customer Orders</mat-card-title>
+    <mat-divider></mat-divider>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Order ID</th> <!-- ✅ Ajout de l'ID de la commande -->
+          <th>Remove Order</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders; let i = index">
+          <td>{{ order.customer }}</td>
+          <td>{{ order.product }}</td>
+          <td>{{ order.qty }}</td>
+          <td>{{ order.price | number:'1.2-2' }} $</td>
+          <td>{{ order.orderIdEvent }}</td> <!-- ✅ Affichage de l'ID -->
+          <td>
+            <button mat-icon-button color="warn" (click)="removeOrder(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card>
+  
 </div>
