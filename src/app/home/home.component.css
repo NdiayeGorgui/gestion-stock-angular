@@ -7,3 +7,92 @@ mat-divider {
     margin-bottom: 20px;
     
   }
+
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .welcome-card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+  }
+  
+  .welcome-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    
+  }
+  
+  .category-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .category-card:hover {
+    transform: scale(1.05);
+  }
+  
+  mat-card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  mat-card-content p {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+  
+  ul {
+    padding-left: 20px !important; /* Ajuste l'indentation */
+    margin-left: 0 !important;
+    text-align: left !important; /* Force l'alignement à gauche */
+  }
+  
+  li {
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
+  
+  .custom-grid {
+    row-gap: 5px !important; /* Diminue l'espacement entre les lignes */
+  }
+
+  .category-card ul {
+    padding-left: 20px;
+  }
+  
+  .category-card ul li {
+    text-align: left;
+    margin-bottom: 6px;
+  }
+
+  .welcome-title {
+    display: block;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #007bff; /* Bootstrap Primary */
+    margin-bottom: 10px;
+  }
+  
+  .card-body ul {
+    padding-left: 1.2rem;
+  }
+
+  .card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  
