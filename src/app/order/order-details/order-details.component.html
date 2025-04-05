@@ -12,7 +12,7 @@
           <li class="list-group-item"><b>Customer Address :</b> {{customer.address}}</li>
           <li class="list-group-item"><b>Customer Email :</b> {{customer.email}}</li>
           <li class="list-group-item"></li>
-          <li class="list-group-item"><b>Total Tax :</b> {{ amountDto.tax| number:'1.2-2' }} $</li>
+          <li class="list-group-item"><b>Total Tax :</b> {{ amountDto.tax| number:'1.2-2' }} </li>
         </ul>
       </div>
      
@@ -85,8 +85,8 @@
             <div>
               <label><b>Total Amount</b></label>
               <input matInput class="form-control" id="totalAmount" readonly
-                     [ngModel]="amountDto.totalAmount | number:'1.2-2'"
-                     (ngModelChange)="amountDto.totalAmount = $event"
+                     [ngModel]="amountDto.totalAmount | number:'1.2-2'" 
+                     (ngModelChange)="amountDto.totalAmount = $event" 
                      name="totalAmount">
             </div>
             
