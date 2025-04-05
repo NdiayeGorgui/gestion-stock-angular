@@ -29,7 +29,7 @@ export class OrderDetailsComponent implements OnInit{
   }
 };
 
-public displayedColumns=["productIdEvent","productName","category","price","qty","tax","discount","amount","status"]
+public displayedColumns=["productIdEvent","productName","category","price","qty","discount","amount","status"]
 
    //order:OrderEvent=new OrderEvent();
    orderEvent:any;
