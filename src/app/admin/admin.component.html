@@ -19,9 +19,9 @@
         Orders List
     </button>
     <mat-menu #importMenu>
-        <button  mat-menu-item routerLink="/admin/order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Created Orders List</button>
-        <button  mat-menu-item routerLink="/admin/completed-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Completed Orders List</button>
-        <button  mat-menu-item routerLink="/admin/cancel-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Canceled Orders List</button>
+        <button  mat-menu-item routerLink="/admin/order"><mat-icon matSuffix>format_list_bulleted</mat-icon>📋 Created Orders List</button>
+        <button  mat-menu-item routerLink="/admin/completed-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>✅ Completed Orders List</button>
+        <button  mat-menu-item routerLink="/admin/cancel-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>❌ Canceled Orders List</button>
     </mat-menu>
         <button mat-button *ngIf="authService.authenticated==true">
             <mat-icon matSuffix>person</mat-icon>
