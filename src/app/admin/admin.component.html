@@ -1,5 +1,6 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button (click)="drawer.toggle()">
+<mat-toolbar color="primary" class="hide-on-mobile">
+
+    <button mat-icon-button (click)="toggleDrawer(drawer)">
         <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
@@ -20,7 +21,7 @@
     <mat-menu #importMenu>
         <button  mat-menu-item routerLink="/admin/order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Created Orders List</button>
         <button  mat-menu-item routerLink="/admin/completed-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Completed Orders List</button>
-        <button  mat-menu-item routerLink="/admin/cancel-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Cancelled Orders List</button>
+        <button  mat-menu-item routerLink="/admin/cancel-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>Canceled Orders List</button>
     </mat-menu>
         <button mat-button *ngIf="authService.authenticated==true">
             <mat-icon matSuffix>person</mat-icon>
@@ -31,7 +32,7 @@
     </button>
 </mat-toolbar>
 <mat-drawer-container>
-    <mat-drawer #drawer mode="side" position="start" opened="true">
+    <mat-drawer #drawer [mode]="drawerMode" [opened]="drawerOpened">
         <mat-nav-list>
             <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
                 <button routerLink="/admin/dashboard" mat-button>
@@ -107,7 +108,7 @@
     bottom: 0;
     width: 100%;">
       © 2025 Copyright:
-      <a class="text-dark" href="https:/gorgui.com/">Gorgui Solution Inc</a>
+      <a class="text-dark" href="https:/trocady.com/">Trocady Solution Inc</a>
     </div>
     <!-- Copyright -->
   </footer>

@@ -1,15 +1,9 @@
-.spacer{
+.spacer {
     flex: auto;
 }
 
-mat-toolbar{
+mat-toolbar {
     background-color: rgb(103, 103, 203);
-    
-}
-
-mat-card-footero{
-    background-color: rgb(103, 103, 203);
-    
 }
 
 mat-card-footer {
@@ -21,3 +15,34 @@ mat-card-footer {
     bottom: 0;
     width: 100%;
 }
+
+/* Centrage du titre */
+.welcome-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Hover sur les cartes */
+.card:hover {
+    transform: scale(1.03);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Taille uniforme des cartes */
+.card {
+    height: 100%;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .welcome-title {
+        font-size: 1.4rem;
+    }
+}
+
+
+  
