@@ -68,6 +68,7 @@ export class CreateOrderComponent implements OnInit {
       this.getCustomers();
       this.getProducts();
       this.getOrders();
+
      
     }
 
@@ -92,11 +93,12 @@ export class CreateOrderComponent implements OnInit {
           // ✅ Ajout du montant de la commande au total du panier
           this.totalCartAmount += this.amount; 
           
-          // ✅ Mettre à jour la liste des commandes pour récupérer l'ID
-          this.getOrdersCreatedListByCustomer();
     
           // ✅ Navigation après succès
           this.router.navigate(['/admin/create-order']);
+
+          // ✅ Mettre à jour la liste des commandes pour récupérer l'ID
+          this.getOrdersCreatedListByCustomer();
     
           // ✅ Mise à jour du compteur du panier
           this.cartCount++; 
