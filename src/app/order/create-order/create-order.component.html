@@ -2,37 +2,36 @@
   <mat-card>
     <mat-card-header>
       <div class="row g-3 w-100 align-items-center">
-        
+
         <!-- Bouton "Add Order" à gauche -->
         <div class="col-md-6 col-12 d-flex">
-          <button mat-flat-button color="primary" 
-                  class="btn btn-primary w-100 button-order"
-                  (click)="newOrder()" [disabled]="orderForm.invalid">
+          <button mat-flat-button color="primary" class="btn btn-primary w-100 button-order" (click)="newOrder()"
+            [disabled]="orderForm.invalid">
             <mat-icon matSuffix>production_quantity_limits</mat-icon> Add Order
           </button>
         </div>
-    
+
         <!-- Total Cart au centre gauche -->
         <div class="col-md-4 col-12 d-flex justify-content-center">
           <span class="total-cart-label">
             Total Cart: <strong>{{ totalCartAmount | number:'1.2-2' }} $</strong>
           </span>
         </div>
-    
-        <!-- Bouton Panier complètement à droite -->
-       <!-- 🟢 Bouton Panier complètement à droite avec une largeur réduite -->
-<div class="col-md-2 col-12 d-flex justify-content-end">
-  <button mat-flat-button color="primary" class="btn btn-success button-cart w-50"
-          (click)="goToPayment()" [disabled]="!isCardButtonEnabled">
-    <mat-icon matSuffix>shopping_cart</mat-icon> 
-    <span *ngIf="cartCount > 0">({{ cartCount }})</span>
-  </button>
-</div>
 
-    
+        <!-- Bouton Panier complètement à droite -->
+        <!-- 🟢 Bouton Panier complètement à droite avec une largeur réduite -->
+        <div class="col-md-2 col-12 d-flex justify-content-end">
+          <button mat-flat-button color="primary" class="btn btn-success button-cart w-50" (click)="goToPayment()"
+            [disabled]="!isCardButtonEnabled">
+            <mat-icon matSuffix>shopping_cart</mat-icon>
+            <span *ngIf="cartCount > 0">({{ cartCount }})</span>
+          </button>
+        </div>
+
+
       </div>
     </mat-card-header>
-    
+
 
     <mat-divider></mat-divider>
 
@@ -44,11 +43,10 @@
           <div class="col-md-3">
             <mat-form-field class="w-100">
               <mat-label>Select Customer</mat-label>
-              <mat-select [(ngModel)]="orderEvent.customer.customerIdEvent" 
-                          name="customerIdEvent" required
-                          (selectionChange)="onCustomerChange($event.value)">
+              <mat-select [(ngModel)]="orderEvent.customer.customerIdEvent" name="customerIdEvent" required
+                (selectionChange)="onCustomerChange($event.value)">
                 @for (customer of customers; track customer) {
-                  <mat-option [value]="customer.customerIdEvent">{{customer.name}}</mat-option>
+                <mat-option [value]="customer.customerIdEvent">{{customer.name}}</mat-option>
                 }
               </mat-select>
             </mat-form-field>
@@ -81,11 +79,10 @@
           <div class="col-md-3">
             <mat-form-field class="w-100">
               <mat-label>Select Product</mat-label>
-              <mat-select [(ngModel)]="orderEvent.product.productIdEvent" 
-                          name="productIdEvent" required
-                          (selectionChange)="onProductChange($event.value)">
+              <mat-select [(ngModel)]="orderEvent.product.productIdEvent" name="productIdEvent" required
+                (selectionChange)="onProductChange($event.value)">
                 @for (product of products; track product) {
-                  <mat-option [value]="product.productIdEvent">{{product.name}}</mat-option>
+                <mat-option [value]="product.productIdEvent">{{product.name}}</mat-option>
                 }
               </mat-select>
             </mat-form-field>
@@ -118,9 +115,8 @@
           <div class="col-md-3">
             <mat-form-field class="w-100">
               <mat-label>Product Item Qty</mat-label>
-              <input matInput type="number" [(ngModel)]="orderEvent.productItem.productQty"
-                     name="productItemQty" required min="1"
-                     (input)="onQuantityChange()">
+              <input matInput type="number" [(ngModel)]="orderEvent.productItem.productQty" name="productItemQty"
+                required min="1" (input)="onQuantityChange()">
             </mat-form-field>
           </div>
 
@@ -150,7 +146,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="mt-4">
+  <mat-card class="mt-4" *ngIf="orders && orders.length > 0">
     <mat-card-title>Customer Orders</mat-card-title>
     <mat-divider></mat-divider>
     <table class="table">
@@ -166,12 +162,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let order of orders; let i = index">
-          <td>{{ order.customer }}</td>
-          <td>{{ order.product }}</td>
-          <td>{{ order.qty }}</td>
-          <td>{{ order.price | number:'1.2-2' }} $</td>
-          <td>{{ order.orderIdEvent }}</td> <!-- ✅ Affichage de l'ID -->
-          <td>
+
+          <td *ngIf="orders &&  order.customer != null">{{ order.customer }}</td>
+          <td *ngIf="orders &&  order.customer != null">{{ order.product }}</td>
+          <td *ngIf="orders &&  order.customer != null">{{ order.qty }}</td>
+          <td *ngIf="orders &&  order.customer != null">{{ order.price | number:'1.2-2' }} $</td>
+          <td *ngIf="orders &&  order.customer != null">{{ order.orderIdEvent }}</td> <!-- ✅ Affichage de l'ID -->
+          <td *ngIf="orders &&  order.customer != null">
             <button mat-icon-button color="warn" (click)="removeOrder(i)">
               <mat-icon>delete</mat-icon>
             </button>
@@ -180,5 +177,5 @@
       </tbody>
     </table>
   </mat-card>
-  
+
 </div>

@@ -1,93 +1,88 @@
 <div class="container mt-4">
-  <mat-card>
-      <mat-card-header>
-          <mat-card-title>New Payment</mat-card-title>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-          <form #paymentForm="ngForm">
-              <div class="row">
-                  <div class="col-md-6">
-                      <mat-form-field class="w-100">
-                          <mat-label>Payment mode</mat-label>
-                          <mat-icon matSuffix>attach_money</mat-icon>
-                          <mat-select [(ngModel)]="payment.paymentMode" name="mode" required 
-                                      #paymentCtrl="ngModel" (change)="modeChange(mode)">
-                              @for (mod of modes; track mod) {
-                                  <mat-option [value]="mod.name">{{mod.name}}</mat-option>
-                              }
-                          </mat-select>
-                          <mat-error *ngIf="paymentCtrl.invalid && paymentCtrl.touched">
-                              Payment mode is required.
-                          </mat-error>
-                      </mat-form-field>
-                  </div>
-                  <div class="col-md-6">
-                      <mat-form-field class="w-100">
-                          <mat-label>Customer Name</mat-label>
-                          <input matInput class="form-control" id="customerName" readonly
-                                 [(ngModel)]="customer.name" name="customerName">
-                          <mat-icon matSuffix>person</mat-icon>
-                      </mat-form-field>
-                  </div>
-              </div>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>New Payment</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <form #paymentForm="ngForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Payment mode</mat-label>
+                            <mat-icon matSuffix>attach_money</mat-icon>
+                            <mat-select [(ngModel)]="payment.paymentMode" name="mode" required #paymentCtrl="ngModel"
+                                (change)="modeChange(mode)">
+                                @for (mod of modes; track mod) {
+                                <mat-option [value]="mod.name">{{mod.name}}</mat-option>
+                                }
+                            </mat-select>
+                            <mat-error *ngIf="paymentCtrl.invalid && paymentCtrl.touched">
+                                Payment mode is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Customer Name</mat-label>
+                            <input matInput class="form-control" id="customerName" readonly [(ngModel)]="customer.name"
+                                name="customerName">
+                            <mat-icon matSuffix>person</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-              <div class="row">
-                  <div class="col-md-6">
-                      <mat-form-field class="w-100">
-                          <mat-label>Tax</mat-label>
-                          <input matInput class="form-control" id="tax" readonly
-                     [ngModel]="amountDto.tax | number:'1.2-2'"
-                     (ngModelChange)="amountDto.tax = $event"
-                     name="tax">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Tax</mat-label>
+                            <input matInput class="form-control" id="tax" readonly
+                                [ngModel]="amountDto.tax | number:'1.2-2'" (ngModelChange)="amountDto.tax = $event"
+                                name="tax">
 
-                          <mat-icon matSuffix>paid</mat-icon>
-                      </mat-form-field>
-                  </div>
-                  <div class="col-md-6">
-                      <mat-form-field class="w-100">
-                          <mat-label>Discount</mat-label>
-                          <input matInput class="form-control" id="discount" readonly
-                                 [(ngModel)]="amountDto.discount" name="discount"
-                                 (ngModelChange)="amountDto.discount = $event">
-                          <mat-icon matSuffix>paid</mat-icon>
-                      </mat-form-field>
-                  </div>
-              </div>
+                            <mat-icon matSuffix>paid</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Discount</mat-label>
+                            <input matInput class="form-control" id="discount" readonly [(ngModel)]="amountDto.discount"
+                                name="discount" (ngModelChange)="amountDto.discount = $event">
+                            <mat-icon matSuffix>paid</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-              <div class="row">
-                  <div class="col-md-6">
-                      <mat-form-field class="w-100">
-                          <mat-label>Amount</mat-label>
-                          <input matInput class="form-control" id="amount" readonly
-                     [ngModel]="amountDto.amount | number:'1.2-2'"
-                     (ngModelChange)="amountDto.amount = $event"
-                     name="amount">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Amount</mat-label>
+                            <input matInput class="form-control" id="amount" readonly
+                                [ngModel]="amountDto.amount | number:'1.2-2'"
+                                (ngModelChange)="amountDto.amount = $event" name="amount">
 
-                          <mat-icon matSuffix>paid</mat-icon>
-                      </mat-form-field>
-                  </div>
-                  <div class="col-md-6">
-                      <mat-form-field class="w-100">
-                          <mat-label>Total Amount</mat-label>
-                          <input matInput class="form-control" id="totalAmount" readonly
-                     [ngModel]="amountDto.totalAmount | number:'1.2-2'"
-                     (ngModelChange)="amountDto.totalAmount = $event"
-                     name="totalAmount">
+                            <mat-icon matSuffix>paid</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Total Amount</mat-label>
+                            <input matInput class="form-control" id="totalAmount" readonly
+                                [ngModel]="amountDto.totalAmount | number:'1.2-2'"
+                                (ngModelChange)="amountDto.totalAmount = $event" name="totalAmount">
 
-                          <mat-icon matSuffix>paid</mat-icon>
-                      </mat-form-field>
-                  </div>
-              </div>
+                            <mat-icon matSuffix>paid</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-              <div class="text-center mt-4">
-                  <button mat-flat-button color="primary" (click)="printPayment()" 
-                          [disabled]="paymentForm.invalid">
-                      <mat-icon matSuffix>paid</mat-icon>
-                      Pay Now
-                  </button>
-              </div>
-          </form>
-      </mat-card-content>
-  </mat-card>
+                <div class="text-center mt-4">
+                    <button mat-flat-button color="primary" (click)="printPayment()" [disabled]="paymentForm.invalid">
+                        <mat-icon matSuffix>paid</mat-icon>
+                        Pay Now
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
 </div>

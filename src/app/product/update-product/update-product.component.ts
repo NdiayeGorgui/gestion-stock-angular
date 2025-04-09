@@ -6,41 +6,41 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-update-product',
   standalone: false,
-  
+
   templateUrl: './update-product.component.html',
   styleUrl: './update-product.component.css'
 })
 export class UpdateProductComponent implements OnInit {
 
-  product:Products=new Products();
-  productIdEvent!:string;
- constructor(private stockService:StockService,private activatedRoute:ActivatedRoute,private router:Router){
+  product: Products = new Products();
+  productIdEvent!: string;
+  constructor(private stockService: StockService, private activatedRoute: ActivatedRoute, private router: Router) {
 
   }
   ngOnInit(): void {
 
-    this.productIdEvent=this.activatedRoute.snapshot.params['productIdEvent'];
+    this.productIdEvent = this.activatedRoute.snapshot.params['productIdEvent'];
 
     this.stockService.getProductById(this.productIdEvent).subscribe({
-     next:data=>{
-      this.product=data;
-     },error:err=>{
-      console.log(err);
-    }
+      next: data => {
+        this.product = data;
+      }, error: err => {
+        console.log(err);
+      }
     });
-    
+
   }
 
-  updateProduct(){
-    this.stockService.updateProduct(this.productIdEvent,this.product).subscribe({
-      next:data=>{
+  updateProduct() {
+    this.stockService.updateProduct(this.productIdEvent, this.product).subscribe({
+      next: data => {
         alert("Product updated successfuly!");
         this.router.navigate(['/admin/product']);
-       },error:err=>{
+      }, error: err => {
         console.error('Error:', err);
-          alert('Error while updating product. Please try again.');
+        alert('Error while updating product. Please try again.');
       }
-      });
+    });
   }
- 
+
 }

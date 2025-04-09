@@ -1,85 +1,78 @@
 <div class="container mt-4">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>New Customer</mat-card-title>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <form #customerForm="ngForm">
-          <div class="row">
-            <!-- Customer Name -->
-            <div class="col-sm-12 col-md-6">
-              <mat-form-field class="w-100">
-                <mat-label>Customer Name</mat-label>
-                <input matInput class="form-control" id="name"
-                       [(ngModel)]="customer.name" name="name"
-                       required #nameCtrl="ngModel">
-                <mat-icon matSuffix>person</mat-icon>
-                <mat-error *ngIf="nameCtrl.invalid && nameCtrl.touched">
-                  Name is required.
-                </mat-error>
-              </mat-form-field>
-            </div>
-  
-            <!-- Customer Address -->
-            <div class="col-sm-12 col-md-6">
-              <mat-form-field class="w-100">
-                <mat-label>Customer Address</mat-label>
-                <input matInput class="form-control" id="address"
-                       [(ngModel)]="customer.address" name="address"
-                       required #addressCtrl="ngModel">
-                <mat-icon matSuffix>home</mat-icon>
-                <mat-error *ngIf="addressCtrl.invalid && addressCtrl.touched">
-                  Address is required.
-                </mat-error>
-              </mat-form-field>
-            </div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>New Customer</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <form #customerForm="ngForm">
+        <div class="row">
+          <!-- Customer Name -->
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>Customer Name</mat-label>
+              <input matInput class="form-control" id="name" [(ngModel)]="customer.name" name="name" required
+                #nameCtrl="ngModel">
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-error *ngIf="nameCtrl.invalid && nameCtrl.touched">
+                Name is required.
+              </mat-error>
+            </mat-form-field>
           </div>
-  
-          <div class="row">
-            <!-- Customer Phone -->
-            <div class="col-sm-12 col-md-6">
-              <mat-form-field class="w-100">
-                <mat-label>Customer Phone</mat-label>
-                <input matInput class="form-control" id="phone"
-                       [(ngModel)]="customer.phone" name="phone"
-                       required pattern="^[0-9]{10}$" #phoneCtrl="ngModel">
-                <mat-icon matSuffix>phone</mat-icon>
-                <mat-error *ngIf="phoneCtrl.invalid && phoneCtrl.touched">
-                  <span *ngIf="phoneCtrl.errors?.['required']">Phone is required.</span>
-                  <span *ngIf="phoneCtrl.errors?.['pattern']">Invalid phone number (10 digits required).</span>
-                </mat-error>
-              </mat-form-field>
-            </div>
-  
-            <!-- Customer Email -->
-            <div class="col-sm-12 col-md-6">
-              <mat-form-field class="w-100">
-                <mat-label>Customer Email</mat-label>
-                <input matInput class="form-control" id="email"
-                       [(ngModel)]="customer.email" name="email"
-                       required email #emailCtrl="ngModel"
-                       placeholder="gorgui@example.com"/>
-                <mat-icon matSuffix>email</mat-icon>
-                <mat-error *ngIf="emailCtrl.invalid && emailCtrl.touched">
-                  <span *ngIf="emailCtrl.errors?.['required']">Email is required.</span>
-                  <span *ngIf="emailCtrl.errors?.['email']">Invalid email format.</span>
-                </mat-error>
-              </mat-form-field>
-            </div>
+
+          <!-- Customer Address -->
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>Customer Address</mat-label>
+              <input matInput class="form-control" id="address" [(ngModel)]="customer.address" name="address" required
+                #addressCtrl="ngModel">
+              <mat-icon matSuffix>home</mat-icon>
+              <mat-error *ngIf="addressCtrl.invalid && addressCtrl.touched">
+                Address is required.
+              </mat-error>
+            </mat-form-field>
           </div>
-  
-          <!-- Bouton d'action -->
-          <div class="row">
-            <div class="col-12 text-center mt-3">
-              <button mat-flat-button color="primary" (click)="newCustomer()"
-                      [disabled]="customerForm.invalid">
-                <mat-icon>person_add</mat-icon> Add Customer
-              </button>
-            </div>
+        </div>
+
+        <div class="row">
+          <!-- Customer Phone -->
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>Customer Phone</mat-label>
+              <input matInput class="form-control" id="phone" [(ngModel)]="customer.phone" name="phone" required
+                pattern="^[0-9]{10}$" #phoneCtrl="ngModel">
+              <mat-icon matSuffix>phone</mat-icon>
+              <mat-error *ngIf="phoneCtrl.invalid && phoneCtrl.touched">
+                <span *ngIf="phoneCtrl.errors?.['required']">Phone is required.</span>
+                <span *ngIf="phoneCtrl.errors?.['pattern']">Invalid phone number (10 digits required).</span>
+              </mat-error>
+            </mat-form-field>
           </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  
+
+          <!-- Customer Email -->
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>Customer Email</mat-label>
+              <input matInput class="form-control" id="email" [(ngModel)]="customer.email" name="email" required email
+                #emailCtrl="ngModel" placeholder="gorgui@example.com" />
+              <mat-icon matSuffix>email</mat-icon>
+              <mat-error *ngIf="emailCtrl.invalid && emailCtrl.touched">
+                <span *ngIf="emailCtrl.errors?.['required']">Email is required.</span>
+                <span *ngIf="emailCtrl.errors?.['email']">Invalid email format.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Bouton d'action -->
+        <div class="row">
+          <div class="col-12 text-center mt-3">
+            <button mat-flat-button color="primary" (click)="newCustomer()" [disabled]="customerForm.invalid">
+              <mat-icon>person_add</mat-icon> Add Customer
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

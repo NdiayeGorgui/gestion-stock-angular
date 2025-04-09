@@ -11,24 +11,24 @@ import { StockService } from '../../services/stock.service';
 export class OrderCreatedCompletedDetailsComponent {
 
 
-   //order:OrderEvent=new OrderEvent();
-   orderEvent:any;
-        orderIdEvent!:string;
-       constructor(private stockService:StockService,private activatedRoute:ActivatedRoute,private router:Router){
-     
-        }
-      
-        ngOnInit(): void {
-      
-          this.orderIdEvent=this.activatedRoute.snapshot.params['orderIdEvent'];
-      
-          this.stockService.getOrderById(this.orderIdEvent).subscribe({
-           next:data=>{
-            this.orderEvent=data;
-           },error:err=>{
-            console.log(err);
-          }
-          });
-          
-        }
+  //order:OrderEvent=new OrderEvent();
+  orderEvent: any;
+  orderIdEvent!: string;
+  constructor(private stockService: StockService, private activatedRoute: ActivatedRoute, private router: Router) {
+
+  }
+
+  ngOnInit(): void {
+
+    this.orderIdEvent = this.activatedRoute.snapshot.params['orderIdEvent'];
+
+    this.stockService.getOrderById(this.orderIdEvent).subscribe({
+      next: data => {
+        this.orderEvent = data;
+      }, error: err => {
+        console.log(err);
+      }
+    });
+
+  }
 }

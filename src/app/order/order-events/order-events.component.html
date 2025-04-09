@@ -1,70 +1,64 @@
 <div class="container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Order Events List</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        
-        <mat-card-content>
-          <mat-toolbar>
-            <mat-form-field appearance="outline" class="search">
-              <mat-label>
-                <mat-icon matSuffix>search</mat-icon>
-                search</mat-label>
-              <input matInput (keyup)="filterOrderEvents($event)">
-          </mat-form-field>
-          
-          </mat-toolbar>
-            
-           
-            <table matSort mat-table  [dataSource]="dataSource" class="mat-elevation-z8">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Order Events List</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
 
-                <!--- Note that these columns can be defined in any order.
+    <mat-card-content>
+      <mat-toolbar>
+        <mat-form-field appearance="outline" class="w-50">
+          <mat-label>
+            <mat-icon matSuffix>search</mat-icon>
+            search</mat-label>
+          <input matInput (keyup)="filterOrderEvents($event)">
+        </mat-form-field>
+
+      </mat-toolbar>
+
+
+      <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
                       The actual rendered columns are set as a property on the row definition" -->
-              
-              
-              
-                <!-- Name Column -->
-                <ng-container matColumnDef="orderId">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Id </th>
-                  <td mat-cell *matCellDef="let element"> {{element.orderId}} </td>
-                </ng-container>
-                <!-- Address Column -->
-                <ng-container matColumnDef="customerId">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Id </th>
-                    <td mat-cell *matCellDef="let element"> {{element.customerId}} </td>
-                  </ng-container>
 
-               <!-- Email Column -->
-               <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-              </ng-container>
 
-                <!-- Phone Column -->
-                <ng-container matColumnDef="details">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Details </th>
-                  <td mat-cell *matCellDef="let element"> {{element.details}} </td>
-                </ng-container>
 
-                 <!-- Status Column -->
-                 <ng-container matColumnDef="eventTimeStamp">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
-                    <td mat-cell *matCellDef="let element"> {{element.eventTimeStamp}} </td>
-                  </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="orderId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.orderId}} </td>
+        </ng-container>
+        <!-- Address Column -->
+        <ng-container matColumnDef="customerId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.customerId}} </td>
+        </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-              
-              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                    showFirstLastButtons
-                    aria-label="Select page of periodic elements">
-              </mat-paginator>
-        </mat-card-content>
-    </mat-card>
+        <!-- Email Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+
+        <!-- Phone Column -->
+        <ng-container matColumnDef="details">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Details </th>
+          <td mat-cell *matCellDef="let element"> {{element.details}} </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="eventTimeStamp">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.eventTimeStamp}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
 </div>
-
-
-
-

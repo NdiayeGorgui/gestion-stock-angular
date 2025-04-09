@@ -4,29 +4,32 @@
         <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
-    <button  mat-button routerLink="/admin/home">
+    <button mat-button routerLink="/admin/home">
         <mat-icon matSuffix>home</mat-icon>
         Home</button>
-        <button  mat-button routerLink="/admin/chat-bot">
-            <mat-icon matSuffix>chat</mat-icon>
-            Chat bot zone</button>
-    <button  mat-button routerLink="/admin/profile">
+    <button mat-button routerLink="/admin/chat-bot">
+        <mat-icon matSuffix>chat</mat-icon>
+        Chat bot zone</button>
+    <button mat-button routerLink="/admin/profile">
         <mat-icon matSuffix>portrait</mat-icon>
         Profile</button>
     <button mat-button [matMenuTriggerFor]="importMenu">
         <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
-       
+
         Orders List
     </button>
     <mat-menu #importMenu>
-        <button  mat-menu-item routerLink="/admin/order"><mat-icon matSuffix>format_list_bulleted</mat-icon>📋 Created Orders List</button>
-        <button  mat-menu-item routerLink="/admin/completed-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>✅ Completed Orders List</button>
-        <button  mat-menu-item routerLink="/admin/cancel-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>❌ Canceled Orders List</button>
+        <button mat-menu-item routerLink="/admin/order"><mat-icon matSuffix>format_list_bulleted</mat-icon>📋 Created
+            Orders List</button>
+        <button mat-menu-item routerLink="/admin/completed-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>✅
+            Completed Orders List</button>
+        <button mat-menu-item routerLink="/admin/cancel-order"><mat-icon matSuffix>format_list_bulleted</mat-icon>❌
+            Canceled Orders List</button>
     </mat-menu>
-        <button mat-button *ngIf="authService.authenticated==true">
-            <mat-icon matSuffix>person</mat-icon>
-            {{authService.username}}
-        </button>
+    <button mat-button *ngIf="authService.authenticated==true">
+        <mat-icon matSuffix>person</mat-icon>
+        {{authService.username}}
+    </button>
     <button routerLink="/login" mat-flat-button color="accent" (click)="logout()">
         <mat-icon matSuffix>logout</mat-icon>Logout
     </button>
@@ -41,7 +44,7 @@
                 </button>
             </mat-list-item>
             <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
-                <button  routerLink="/admin/product" mat-button>
+                <button routerLink="/admin/product" mat-button>
                     <mat-icon>inventory</mat-icon>
                     Manage Products
                 </button>
@@ -83,13 +86,13 @@
                     View Payments
                 </button>
             </mat-list-item>
-                <mat-list-item>
-                    <button routerLink="/admin/order-events" mat-button>
-                        <mat-icon>low_priority</mat-icon>
-                        View Order events
-                    </button>
-                </mat-list-item>
-           
+            <mat-list-item>
+                <button routerLink="/admin/order-events" mat-button>
+                    <mat-icon>low_priority</mat-icon>
+                    View Order events
+                </button>
+            </mat-list-item>
+
         </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content>
@@ -107,9 +110,8 @@
     position: relative;
     bottom: 0;
     width: 100%;">
-      © 2025 Copyright:
-      <a class="text-dark" href="https:/trocady.com/">Trocady Solution Inc</a>
+        © 2025 Copyright:
+        <a class="text-dark" href="https:/trocady.com/">Trocady Solution Inc</a>
     </div>
     <!-- Copyright -->
-  </footer>
-
+</footer>
