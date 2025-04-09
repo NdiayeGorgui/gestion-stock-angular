@@ -8,19 +8,22 @@
          
           <div class="chart-container">
             <h3>Best-selling products</h3>
+            <div style="overflow: auto;">
             <ngx-charts-bar-vertical
-              [view]="[800, 450]"
+              [view]="[barChartWidth, 450]"
               [results]="mostOrderedProducts"
               [scheme]="colorScheme"
               [gradient]="true"
               [xAxis]="true"
               [yAxis]="true"
               [legend]="true"
+              [legendPosition]="legendPosition"
               [showDataLabel]="true"
-              [barPadding]="20"
+              [barPadding]="10"
               [animations]="true"
               [roundEdges]="true">
             </ngx-charts-bar-vertical>
+          </div>
           </div>
 
           <div class="chart-container">
@@ -42,19 +45,22 @@
 
           <div class="chart-container">
             <h3>Products with their remaining quantities</h3>
+            <div style="overflow: auto;">
             <ngx-charts-bar-vertical
-              [view]="[800, 450]"
+              [view]="[barChartWidth, 450]"
               [results]="products"
               [scheme]="colorScheme"
               [gradient]="true"
               [xAxis]="true"
               [yAxis]="true"
               [legend]="true"
+              [legendPosition]="legendPosition"
               [showDataLabel]="true"
-              [barPadding]="20"
+              [barPadding]="10"
               [animations]="true"
               [roundEdges]="true">
             </ngx-charts-bar-vertical>
+          </div>
           </div>
           
         </mat-card-content>

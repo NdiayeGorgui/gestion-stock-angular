@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StockService } from '../services/stock.service';
-import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 @Component({
   selector: 'app-dashboard',
   standalone: false,
@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   public products: any;
   public mostOrderedProducts: any;
   public mostOrderedCustomers: any;
+  legendPosition: LegendPosition = LegendPosition.Below;
 
 
 
@@ -23,14 +24,21 @@ export class DashboardComponent implements OnInit {
     selectable: true,
     group: ScaleType.Time
   };
+  barChartWidth!: number;
 
+  setBarChartWidth() {
+    const baseWidth = 800;
+    const barWidth = 60;
+    const productCount = this.products?.length || 0;
 
+    this.barChartWidth = Math.max(baseWidth, productCount * barWidth);
+  }
 
   ngOnInit(): void {
     this.getMostOrderedProducts();
     this.getTop10CustomersMostOrdered();
     this.getProducts();
-
+    this.setBarChartWidth();
   }
   constructor(private stockService: StockService) {
 
