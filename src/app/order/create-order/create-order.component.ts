@@ -68,8 +68,7 @@ export class CreateOrderComponent implements OnInit {
     this.getCustomers();
     this.getProducts();
     this.getOrders();
-   // ✅ Mettre à jour la liste des commandes pour récupérer l'ID
-   this.getOrdersCreatedListByCustomer();
+
 
   }
 
@@ -98,7 +97,8 @@ export class CreateOrderComponent implements OnInit {
         // ✅ Navigation après succès
         this.router.navigate(['/admin/create-order']);
 
-        
+        // ✅ Mettre à jour la liste des commandes pour récupérer l'ID
+        this.getOrdersCreatedListByCustomer();
 
         // ✅ Mise à jour du compteur du panier
         this.cartCount++;
