@@ -50,7 +50,7 @@
         <!-- Status Column -->
         <ng-container matColumnDef="eventTimeStamp">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
-          <td mat-cell *matCellDef="let element"> {{element.eventTimeStamp}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.eventTimeStamp | date: 'dd/MM/YYYY'}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
