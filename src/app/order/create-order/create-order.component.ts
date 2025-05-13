@@ -9,6 +9,9 @@ import { OrderEvent } from '../orders/orderEvent';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Custom } from '../../customer/custom';
 import { Products } from '../../product/products';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 
 
 @Component({
@@ -54,7 +57,7 @@ export class CreateOrderComponent implements OnInit {
   selectedProductId: string = '';
   selectedProduct: Products | null = null;
 
-  constructor(private stockService: StockService, private router: Router) {
+  constructor(private snackBar: MatSnackBar,private dialog: MatDialog,private stockService: StockService, private router: Router) {
 
   }
 
@@ -78,55 +81,72 @@ export class CreateOrderComponent implements OnInit {
   isCardButtonEnabled: boolean = false;  // Désactivé par défaut
 
   newOrder() {
-    if (!this.orderEvent.customer.customerIdEvent ||
-      !this.orderEvent.product.productIdEvent ||
-      !this.orderEvent.productItem.productQty) {
-      alert('Please fill in all required fields.');
+    if (
+      !this.orderEvent.customer?.customerIdEvent ||
+      !this.orderEvent.product?.productIdEvent ||
+      !this.orderEvent.productItem?.productQty
+    ) {
+      this.snackBar.open('Please fill in all required fields.', 'Close', {
+        duration: 3000,
+        panelClass: 'snackbar-error'
+      });
       return;
     }
-
-    this.stockService.createOrder(this.orderEvent).subscribe({
-      next: (prod) => {
-        console.log("✅ Commande créée :", prod);
-        alert('Order saved successfully!');
-
-        // ✅ Ajout du montant de la commande au total du panier
-        this.totalCartAmount += this.amount;
-
-
-        // ✅ Navigation après succès
-        this.router.navigate(['/admin/create-order']);
-
-        // ✅ Mettre à jour la liste des commandes pour récupérer l'ID
-        this.getOrdersCreatedListByCustomer();
-
-        // ✅ Mise à jour du compteur du panier
-        this.cartCount++;
-        this.isCardButtonEnabled = true;
-
-        // ✅ Ajouter à `orders` avec `orderIdEvent`
-        this.orders.push({
-          orderIdEvent: (prod as any).orderIdEvent, // ✅ Forcer l'accès à la propriété
-          customer: this.selectedCustomer?.name,
-          product: this.selectedProduct?.name,
-          qty: this.orderEvent.productItem.productQty,
-          basePrice: this.selectedProduct?.price, // 🆕
-          price: this.amount,
-
-
+  
+    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+      data: {
+        title: 'Confirm Order',
+        message: 'Are you sure you want to save this order?'
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.stockService.createOrder(this.orderEvent).subscribe({
+          next: (prod: any) => {
+            this.snackBar.open('Order saved successfully!', 'Close', {
+              duration: 3000,
+              panelClass: 'snackbar-success'
+            });
+            
+  
+            // ✅ Ajouter directement dans le tableau
+            this.orders.push({
+              orderIdEvent: prod.orderIdEvent,
+              customer: this.selectedCustomer?.name,
+              product: this.selectedProduct?.name,
+              qty: this.orderEvent.productItem.productQty,
+              basePrice: this.selectedProduct?.price,
+              price: this.amount,
+            });
+  
+            this.orders = [...this.orders]; // déclenche change detection
+  
+            // ✅ Mise à jour des totaux et état
+            this.totalCartAmount += this.amount;
+            this.cartCount++;
+            this.isCardButtonEnabled = true;
+  
+            // ✅ Reset form
+            this.resetOrderForm();
+  
+            // ✅ Synchroniser avec le backend après court délai
+            setTimeout(() => {
+              this.getOrdersCreatedListByCustomer();
+            }, 500);
+          },
+          error: (err) => {
+            console.error("❌ Erreur :", err);
+            this.snackBar.open('Error while saving order.', 'Close', {
+              duration: 3000,
+              panelClass: 'snackbar-error'
+            });
+          }
         });
-
-        // ✅ Réinitialiser les champs
-        this.resetOrderForm();
-      },
-      error: (err) => {
-        console.log("❌ Erreur :", err);
-        alert('Error while saving order.');
       }
     });
   }
-
-
+  
   // Fonction pour réinitialiser le formulaire
   resetOrderForm() {
     // this.selectedCustomerId = '';

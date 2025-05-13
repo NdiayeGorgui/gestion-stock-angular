@@ -5,6 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Products } from '../products';
 import { StockService } from '../../services/stock.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component'; 
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product',
@@ -24,7 +27,7 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/{
   
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!:MatSort;
-  constructor(private router:Router, private stockService:StockService,private activatedRoute:ActivatedRoute){
+  constructor(private snackBar: MatSnackBar,private dialog: MatDialog,private router:Router, private stockService:StockService,private activatedRoute:ActivatedRoute){
   }
 
   public getProducts(){
@@ -70,25 +73,38 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/{
     this.router.navigateByUrl("/payments")
   }
 
-  deleteProduct(id:string){
-    let conf=confirm("Are you sure ?")
-    if(conf){
-     this.stockService.deleteProduct(id).subscribe(data => {
-      alert("Product deleted successfully !");
-       console.log(data);
-       this.ngOnInit();
-       
-     }, () => {
-      alert('Error while deleting product. Please try again.');
+
+  deleteProduct(id: string) {
+  
+     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          data: { message: 'Are you sure you want to delete this product?' }
+        });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.stockService.deleteProduct(id).subscribe({
+          next: () => {
+            // Suppression locale
+            this.products = this.products.filter((p: { productIdEvent: string; }) => p.productIdEvent !== id);
+            this.dataSource.data = this.products;
+  
+            this.snackBar.open('Product deleted successfully!', 'Close', {
+              duration: 3000,
+              panelClass: ['snackbar-success']
+            });
+          },
+          error: () => {
+            this.snackBar.open('Error while deleting product.', 'Close', {
+              duration: 3000,
+              panelClass: ['snackbar-error']
+            });
+          }
+        });
+      }
     });
-     
-    }
-   
   }
-
-
-
-
+  
+  
   editProduct(productIdEvent:string){
     this.router.navigate(['/admin/update-product',productIdEvent]);
   

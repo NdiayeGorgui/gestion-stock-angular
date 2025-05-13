@@ -4,6 +4,9 @@ import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StockService } from '../../services/stock.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component'; 
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-customer',
@@ -23,7 +26,7 @@ export class CustomerComponent implements OnInit {
     
     @ViewChild(MatPaginator) paginator!:MatPaginator;
     @ViewChild(MatSort) sort!:MatSort;
-    constructor(private router:Router, private stockService:StockService,private activatedRoute:ActivatedRoute){
+    constructor(private snackBar: MatSnackBar,private dialog: MatDialog,private router:Router, private stockService:StockService,private activatedRoute:ActivatedRoute){
     }
   
     public getCustomers(){
@@ -56,19 +59,35 @@ export class CustomerComponent implements OnInit {
       this.router.navigateByUrl("/admin/create-customer");
     }
 
-    deleteCustomer(id:string){
-      let conf=confirm("Are you sure ?")
-      if(conf){
-       this.stockService.deleteCustomer(id).subscribe(data => {
-        alert("Customer deleted successfully !");
-         console.log(data);
-         this.ngOnInit();
-       }, () => {
-        alert('Error while deleting customer. Please try again.');
+    deleteCustomer(id: string) {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        data: { message: 'Are you sure you want to delete this customer?' }
       });
-       
-      }
+    
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          this.stockService.deleteCustomer(id).subscribe({
+            next: () => {
+              // Suppression locale
+              this.customers = this.customers.filter((c: { customerIdEvent: string; }) => c.customerIdEvent !== id);
+              this.dataSource.data = this.customers;
+    
+              this.snackBar.open('Customer deleted successfully!', 'Close', {
+                duration: 3000,
+                panelClass: ['snackbar-success']
+              });
+            },
+            error: () => {
+              this.snackBar.open('Error while deleting customer.', 'Close', {
+                duration: 3000,
+                panelClass: ['snackbar-error']
+              });
+            }
+          });
+        }
+      });
     }
+    
   
     editCustomer(customerIdEvent:string){
       this.router.navigate(['/admin/update-customer',customerIdEvent]);

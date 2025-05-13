@@ -6,7 +6,6 @@ import { environment } from '../../environments/environment.development';
 import { Products } from '../product/products';
 import { Customers } from '../customer/customer';
 import { Custom } from '../customer/custom';
-import { Order } from '../order/order';
 import { OrderEvent } from '../order/orders/orderEvent';
 import { Payment } from '../payment/payment';
 import { Bill } from '../bill/bill';

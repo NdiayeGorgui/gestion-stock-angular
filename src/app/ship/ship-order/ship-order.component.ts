@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { StockService } from '../../services/stock.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ship } from '../Ship';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 
 @Component({
   selector: 'app-ship-order',
@@ -14,7 +17,7 @@ export class ShipOrderComponent implements OnInit {
    ship:Ship=new Ship();
    orderId!:string;
 
-   constructor(private stockService:StockService,private router:Router,private activatedRoute:ActivatedRoute){
+   constructor(private snackBar: MatSnackBar,private dialog: MatDialog,private stockService:StockService,private router:Router,private activatedRoute:ActivatedRoute){
   
       }
 
@@ -33,24 +36,34 @@ export class ShipOrderComponent implements OnInit {
   }
 
   newShip() {
-   
-    this.stockService.createShip(this.ship).subscribe({
-      next: (res) => {
-        console.log('Réponse du serveur:', res);
-        alert('Order shipped successfully!');
-        
-        console.log('Navigation en cours...');
-        this.router.navigate(['/admin/shipped-orders'])
-            .then(success => console.log('Navigation réussie:', success))
-            .catch(err => console.error('Erreur de navigation:', err));
-    
-        
-      },
-      error: (err) => {
-        console.error('Error:', err);
-        alert('Error while shipping order. Please try again.');
+    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+      data: { message: 'Do you want to confirm shipment of this order?' }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.stockService.createShip(this.ship).subscribe({
+          next: (res) => {
+            console.log('Réponse du serveur:', res);
+            this.snackBar.open('Order shipped successfully!', 'Close', {
+              duration: 3000,
+              panelClass: ['snackbar-success']
+            });
+  
+            this.router.navigate(['/admin/shipped-orders'])
+              .then(success => console.log('Navigation réussie:', success))
+              .catch(err => console.error('Erreur de navigation:', err));
+          },
+          error: (err) => {
+            console.error('Error:', err);
+            this.snackBar.open('Error while shipping order. Please try again.', 'Close', {
+              duration: 3000,
+              panelClass: ['snackbar-error']
+            });
+          }
+        });
       }
     });
-   
   }
+  
 }

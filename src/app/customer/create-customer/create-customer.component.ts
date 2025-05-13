@@ -5,6 +5,9 @@ import { merge } from 'rxjs';
 import { StockService } from '../../services/stock.service';
 import { Custom } from '../custom';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 
 
 
@@ -23,7 +26,7 @@ export class CreateCustomerComponent implements OnInit {
 
   errorMessage = signal('');
 
-  constructor(private stockService: StockService, private router: Router) {
+  constructor(private snackBar: MatSnackBar,private dialog: MatDialog,private stockService: StockService, private router: Router) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -45,28 +48,39 @@ export class CreateCustomerComponent implements OnInit {
 
   newCustomer() {
     if (!this.customer.name || !this.customer.address || !this.customer.phone || !this.customer.email) {
-      alert('Please fill in all required fields.');
+      this.snackBar.open('Please fill in all required fields.', 'Close', {
+        duration: 3000,
+        panelClass: 'snackbar-error'
+      });
       return;
     }
-
-    this.stockService.createCustomer(this.customer).subscribe({
-      next: (res) => {
-        console.log('Réponse du serveur:', res);
-        alert('Customer saved successfully!');
-
-        console.log('Navigation en cours...');
-        this.router.navigate(['/admin/customer'])
-          .then(success => console.log('Navigation réussie:', success))
-          .catch(err => console.error('Erreur de navigation:', err));
-
-
-      },
-      error: (err) => {
-        console.error('Error:', err);
-        alert('Error while saving customer. Please try again.');
+  
+    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+      data: { message: 'Do you want to save this customer?' }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.stockService.createCustomer(this.customer).subscribe({
+          next: (res) => {
+            this.snackBar.open('Customer saved successfully!', 'Close', {
+              duration: 3000,
+              panelClass: 'snackbar-success'
+            });
+            this.router.navigate(['/admin/customer'])
+              .then(success => console.log('Navigation successful:', success))
+              .catch(err => console.error('Navigation error:', err));
+          },
+          error: (err) => {
+            console.error('Error:', err);
+            this.snackBar.open('Error while saving customer. Please try again.', 'Close', {
+              duration: 3000,
+              panelClass: 'snackbar-error'
+            });
+          }
+        });
       }
     });
-
   }
 
 

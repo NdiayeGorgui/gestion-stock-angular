@@ -57,6 +57,12 @@ import { ShipOrderComponent } from './ship/ship-order/ship-order.component';
 import { ShippedOrdersComponent } from './ship/shipped-orders/shipped-orders.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { OrderCreatedCompletedDetailsComponent } from './order/order-created-completed-details/order-created-completed-details.component';
+import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AddConfirmDialogComponent } from './shared/add-confirm-dialog/add-confirm-dialog.component';
+
+
 
 
 @NgModule({
@@ -93,7 +99,9 @@ import { OrderCreatedCompletedDetailsComponent } from './order/order-created-com
     ShipOrderComponent,
     ShippedOrdersComponent,
     OrderEventsComponent,
-    OrderCreatedCompletedDetailsComponent
+    OrderCreatedCompletedDetailsComponent,
+    ConfirmDialogComponent,
+    AddConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +126,9 @@ import { OrderCreatedCompletedDetailsComponent } from './order/order-created-com
     BrowserAnimationsModule,
     RouterModule,
     NgxChartsModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule,
+    MatSnackBarModule
     
   
   ],
