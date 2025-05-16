@@ -175,7 +175,7 @@ async submitOrder() {
 
     try {
       for (const item of this.orderItems) {
-        const orderToSubmit: any = {
+        const orderToSubmit: any = {  
           customer: {
             customerIdEvent: this.selectedClient.customerIdEvent
           },
