@@ -126,7 +126,7 @@ export class CreatePaymentComponent implements OnInit {
                   duration: 3000,
                   panelClass: ['snackbar-success']
                 });
-                this.router.navigate(['/admin/payment']);
+                //this.router.navigate(['/admin/payment']);
               },
               error: err => {
                 console.error('Error creating payment:', err);

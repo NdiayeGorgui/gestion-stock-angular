@@ -1,181 +1,131 @@
-<div class="container-fluid create-order">
-  <mat-card>
-    <mat-card-header>
-      <div class="row g-3 w-100 align-items-center">
+<div class="container mt-4">
+ <div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>New Order</h2>
+  <div [hidden]="!showPaymentButton">
+  <button class="btn btn-success mx-3" (click)="goToCreatedOrders()">
+    💰  Proceed to Payment
+  </button>
+</div>
+  <div class="d-flex gap-2">
+    <button class="btn btn-outline-primary position-relative" (click)="toggleOrderDetails()">
+      🛒 Cart
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        {{ totalItems }}
+      </span>
+    </button>
 
-        <!-- Bouton "Add Order" à gauche -->
-        <div class="col-md-6 col-12 d-flex">
-          <button mat-flat-button color="primary" class="btn btn-primary w-100 button-order" (click)="newOrder()"
-            [disabled]="orderForm.invalid">
-            <mat-icon matSuffix>production_quantity_limits</mat-icon> Add Order
-          </button>
-        </div>
-
-        <!-- Total Cart au centre gauche -->
-        <div class="col-md-4 col-12 d-flex justify-content-center">
-          <span class="total-cart-label">
-            Total Cart: <strong>{{ totalCartAmount | number:'1.2-2' }} $</strong>
-          </span>
-        </div>
-
-        <!-- Bouton Panier complètement à droite -->
-        <!-- 🟢 Bouton Panier complètement à droite avec une largeur réduite -->
-        <div class="col-md-2 col-12 d-flex justify-content-end">
-          <button mat-flat-button color="primary" class="btn btn-success button-cart w-50" (click)="goToPayment()"
-            [disabled]="!isCardButtonEnabled">
-            <mat-icon matSuffix>shopping_cart</mat-icon>
-            <span *ngIf="cartCount > 0">({{ cartCount }})</span>
-          </button>
-        </div>
+   
 
 
-      </div>
-    </mat-card-header>
+  </div>
+</div>
 
 
-    <mat-divider></mat-divider>
+  <!-- Sélection client -->
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <label>Customer</label>
+      <select class="form-select" [(ngModel)]="selectedClientId" (change)="onClientChange()">
+        <option value="">-- Select customer --</option>
+        <option *ngFor="let client of customers" [value]="client.id">{{ client.name }}</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label>Name</label>
+      <input class="form-control" [value]="selectedClient?.name || ''" readonly />
+    </div>
+    <div class="col-md-4">
+      <label>Email</label>
+      <input class="form-control" [value]="selectedClient?.email || ''" readonly />
+    </div>
+  </div>
 
-    <mat-card-content>
-      <form #orderForm="ngForm">
+  <hr>
 
-        <!-- 🟢 Ligne 1 : Informations Client -->
-        <div class="row g-3">
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Select Customer</mat-label>
-              <mat-select [(ngModel)]="orderEvent.customer.customerIdEvent" name="customerIdEvent" required
-                (selectionChange)="onCustomerChange($event.value)">
-                @for (customer of customers; track customer) {
-                <mat-option [value]="customer.customerIdEvent">{{customer.name}}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </div>
+  <!-- Sélection produit -->
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <label>Product</label>
+      <select class="form-select" [(ngModel)]="selectedProductId" (change)="onProductChange()">
+        <option value="">-- Select product --</option>
+        <option *ngFor="let product of products" [value]="product.id">
+          {{ product.name }} - {{ product.price }} $
+        </option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label>Product Name</label>
+      <input class="form-control" [value]="selectedProduct?.name || ''" readonly />
+    </div>
+    <div class="col-md-4">
+      <label>Price ($)</label>
+      <input class="form-control" [value]="selectedProduct?.price || ''" readonly />
+    </div>
+  </div>
 
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Customer Address</mat-label>
-              <input matInput [value]="selectedCustomer?.address" readonly>
-            </mat-form-field>
-          </div>
+  <!-- Quantité et calculs -->
+  <div class="row mb-3" *ngIf="selectedProduct">
+    <div class="col-md-2">
+      <label>Quantity</label>
+      <input type="number" class="form-control" [(ngModel)]="itemQty" (change)="onQtyChange()" min="1" />
+    </div>
+    <div class="col-md-2">
+      <label>Amount ($)</label>
+      <input class="form-control" [value]="amount.toFixed(2)" readonly />
+    </div>
+    <div class="col-md-2">
+      <label>Tax ($)</label>
+      <input class="form-control" [value]="tax.toFixed(2)" readonly />
+    </div>
+    <div class="col-md-2">
+      <label>Discount ($)</label>
+      <input class="form-control" [value]="discount.toFixed(2)" readonly />
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-primary w-100" (click)="addProductToOrder()">Add order</button>
+    </div>
+  </div>
 
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Customer Email</mat-label>
-              <input matInput [value]="selectedCustomer?.email" readonly>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Customer Phone</mat-label>
-              <input matInput [value]="selectedCustomer?.phone" readonly>
-            </mat-form-field>
-          </div>
-        </div>
-
-        <!-- 🟢 Ligne 2 : Informations Produit -->
-        <div class="row g-3">
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Select Product</mat-label>
-              <mat-select [(ngModel)]="orderEvent.product.productIdEvent" name="productIdEvent" required
-                (selectionChange)="onProductChange($event.value)">
-                @for (product of products; track product) {
-                <mat-option [value]="product.productIdEvent">{{product.name}}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Product Category</mat-label>
-              <input matInput [value]="selectedProduct?.category" readonly>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Remaining Qty</mat-label>
-              <input matInput [value]="selectedProduct?.qty" readonly>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Product Price</mat-label>
-              <input matInput [value]="selectedProduct?.price " readonly>
-            </mat-form-field>
-          </div>
-        </div>
-
-        <!-- 🟢 Ligne 3 : Product Item, Discount, Tax, Amount -->
-        <div class="row g-3">
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Product Item Qty</mat-label>
-              <input matInput type="number" [(ngModel)]="orderEvent.productItem.productQty" name="productItemQty"
-                required min="1" (input)="onQuantityChange()">
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Discount</mat-label>
-              <input matInput [value]="discount | number:'1.2-2'" readonly>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Tax</mat-label>
-              <input matInput [value]="tax | number:'1.2-2'" readonly>
-            </mat-form-field>
-          </div>
-
-          <div class="col-md-3">
-            <mat-form-field class="w-100">
-              <mat-label>Amount</mat-label>
-              <input matInput [value]="amount | number:'1.2-2'" readonly>
-            </mat-form-field>
-          </div>
-        </div>
-
-      </form>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="mt-4" *ngIf="orders && orders.length > 0">
-    <mat-card-title>Customer Orders</mat-card-title>
-    <mat-divider></mat-divider>
-    <table class="table">
+  <!-- Affichage des détails (si activé) -->
+  <div *ngIf="showOrderDetails" class="mt-4">
+    <h4>Order details</h4>
+    <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Customer</th>
           <th>Product</th>
-          <th>Qty</th>
-          <th>Price</th>
-          <th>Order ID</th> <!-- ✅ Ajout de l'ID de la commande -->
-          <th>Remove Order</th>
+          <th>Quantity</th>
+          <th>Amount</th>
+          <th>Tax</th>
+          <th>Discount</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders; let i = index">
-
-          <td *ngIf="orders &&  order.customer != null">{{ order.customer }}</td>
-          <td *ngIf="orders &&  order.customer != null">{{ order.product }}</td>
-          <td *ngIf="orders &&  order.customer != null">{{ order.qty }}</td>
-          <td *ngIf="orders &&  order.customer != null">{{ order.price | number:'1.2-2' }} $</td>
-          <td *ngIf="orders &&  order.customer != null">{{ order.orderIdEvent }}</td> <!-- ✅ Affichage de l'ID -->
-          <td *ngIf="orders &&  order.customer != null">
-            <button mat-icon-button color="warn" (click)="removeOrder(i)">
-              <mat-icon>delete</mat-icon>
-            </button>
+        <tr *ngFor="let item of orderItems; index as i">
+          <td>{{ item.name }}</td>
+          <td>{{ item.qty }}</td>
+          <td>{{ item.price.toFixed(2) }} $</td>
+          <td>{{ item.tax.toFixed(2) }} $</td>
+          <td>{{ item.discount.toFixed(2) }} $</td>
+          <td>
+            <button class="btn btn-sm btn-danger" (click)="removeItem(i)">Remove</button>
           </td>
         </tr>
       </tbody>
     </table>
-  </mat-card>
 
+    <div class="text-end">
+      <h6>Total amount HT : {{ totalPrice | number: '1.2-2' }} $</h6>
+<h6>Total Tax : {{ totalTax | number: '1.2-2' }} $</h6>
+<h6>Total discount : {{ totalDiscount | number: '1.2-2' }} $</h6>
+<h5>Total amount : {{ totalAmount | number: '1.2-2' }} $</h5>
+
+    </div>
+    <div class="text-end mt-3" *ngIf="orderItems.length > 0">
+  <button [disabled]="!selectedClient || orderItems.length === 0" class="btn btn-success" (click)="submitOrder()">
+    ✅ Place Order
+  </button>
+</div>
+
+  </div>
 </div>

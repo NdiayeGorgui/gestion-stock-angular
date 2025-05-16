@@ -1,167 +1,175 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { StockService } from '../../services/stock.service';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { OrderEvent } from './orderEvent';
 import { Customer } from '../customer';
 import { Product } from '../product';
-import { ProductItem } from '../productItem';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-order',
   standalone: false,
-  
+
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
-export class OrderComponent implements OnInit{
+export class OrderComponent implements OnInit {
 
- // oder:Order=new Order();
- 
-  customer:Customer=new Customer();
-  customerId!:string;
-  customerName!:string;
-  customerEmail!:string;
-  customerPhone!:string;
-  customerAddress!:string;
+  // oder:Order=new Order();
 
-  product:Product=new Product();
-  productId!:string;
-  productName!:string;
-  productPrice!:number;
-  productQty!:number;
-  date!:Date;
-  amount!:number;
-  discount!:number;
-  price!:number;
-  orderIdEvent!:string;
+  customer: Customer = new Customer();
+  customerId!: string;
+  customerName!: string;
+  customerEmail!: string;
+  customerPhone!: string;
+  customerAddress!: string;
+
+  product: Product = new Product();
+  productId!: string;
+  productName!: string;
+  productPrice!: number;
+  productQty!: number;
+  date!: Date;
+  amount!: number;
+  discount!: number;
+  price!: number;
+  orderIdEvent!: string;
 
 
   //productItem:ProductItem=new ProductItem();
-  producItemtQty!:number;
- 
-  
-  orderEvent:OrderEvent=new OrderEvent();
-  order:OrderEvent=new OrderEvent();
-  status='CREATED';
+  producItemtQty!: number;
 
-   public orders:any;
-      public dataSource:any;
-      //customerIdEvent!:string;
 
-      productItem:any= {
-        
-        product:{},
-        order:{
-          customer:{}
-        }
-      };
-    
-      public displayedColumns=["customerName","productName","price","qty","payment","details"]
-      
-      @ViewChild(MatPaginator) paginator!:MatPaginator;
-      @ViewChild(MatSort) sort!:MatSort;
-  constructor(private stockService:StockService,private router:Router,private activatedRoute:ActivatedRoute){
+  orderEvent: OrderEvent = new OrderEvent();
+  order: OrderEvent = new OrderEvent();
+  status = 'CREATED';
+
+  public orders: any;
+  public dataSource: any;
+  //customerIdEvent!:string;
+
+  productItem: any = {
+
+    product: {},
+    order: {
+      customer: {}
+    }
+  };
+
+  public displayedColumns = ["customerName", "productName", "price", "qty", "payment", "details", "cancel"]
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private stockService: StockService, private router: Router, private activatedRoute: ActivatedRoute) {
 
   }
-  public getCreatedOrders(){
+  public getCreatedOrders() {
     this.stockService.getCreatedOrders(this.status).subscribe({
-      next: data=>{
-        this.orders=data;
+      next: data => {
+        this.orders = data;
         this.orders.sort((a: any, b: any) => a.order.customer.name.localeCompare(b.order.customer.name));
-        this.dataSource=new MatTableDataSource(this.orders)
-        this.dataSource.paginator=this.paginator;
-        this.dataSource.sort=this.sort;
+        this.dataSource = new MatTableDataSource(this.orders)
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
-      error:err=>{
+      error: err => {
         console.log(err);
       }
 
     });
-    
+
   }
- 
-      
 
   ngOnInit(): void {
-    this.getCreatedOrders();
-    
+    this.stockService.getCreatedOrders('CREATED').subscribe({
+      next: data => {
+        this.createdOrders = data;
+        this.dataSource = new MatTableDataSource(this.createdOrders);
+        this.groupOrders(); // ← APPEL INDISPENSABLE
+      },
+      error: err => console.error(err)
+    });
   }
 
-  /*getOrder(orderIdEvent:string){
-    this.router.navigate(['/admin/order-details',orderIdEvent]);
-  }*/
 
-    getOrder(customerIdEvent:string){
-      this.router.navigate(['/admin/order-details',customerIdEvent]);
-    }
 
-  filterOrder(event:Event){
-    let value=(event.target as HTMLInputElement).value;
+  getOrder(customerIdEvent: string) {
+    this.router.navigate(['/admin/order-details', customerIdEvent]);
+  }
+
+  filterOrder(event: Event) {
+    let value = (event.target as HTMLInputElement).value;
     this.dataSource.filter = value;
   }
 
-  makePayment(customerIdEvent:string){
-    this.router.navigate(['/admin/create-payment',customerIdEvent]);
+  makePayment(customerIdEvent: string) {
+    this.router.navigate(['/admin/create-payment', customerIdEvent]);
   }
+  createdOrders: any[] = []; // ou OrderDTO[]
 
- /* cancelOrder(orderIdEvent:string){
-   // this.router.navigate(['/admin/cancel-order',customerIdEvent]);
-  
-    let conf=confirm("Are you sure ?")
-    if(conf){
-      this.stockService.cancelOrder(orderIdEvent).subscribe({
-        next:data=>{
-
-          alert('Order canceled successfuly !');
-          this.ngOnInit();
-         //this.order=data;
-         console.log(data);
-        },error:err=>{
-         console.log(err);
-       }
-       }); 
-  }
-  }*/
-
-  newOrder(){
-
-    this.stockService.createOrder(this.orderEvent).subscribe({
-      next:prod=>{
-      
-      },
-      error:err=>{
-        console.log(err);
+  cancelOrder(orderIdEvent: string): void {
+    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+      data: {
+        title: 'Are you sure?',
+        message: 'This order will be permanently removed.',
+        confirmText: 'Yes, delete it',
+        cancelText: 'Cancel'
       }
-   
     });
-    alert('Product saved successfuly !');
-    this.router.navigate(['/admin/order']);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.stockService.cancelOrder(orderIdEvent).subscribe({
+          next: () => {
+            this.createdOrders = this.createdOrders.filter(order => order.orderIdEvent !== orderIdEvent);
+            this.dataSource.data = this.createdOrders; // met à jour la table
+            this.groupOrders(); // recalcul des regroupements pour rowspan
+          },
+          error: (err) => {
+            console.error('Error cancelling order', err);
+          }
+        });
+      }
+    });
+  }
+
+
+  growSpanMap: Map<number, number> = new Map();
+
+  groupOrders(): void {
+    this.growSpanMap.clear();
+    const map = new Map<string, number>();
+    this.createdOrders.forEach((order, index) => {
+      const customerId = order.order.customer.customerIdEvent;
+      if (!map.has(customerId)) {
+        map.set(customerId, index);
+        this.growSpanMap.set(index, 1);
+      } else {
+        const firstIndex = map.get(customerId)!;
+        this.growSpanMap.set(firstIndex, this.growSpanMap.get(firstIndex)! + 1);
+        this.growSpanMap.set(index, 0); // les suivants ne s'affichent pas
+      }
+    });
+  }
+
+
+
+  shouldShowRowSpan(index: number): boolean {
+    return this.growSpanMap.get(index)! > 0;
   }
 
   getRowSpan(index: number): number {
-    const customer = this.orders[index].order.customer.customerIdEvent;
-    let count = 1;
-    
-    for (let i = index + 1; i < this.orders.length; i++) {
-      if (this.orders[i].order.customer.customerIdEvent === customer) {
-        count++;
-      } else {
-        break;
-      }
-    }
-    return count;
+    return this.growSpanMap.get(index)!;
   }
-  
-  shouldShowRowSpan(index: number): boolean {
-    if (index === 0) return true;
-    return this.orders[index].order.customer.customerIdEvent !== this.orders[index - 1].order.customer.customerIdEvent;
-  }
-  
 
-   
+
+
+
 }

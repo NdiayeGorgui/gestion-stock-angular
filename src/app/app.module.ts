@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule} from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule} from '@angular/material/menu';
 import { MatListModule} from '@angular/material/list';
 import { MatCardModule} from '@angular/material/card';
@@ -20,7 +21,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatTabsModule} from '@angular/material/tabs';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AdminComponent } from './admin/admin.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
@@ -80,7 +80,7 @@ import { AddConfirmDialogComponent } from './shared/add-confirm-dialog/add-confi
     OrderComponent,
     CreateCustomerComponent,
     CreateProductComponent,
-    CreateOrderComponent,
+    
     CreatePaymentComponent,
     CreateBillComponent,
     UpdateCustomerComponent,
@@ -128,7 +128,10 @@ import { AddConfirmDialogComponent } from './shared/add-confirm-dialog/add-confi
     NgxChartsModule,
     MatGridListModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatBadgeModule,
+    BrowserAnimationsModule,
+    CreateOrderComponent
     
   
   ],
