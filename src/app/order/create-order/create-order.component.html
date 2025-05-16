@@ -24,18 +24,18 @@
   <!-- Sélection client -->
   <div class="row mb-3">
     <div class="col-md-4">
-      <label>Customer</label>
+      <label><b>Customer</b></label>
       <select class="form-select" [(ngModel)]="selectedClientId" (change)="onClientChange()">
         <option value="">-- Select customer --</option>
         <option *ngFor="let client of customers" [value]="client.id">{{ client.name }}</option>
       </select>
     </div>
     <div class="col-md-4">
-      <label>Name</label>
+      <label><b>Name</b></label>
       <input class="form-control" [value]="selectedClient?.name || ''" readonly />
     </div>
     <div class="col-md-4">
-      <label>Email</label>
+      <label><b>Email</b></label>
       <input class="form-control" [value]="selectedClient?.email || ''" readonly />
     </div>
   </div>
@@ -45,7 +45,7 @@
   <!-- Sélection produit -->
   <div class="row mb-3">
     <div class="col-md-4">
-      <label>Product</label>
+      <label><b>Product</b></label>
       <select class="form-select" [(ngModel)]="selectedProductId" (change)="onProductChange()">
         <option value="">-- Select product --</option>
         <option *ngFor="let product of products" [value]="product.id">
@@ -54,11 +54,11 @@
       </select>
     </div>
     <div class="col-md-4">
-      <label>Product Name</label>
+      <label><b>Product Name</b></label>
       <input class="form-control" [value]="selectedProduct?.name || ''" readonly />
     </div>
     <div class="col-md-4">
-      <label>Price ($)</label>
+      <label><b>Price ($)</b></label>
       <input class="form-control" [value]="selectedProduct?.price || ''" readonly />
     </div>
   </div>
@@ -66,19 +66,19 @@
   <!-- Quantité et calculs -->
   <div class="row mb-3" *ngIf="selectedProduct">
     <div class="col-md-2">
-      <label>Quantity</label>
+      <label><b>Quantity</b></label>
       <input type="number" class="form-control" [(ngModel)]="itemQty" (change)="onQtyChange()" min="1" />
     </div>
     <div class="col-md-2">
-      <label>Amount ($)</label>
+      <label><b>Amount ($)</b></label>
       <input class="form-control" [value]="amount.toFixed(2)" readonly />
     </div>
     <div class="col-md-2">
-      <label>Tax ($)</label>
+      <label><b>Tax ($)</b></label>
       <input class="form-control" [value]="tax.toFixed(2)" readonly />
     </div>
     <div class="col-md-2">
-      <label>Discount ($)</label>
+      <label><b>Discount ($)</b></label>
       <input class="form-control" [value]="discount.toFixed(2)" readonly />
     </div>
     <div class="col-md-2 d-flex align-items-end">
