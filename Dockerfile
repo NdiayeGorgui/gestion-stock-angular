@@ -1,28 +1,23 @@
-# Stage 1: Compile and Build angular codebase
+# Stage 1: Compile and Build Angular codebase
+FROM node:18 AS build
 
-# Use official node image as the base image
-FROM node:latest AS  build
-
-# Set the working directory
 WORKDIR /usr/local/app
 
-# Add the source code to app
-COPY ./ /usr/local/app/
-
-# Install all the dependencies
+COPY package*.json ./
 RUN npm install
 
-# Generate the build of the application
-RUN npm run build
-
+COPY . .
+RUN npm run build -- --configuration=production
 
 # Stage 2: Serve app with nginx server
-
-# Use official nginx image as the base image
 FROM nginx:latest
 
-# Copy the build output to replace the default nginx contents.
+# Copie du build Angular (à adapter si ton nom de projet change)
 COPY --from=build /usr/local/app/dist/stock-web-app/browser /usr/share/nginx/html
 
-# Expose port 4200
+# Remplace la config Nginx par défaut pour gérer les routes Angular
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 4200
+
+CMD ["nginx", "-g", "daemon off;"]
