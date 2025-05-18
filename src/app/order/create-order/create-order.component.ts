@@ -7,6 +7,7 @@ import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-c
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DialogAlertComponent } from '../../shared/dialog-alert/dialog-alert.component';
 
 @Component({
   standalone: true,
@@ -45,6 +46,7 @@ export class CreateOrderComponent implements OnInit {
   showPaymentButton: boolean = false;
 
   constructor(
+    private dialogAlready: MatDialog,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private stockService: StockService,
@@ -96,20 +98,37 @@ export class CreateOrderComponent implements OnInit {
     }
   }
 
-  addProductToOrder() {
-    if (this.selectedProduct && this.itemQty > 0) {
-      const newItem = {
-        ...this.selectedProduct,
-        qty: this.itemQty,
-        amount: this.amount,
-        price: this.price,
-        tax: this.tax,
-        discount: this.discount
-      };
-      this.orderItems.push(newItem);
-      this.resetCurrentProduct();
+addProductToOrder() {
+  if (this.selectedProduct && this.itemQty > 0) {
+    const alreadyExists = this.orderItems.some(
+      item => item.id === this.selectedProduct.id
+    );
+
+    if (alreadyExists) {
+      this.dialogAlready.open(DialogAlertComponent, {
+        data: {
+          title: 'Product already present',
+          message: 'This product is already in the cart.'
+        }
+      });
+      return;
     }
+
+    const newItem = {
+      ...this.selectedProduct,
+      qty: this.itemQty,
+      amount: this.amount,
+      price: this.price,
+      tax: this.tax,
+      discount: this.discount
+    };
+
+    this.orderItems.push(newItem);
+    this.resetCurrentProduct();
   }
+}
+
+
 
   removeItem(index: number) {
     this.orderItems.splice(index, 1);

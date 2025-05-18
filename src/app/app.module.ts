@@ -61,6 +61,7 @@ import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.c
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from './shared/add-confirm-dialog/add-confirm-dialog.component';
+import { DialogAlertComponent } from './shared/dialog-alert/dialog-alert.component';
 
 
 
@@ -101,7 +102,8 @@ import { AddConfirmDialogComponent } from './shared/add-confirm-dialog/add-confi
     OrderEventsComponent,
     OrderCreatedCompletedDetailsComponent,
     ConfirmDialogComponent,
-    AddConfirmDialogComponent
+    AddConfirmDialogComponent,
+    DialogAlertComponent
   ],
   imports: [
     BrowserModule,
