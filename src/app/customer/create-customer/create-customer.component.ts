@@ -67,9 +67,9 @@ export class CreateCustomerComponent implements OnInit {
               duration: 3000,
               panelClass: 'snackbar-success'
             });
-            this.router.navigate(['/admin/customer'])
-              .then(success => console.log('Navigation successful:', success))
-              .catch(err => console.error('Navigation error:', err));
+           this.stockService.notifyCustomerCreated(); // 🚀 Notifie les observateurs
+
+            this.router.navigate(['/admin/customer']);
           },
           error: (err) => {
             console.error('Error:', err);

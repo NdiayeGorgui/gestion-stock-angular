@@ -17,7 +17,7 @@ export class UpdateProductComponent implements OnInit {
 
   product: Products = new Products();
   productIdEvent!: string;
-  constructor(private snackBar: MatSnackBar,private dialog: MatDialog,private stockService: StockService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private stockService: StockService, private activatedRoute: ActivatedRoute, private router: Router) {
 
   }
   ngOnInit(): void {
@@ -34,44 +34,43 @@ export class UpdateProductComponent implements OnInit {
 
   }
 
-updateProduct() {
-  if (!this.product.name || !this.product.category || this.product.price == null || this.product.qty == null) {
-    this.snackBar.open('Veuillez remplir tous les champs requis.', 'Fermer', {
-      duration: 3000,
-      panelClass: 'snackbar-error'
-    });
-    return;
-  }
-
-  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-    data: { message: 'Do you want to update this product?' }
-  });
-
-  dialogRef.afterClosed().subscribe(result => {
-    if (result === true) {
-      this.stockService.updateProduct(this.productIdEvent, this.product).subscribe({
-        next: () => {
-          this.snackBar.open('Product updated successfully!', 'Close', {
-            duration: 3000,
-            panelClass: 'snackbar-success'
-          });
-
-          // Force un vrai "refresh" de la route
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/admin/product']);
-          });
-        },
-        error: (err) => {
-          console.error('Error while updating product:', err);
-          this.snackBar.open('Error while updating product.', 'Close', {
-            duration: 3000,
-            panelClass: 'snackbar-error'
-          });
-        }
+  updateProduct() {
+    if (!this.product.name || !this.product.category || this.product.price == null || this.product.qty == null) {
+      this.snackBar.open('Veuillez remplir tous les champs requis.', 'Fermer', {
+        duration: 3000,
+        panelClass: 'snackbar-error'
       });
+      return;
     }
-  });
-}
+
+    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+      data: { message: 'Do you want to update this product?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.stockService.updateProduct(this.productIdEvent, this.product).subscribe({
+          next: () => {
+            this.snackBar.open('Product updated successfully!', 'Close', {
+              duration: 3000,
+              panelClass: 'snackbar-success'
+            });
+
+            this.stockService.notifyProductUpdated(); // 🚀 Notifie les observateurs
+
+            this.router.navigate(['/admin/product']);
+          },
+          error: (err) => {
+            console.error('Error while updating product:', err);
+            this.snackBar.open('Error while updating product.', 'Close', {
+              duration: 3000,
+              panelClass: 'snackbar-error'
+            });
+          }
+        });
+      }
+    });
+  }
 
 
 

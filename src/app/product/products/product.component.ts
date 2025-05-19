@@ -47,6 +47,14 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/{
   }
   ngOnInit(): void {
     this.getProducts();
+
+    this.stockService.productUpdated$.subscribe(() => {
+    this.getProducts(); // recharge la liste
+  });
+this.stockService.productCreated$.subscribe(() => {
+    this.getProducts(); // recharge la liste
+  });
+  
    
   }
 

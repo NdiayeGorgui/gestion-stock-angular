@@ -50,6 +50,8 @@ export class CreateProductComponent implements OnInit {
               duration: 3000,
               panelClass: 'snackbar-success'
             });
+           this.stockService.notifyProductCreated(); // 🚀 Notifie les observateurs
+
             this.router.navigate(['/admin/product']);
           },
           error: (err) => {

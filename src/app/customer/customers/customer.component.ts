@@ -47,6 +47,16 @@ export class CustomerComponent implements OnInit {
     ngOnInit(): void {
       
     this.getCustomers();
+    
+    this.stockService.customerUpdated$.subscribe(() => {
+    this.getCustomers(); // recharge la liste
+    
+  });
+
+   this.stockService.customerCreated$.subscribe(() => {
+    this.getCustomers(); // recharge la liste
+    
+  });
       
     }
 

@@ -73,12 +73,9 @@ export class UpdateCustomerComponent implements OnInit {
               duration: 3000,
               panelClass: 'snackbar-success'
             });
-            this.router.navigate(['/admin'], { skipLocationChange: true }).then(() => {
-              this.router.navigate(['/admin/customer']);
+            this.stockService.notifyCustomerUpdated(); // 🚀 Notifie les observateurs
 
-
-            });
-
+            this.router.navigate(['/admin/customer']);
           },
           error: (err) => {
             console.error('Error while updating customer :', err);
