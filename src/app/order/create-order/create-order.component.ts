@@ -99,35 +99,57 @@ export class CreateOrderComponent implements OnInit {
   }
 
 addProductToOrder() {
-  if (this.selectedProduct && this.itemQty > 0) {
-    const alreadyExists = this.orderItems.some(
-      item => item.id === this.selectedProduct.id
-    );
+  if (!this.selectedProduct) return;
 
-    if (alreadyExists) {
-      this.dialogAlready.open(DialogAlertComponent, {
-        data: {
-          title: 'Product already present',
-          message: 'This product is already in the cart.'
-        }
-      });
-      return;
-    }
-
-    const newItem = {
-      ...this.selectedProduct,
-      qty: this.itemQty,
-      amount: this.amount,
-      price: this.price,
-      tax: this.tax,
-      discount: this.discount
-    };
-
-    this.orderItems.push(newItem);
-    this.resetCurrentProduct();
+  // Vérifie si la quantité est invalide (<= 0)
+  if (this.itemQty <= 0) {
+    this.dialogAlready.open(DialogAlertComponent, {
+      data: {
+        title: 'Invalid Quantity',
+        message: 'Please select a valid number.'
+      }
+    });
+    return;
   }
-}
 
+  // Vérifie si le produit est déjà dans le panier
+  const alreadyExists = this.orderItems.some(
+    item => item.id === this.selectedProduct.id
+  );
+
+  if (alreadyExists) {
+    this.dialogAlready.open(DialogAlertComponent, {
+      data: {
+        title: 'Product already present',
+        message: 'This product is already in the cart.'
+      }
+    });
+    return;
+  }
+
+  // Vérifie si la quantité demandée dépasse le stock disponible
+  if (this.itemQty > this.selectedProduct.qty) {
+    this.dialogAlready.open(DialogAlertComponent, {
+      data: {
+        title: 'Insufficient Stock',
+        message: `Only ${this.selectedProduct.qty} items left in stock.`
+      }
+    });
+    return;
+  }
+
+  const newItem = {
+    ...this.selectedProduct,
+    qty: this.itemQty,
+    amount: this.amount,
+    price: this.price,
+    tax: this.tax,
+    discount: this.discount
+  };
+
+  this.orderItems.push(newItem);
+  this.resetCurrentProduct();
+}
 
 
   removeItem(index: number) {
@@ -216,13 +238,19 @@ async submitOrder() {
       });
       this.showPaymentButton = true;
       this.resetCart();
-    } catch (err) {
-      console.error('Error submitting order item:', err);
-      this.snackBar.open('Error while submitting order. Please try again.', 'Close', {
-        duration: 3000,
-        panelClass: 'snackbar-error'
-      });
-    }
+    } catch (err: any) {
+  console.error('Error submitting order item:', err);
+
+  // Extraction du message d'erreur du backend
+  const errorMessage =
+  err?.error?.message || err?.error?.error || err?.message || 'Error while submitting order. Please try again.';
+
+  this.snackBar.open(errorMessage, 'Close', {
+    duration: 4000,
+    panelClass: 'snackbar-error'
+  });
+}
+
   });
 }
 
