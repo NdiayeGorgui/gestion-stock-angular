@@ -165,8 +165,8 @@ addProductToOrder() {
   }
 
   get totalPrice() {
-    return this.orderItems.reduce((sum, item) => sum + item.price * item.qty, 0);
-  }
+  return this.orderItems.reduce((sum, item) => sum + (item.price ), 0);
+}
 
   get totalAmount() {
     return this.orderItems.reduce((sum, item) => sum + item.amount, 0);
