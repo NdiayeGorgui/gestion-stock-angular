@@ -5,62 +5,94 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 
 @Component({
   selector: 'app-update-customer',
   standalone: false,
-  
+
   templateUrl: './update-customer.component.html',
   styleUrl: './update-customer.component.css'
 })
 export class UpdateCustomerComponent implements OnInit {
-  
-    readonly email = new FormControl('', [Validators.required, Validators.email]);
-  
-    errorMessage = signal('');
 
-  customer:Custom=new Custom();
-    customerIdEvent!:string;
-   constructor(private stockService:StockService,private activatedRoute:ActivatedRoute,private router:Router){
-   merge(this.email.statusChanges, this.email.valueChanges)
-        .pipe(takeUntilDestroyed())
-        .subscribe(() => this.updateErrorMessage());
+  readonly email = new FormControl('', [Validators.required, Validators.email]);
+
+  errorMessage = signal('');
+
+  customer: Custom = new Custom();
+  customerIdEvent!: string;
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private stockService: StockService, private activatedRoute: ActivatedRoute, private router: Router) {
+    merge(this.email.statusChanges, this.email.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updateErrorMessage());
+  }
+  updateErrorMessage() {
+    if (this.email.hasError('required')) {
+      this.errorMessage.set('You must enter a value');
+    } else if (this.email.hasError('email')) {
+      this.errorMessage.set('Not a valid email');
+    } else {
+      this.errorMessage.set('');
     }
-    updateErrorMessage() {
-      if (this.email.hasError('required')) {
-        this.errorMessage.set('You must enter a value');
-      } else if (this.email.hasError('email')) {
-        this.errorMessage.set('Not a valid email');
-      } else {
-        this.errorMessage.set('');
-      }
-    }
-    ngOnInit(): void {
-  
-      this.customerIdEvent=this.activatedRoute.snapshot.params['customerIdEvent'];
-  
-      this.stockService.getCustomerById(this.customerIdEvent).subscribe({
-       next:data=>{
-        this.customer=data;
-       },error:err=>{
+  }
+  ngOnInit(): void {
+
+    this.customerIdEvent = this.activatedRoute.snapshot.params['customerIdEvent'];
+
+    this.stockService.getCustomerById(this.customerIdEvent).subscribe({
+      next: data => {
+        this.customer = data;
+      }, error: err => {
         console.log(err);
       }
+    });
+
+  }
+
+  updateCustomer() {
+    if (!this.customer.name || !this.customer.email || !this.customer.phone) {
+      this.snackBar.open('Veuillez remplir tous les champs requis.', 'Fermer', {
+        duration: 3000,
+        panelClass: 'snackbar-error'
       });
-      
+      return;
     }
-  
-    updateCustomer(){
-      this.stockService.updateCustomer(this.customerIdEvent,this.customer).subscribe({
-        next:data=>{
-          console.log('Réponse du serveur:', data);
-          alert('Customer updated successfuly !');
-          this.router.navigateByUrl("/admin/customer");
-         },error:err=>{
-          console.error('Error:', err);
-          alert('Error while updating customer. Please try again.');
-        }
+
+    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+      data: { message: 'Do you want to update this customer?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.stockService.updateCustomer(this.customerIdEvent, this.customer).subscribe({
+          next: (data) => {
+            this.snackBar.open('Customer updated successfully!', 'Close', {
+              duration: 3000,
+              panelClass: 'snackbar-success'
+            });
+            this.router.navigate(['/admin'], { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/admin/customer']);
+
+
+            });
+
+          },
+          error: (err) => {
+            console.error('Error while updating customer :', err);
+            this.snackBar.open('Error while updating customer. Please try again.', 'Close', {
+              duration: 3000,
+              panelClass: 'snackbar-error'
+            });
+          }
         });
-    }
+      }
+    });
+  }
+
+
 
 }
 
