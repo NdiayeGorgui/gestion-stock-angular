@@ -70,10 +70,15 @@
             <span *ngIf="element.qtyStatus === 'LOW'" class="text-warning fw-bold">
               LOW STOCK
             </span>
-            <span *ngIf="element.qtyStatus !== 'LOW' && element.qtyStatus !== 'UNAVAILABLE'">
+            <span *ngIf="element.qtyStatus === 'AVAILABLE'" class="text-success fw-bold">
+              AVAILABLE
+            </span>
+            <span
+              *ngIf="element.qtyStatus !== 'LOW' && element.qtyStatus !== 'UNAVAILABLE' && element.qtyStatus !== 'AVAILABLE'">
               {{ element.qtyStatus }}
             </span>
           </td>
+
         </ng-container>
 
 
