@@ -1,132 +1,109 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Order details</mat-card-title>
+      <mat-card-title><strong>Order Details</strong></mat-card-title>
     </mat-card-header>
+
     <mat-divider></mat-divider>
+
     <mat-card-content>
-
-      <mat-toolbar>
-        <mat-form-field class="create-payment">
-          <input matInput value="Order" readonly>
-          <mat-icon matSuffix>down_outline</mat-icon>
-        </mat-form-field>
-
-        <mat-form-field class="create-payment">
-          <input matInput value="Customer" readonly>
-          <mat-icon matSuffix>down_outline</mat-icon>
-        </mat-form-field>
-        <mat-form-field class="create-payment">
-          <input matInput value="Product" readonly>
-          <mat-icon matSuffix>down_outline</mat-icon>
-        </mat-form-field>
-      </mat-toolbar>
-
-      <mat-toolbar>
-        <mat-form-field class="create-payment">
+     
+      <!-- Champs -->
+      <div class="form-grid">
+        <!-- ORDER -->
+        <mat-form-field appearance="outline">
           <mat-label>Order IdEvent</mat-label>
-          <input matInput class="form-control" id="orderIdEvent" readonly [(ngModel)]="orderEvent.orderIdEvent"
-            name="orderIdEvent">
+          <input matInput readonly [(ngModel)]="orderEvent.orderIdEvent" />
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
 
-        <mat-form-field class="create-payment">
-          <mat-label>Customer IdEvent</mat-label>
-          <input matInput class="form-control" id="customerIdEvent" readonly
-            [(ngModel)]="orderEvent.order.customerIdEvent" name="customerIdEvent">
-          <mat-icon matSuffix>check_circle</mat-icon>
-        </mat-form-field>
-
-        <mat-form-field class="create-payment">
-          <mat-label>Product IdEvent</mat-label>
-          <input matInput class="form-control" id="productIdEvent" readonly
-            [(ngModel)]="orderEvent.product.productIdEvent" name="productIdEvent">
-          <mat-icon matSuffix>check_circle</mat-icon>
-        </mat-form-field>
-      </mat-toolbar>
-
-      <mat-toolbar>
-        <mat-form-field class="create-payment">
+        <mat-form-field appearance="outline">
           <mat-label>Order Id</mat-label>
-          <input matInput class="form-control" id="id" readonly [(ngModel)]="orderEvent.id" name="id">
+          <input matInput readonly [(ngModel)]="orderEvent.id" />
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
-        <mat-form-field class="create-payment">
-          <mat-label>Customer Name</mat-label>
-          <mat-icon matSuffix>person</mat-icon>
-          <input matInput [(ngModel)]="orderEvent.order.customer.name" readonly />
-        </mat-form-field>
-        <mat-form-field class="create-payment">
-          <mat-label>Product name</mat-label>
-          <mat-icon matSuffix>inventory</mat-icon>
-          <input matInput [(ngModel)]="orderEvent.product.name" id="productName" name="productName" readonly />
-        </mat-form-field>
-      </mat-toolbar>
 
-      <mat-toolbar>
-        <mat-form-field class="create-payment">
-          <mat-label>Order date</mat-label>
-          <input matInput class="form-control" id="date" readonly [(ngModel)]="orderEvent.order.date" name="date">
+        <mat-form-field appearance="outline">
+          <mat-label>Order Date</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.order.date" />
           <mat-icon matSuffix>schedule</mat-icon>
         </mat-form-field>
 
-        <mat-form-field class="create-payment">
-          <mat-label>Customer Address</mat-label>
-          <mat-icon matSuffix>home</mat-icon>
-          <input matInput [(ngModel)]="orderEvent.order.customer.address" readonly />
-        </mat-form-field>
-        <mat-form-field class="create-payment">
-          <mat-label>Product category</mat-label>
-          <mat-icon matSuffix>category</mat-icon>
-          <input matInput [(ngModel)]="orderEvent.product.category" name="category" id="category" readonly />
-        </mat-form-field>
-      </mat-toolbar>
-
-      <mat-toolbar>
-
-        <mat-form-field class="create-payment">
-          <mat-label>Discount</mat-label>
-          <input matInput class="form-control" id="discount" readonly [(ngModel)]="orderEvent.discount" name="discount">
-          <mat-icon matSuffix>paid</mat-icon>
-        </mat-form-field>
-
-
-
-        <mat-form-field class="create-payment">
-          <mat-label>Customer mail</mat-label>
-          <mat-icon matSuffix>mail</mat-icon>
-          <input matInput [(ngModel)]="orderEvent.order.customer.email" readonly />
-
-        </mat-form-field>
-
-        <mat-form-field class="create-payment">
-          <mat-label>Product price</mat-label>
-          <input matInput class="form-control" id="amount" readonly [(ngModel)]="orderEvent.amount" name="amount">
-          <mat-icon matSuffix>paid</mat-icon>
-        </mat-form-field>
-      </mat-toolbar>
-
-      <mat-toolbar>
-        <mat-form-field class="create-payment">
-          <mat-label>Order status</mat-label>
-          <input matInput class="form-control" id="orderStatus" readonly [(ngModel)]="orderEvent.order.orderStatus"
-            name="orderStatus">
+        <mat-form-field appearance="outline">
+          <mat-label>Order Status</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.order.orderStatus" />
           <mat-icon matSuffix>check_small</mat-icon>
         </mat-form-field>
 
-        <mat-form-field class="create-payment">
-          <mat-label>Customer phone</mat-label>
-          <mat-icon matSuffix>phone</mat-icon>
-          <input matInput [(ngModel)]="orderEvent.order.customer.phone" readonly />
-
+        <!-- CUSTOMER -->
+        <mat-form-field appearance="outline">
+          <mat-label>Customer IdEvent</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.order.customerIdEvent" />
+          <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
-        <mat-form-field class="create-payment">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Customer Name</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.order.customer.name" />
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Customer Address</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.order.customer.address" />
+          <mat-icon matSuffix>home</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Customer Email</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.order.customer.email" />
+          <mat-icon matSuffix>mail</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Customer Phone</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.order.customer.phone" />
+          <mat-icon matSuffix>phone</mat-icon>
+        </mat-form-field>
+
+        <!-- PRODUCT -->
+        <mat-form-field appearance="outline">
+          <mat-label>Product IdEvent</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.product.productIdEvent" />
+          <mat-icon matSuffix>check_circle</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Product Name</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.product.name" />
+          <mat-icon matSuffix>inventory</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Product Category</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.product.category" />
+          <mat-icon matSuffix>category</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Product Price</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.amount" />
+          <mat-icon matSuffix>paid</mat-icon>
+        </mat-form-field>
+
+        <!-- OTHER -->
+        <mat-form-field appearance="outline">
+          <mat-label>Discount</mat-label>
+          <input matInput readonly [(ngModel)]="orderEvent.discount" />
+          <mat-icon matSuffix>percent</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label>Quantity</mat-label>
-          <input matInput class="form-control" id="quantity" readonly [(ngModel)]="orderEvent.quantity" name="quantity">
+          <input matInput readonly [(ngModel)]="orderEvent.quantity" />
           <mat-icon matSuffix>balance</mat-icon>
         </mat-form-field>
-      </mat-toolbar>
-
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

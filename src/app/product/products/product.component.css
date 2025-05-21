@@ -18,3 +18,47 @@ mat-divider {
   }
   
 
+.product-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 24px 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-field {
+  flex: 1 1 300px;
+  min-width: 200px;
+}
+
+.add-btn {
+  white-space: nowrap;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 16px;
+}
+
+table {
+  width: 100%;
+  min-width: 800px;
+}
+
+.status-label {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status-label.success {
+  color: #388e3c;
+}
+
+.status-label.warning {
+  color: #fbc02d;
+}
+
+.status-label.danger {
+  color: #d32f2f;
+}

@@ -27,3 +27,25 @@
     display:inline-block;
     margin:5px;
 }
+
+.order-actions {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.table-container {
+  margin-top: 24px;
+  overflow-x: auto; 
+}
+
+table {
+  width: 100%;
+  min-width: 800px;
+}
+
+mat-card-title {
+  font-weight: 600;
+}

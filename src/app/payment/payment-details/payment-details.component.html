@@ -1,68 +1,50 @@
 <div class="container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Payment details</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Payment details</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
 
-            <mat-toolbar>
+    <mat-card-content>
+      <div class="form-grid">
 
+        <mat-form-field appearance="outline">
+          <mat-label>Payment IdEvent</mat-label>
+          <input matInput readonly [(ngModel)]="payment.paymentIdEvent" name="paymentIdEvent" />
+          <mat-icon matSuffix>check_circle</mat-icon>
+        </mat-form-field>
 
-                <mat-form-field class="create-payment">
-                    <mat-label>Payment IdEvent</mat-label>
-                    <input matInput class="form-control" id="paymentIdEvent" readonly
-                        [(ngModel)]="payment.paymentIdEvent" name="paymentIdEvent">
-                    <mat-icon matSuffix>check_circle</mat-icon>
-                </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Payment Date</mat-label>
+          <input matInput readonly [(ngModel)]="payment.timeStamp" name="timeStamp" />
+          <mat-icon matSuffix>schedule</mat-icon>
+        </mat-form-field>
 
-                <mat-form-field class="create-payment">
-                    <mat-label>Payment Date</mat-label>
-                    <mat-icon matSuffix>schedule</mat-icon>
-                    <input matInput [(ngModel)]="payment.timeStamp" name="timeStamp" id="timeStamp" readonly />
+        <mat-form-field appearance="outline">
+          <mat-label>Payment mode</mat-label>
+          <input matInput readonly [(ngModel)]="payment.paymentMode" name="paymentMode" />
+          <mat-icon matSuffix>attach_money</mat-icon>
+        </mat-form-field>
 
-                </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Payment status</mat-label>
+          <input matInput readonly [(ngModel)]="payment.paymentStatus" name="paymentStatus" />
+          <mat-icon matSuffix>check_small</mat-icon>
+        </mat-form-field>
 
-            </mat-toolbar>
+        <mat-form-field appearance="outline">
+          <mat-label>Customer Name</mat-label>
+          <input matInput readonly [(ngModel)]="customer.name" name="customerName" />
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
 
+        <mat-form-field appearance="outline">
+          <mat-label>Total Amount</mat-label>
+          <input matInput readonly [(ngModel)]="payment.amount" name="amount" />
+          <mat-icon matSuffix>paid</mat-icon>
+        </mat-form-field>
 
-
-            <mat-toolbar>
-                <mat-form-field class="create-payment">
-                    <mat-label>Payment mode</mat-label>
-                    <mat-icon matSuffix>attach_money</mat-icon>
-                    <input matInput [(ngModel)]="payment.paymentMode" name="paymentMode" id="paymentMode" readonly />
-
-                </mat-form-field>
-
-                <mat-form-field class="create-payment">
-                    <mat-label>Payment status</mat-label>
-                    <mat-icon matSuffix>check_small</mat-icon>
-                    <input matInput [(ngModel)]="payment.paymentStatus" name="paymentStatus" id="paymentStatus"
-                        readonly />
-
-                </mat-form-field>
-
-            </mat-toolbar>
-
-            <mat-toolbar>
-                <mat-form-field class="create-payment">
-                    <mat-label>Customer Name</mat-label>
-                    <input matInput class="form-control" id="customerName" readonly [(ngModel)]="customer.name"
-                        name="customerName">
-                    <mat-icon matSuffix>person</mat-icon>
-                </mat-form-field>
-
-                <mat-form-field class="create-payment">
-                    <mat-label>Total Amount</mat-label>
-                    <input matInput class="form-control" id="amount" readonly [(ngModel)]="payment.amount"
-                        name="amount">
-                    <mat-icon matSuffix>paid</mat-icon>
-                </mat-form-field>
-            </mat-toolbar>
-
-
-
-        </mat-card-content>
-    </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

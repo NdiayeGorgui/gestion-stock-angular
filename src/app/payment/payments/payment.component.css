@@ -29,3 +29,30 @@ mat-divider {
    
     margin-top: 20px;
 }
+
+.payment-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 24px 0;
+  align-items: center;
+}
+
+.search-field {
+  flex: 1 1 300px;
+  min-width: 200px;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 16px;
+}
+
+table {
+  width: 100%;
+  min-width: 800px;
+}
+
+.icon-button {
+  background-color: #f1f1f1;
+}

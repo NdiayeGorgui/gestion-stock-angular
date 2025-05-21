@@ -1,86 +1,75 @@
 <div class="container mt-4">
   <mat-card>
     <mat-card-header>
-      <div class="mb-3">
-        <mat-card-title>Deliveries List</mat-card-title>
-      </div>
+      <mat-card-title><strong>Deliveries List</strong></mat-card-title>
     </mat-card-header>
 
     <mat-divider></mat-divider>
 
     <mat-card-content>
-
-      <!-- Barre de recherche et bouton "New Customer" -->
-      <div class="row align-items-center mb-3">
-        <div class="col-md-6 mb-2">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>
-              <mat-icon matSuffix>search</mat-icon>
-              Search
-            </mat-label>
-            <input matInput (keyup)="filterDelivers($event)">
-          </mat-form-field>
-        </div>
-        <div class="col-md-6 text-md-end">
-
-        </div>
+      <!-- Barre de recherche -->
+      <div class="delivery-toolbar">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>
+            <mat-icon matSuffix>search</mat-icon>
+            Search
+          </mat-label>
+          <input matInput (keyup)="filterDelivers($event)" />
+        </mat-form-field>
       </div>
 
-      <!-- Tableau des clients -->
-      <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100">
+      <!-- Tableau des livraisons -->
+      <div class="table-container">
+        <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="orderId">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Id </th>
-          <td mat-cell *matCellDef="let element"> {{element.orderId}} </td>
-        </ng-container>
+          <!-- Order ID -->
+          <ng-container matColumnDef="orderId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Id </th>
+            <td mat-cell *matCellDef="let element"> {{ element.orderId }} </td>
+          </ng-container>
 
-        <!-- Address Column -->
-        <ng-container matColumnDef="customerName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
-        </ng-container>
+          <!-- Customer Name -->
+          <ng-container matColumnDef="customerName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </th>
+            <td mat-cell *matCellDef="let element"> {{ element.customerName }} </td>
+          </ng-container>
 
-        <!-- Email Column -->
-        <ng-container matColumnDef="customerMail">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-          <td mat-cell *matCellDef="let element"> {{element.customerMail}} </td>
-        </ng-container>
+          <!-- Email -->
+          <ng-container matColumnDef="customerMail">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let element"> {{ element.customerMail }} </td>
+          </ng-container>
 
-        <!-- Phone Column -->
-        <ng-container matColumnDef="eventTimeStamp">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-          <td mat-cell *matCellDef="let element"> {{element.eventTimeStamp | date: 'dd/MM/YYYY'}} </td>
-        </ng-container>
+          <!-- Date -->
+          <ng-container matColumnDef="eventTimeStamp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <td mat-cell *matCellDef="let element"> {{ element.eventTimeStamp | date:'dd/MM/yyyy' }} </td>
+          </ng-container>
 
-        <!-- Status Column -->
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-        </ng-container>
+          <!-- Status -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
+          </ng-container>
 
+          <!-- Action -->
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Deliver Order </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="accent" (click)="deliverOrder(element.orderId)">
+                <mat-icon>local_shipping</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-
-        <!-- Actions Column -->
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef> Deliver order</th>
-          <td mat-cell *matCellDef="let element">
-
-            <button (click)="deliverOrder(element.orderId)" mat-icon-button color="accent">
-              <mat-icon>local_shipping</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-
-        <!-- Affichage des lignes -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
 
       <!-- Pagination -->
-      <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons aria-label="Pagination">
+      <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons aria-label="Delivery pagination">
       </mat-paginator>
-
     </mat-card-content>
   </mat-card>
 </div>
