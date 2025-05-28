@@ -44,7 +44,7 @@ export class ShipOrderComponent implements OnInit {
       if (result === true) {
         this.stockService.createShip(this.ship).subscribe({
           next: (res) => {
-            console.log('Réponse du serveur:', res);
+            console.log('Réponse du serveur:', res); 
             this.snackBar.open('Order shipped successfully!', 'Close', {
               duration: 3000,
               panelClass: ['snackbar-success']

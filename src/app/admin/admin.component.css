@@ -45,4 +45,10 @@ mat-card-footer {
 }
 
 
-  
+.vertical-divider {
+    width: 1px;
+    height: 24px;
+    /* ou 100% pour toute la hauteur de la barre */
+    background-color: rgb(16, 15, 15);
+    margin: 0 12px;
+}

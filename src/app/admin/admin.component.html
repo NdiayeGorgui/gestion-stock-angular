@@ -13,14 +13,16 @@
     <button mat-button routerLink="/admin/home">
       <mat-icon matSuffix>home</mat-icon> Home
     </button>
+     <div class="vertical-divider"></div>
+    <button mat-button [matMenuTriggerFor]="importMenu">
+      <mat-icon iconPositionEnd>arrow_drop_down</mat-icon> Orders List
+    </button>
     <button mat-button routerLink="/admin/chat-bot">
       <mat-icon matSuffix>chat</mat-icon> Chat bot zone
     </button>
+     <div class="vertical-divider"></div>
     <button mat-button routerLink="/admin/profile">
       <mat-icon matSuffix>portrait</mat-icon> Profile
-    </button>
-    <button mat-button [matMenuTriggerFor]="importMenu">
-      <mat-icon iconPositionEnd>arrow_drop_down</mat-icon> Orders List
     </button>
     <button mat-button *ngIf="authService.authenticated">
       <mat-icon matSuffix>person</mat-icon> {{ authService.username }}
@@ -43,14 +45,14 @@
   <button mat-menu-item routerLink="/admin/home">
     <mat-icon>home</mat-icon> Home
   </button>
+   <button mat-menu-item [matMenuTriggerFor]="importMenu">
+    <mat-icon>format_list_bulleted</mat-icon> Orders List
+  </button>
   <button mat-menu-item routerLink="/admin/chat-bot">
     <mat-icon>chat</mat-icon> Chat Bot Zone
   </button>
   <button mat-menu-item routerLink="/admin/profile">
     <mat-icon>portrait</mat-icon> Profile
-  </button>
-  <button mat-menu-item [matMenuTriggerFor]="importMenu">
-    <mat-icon>format_list_bulleted</mat-icon> Orders List
   </button>
   <button mat-menu-item *ngIf="authService.authenticated">
     <mat-icon>person</mat-icon> {{ authService.username }}
