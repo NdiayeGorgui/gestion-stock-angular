@@ -28,9 +28,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { ProductComponent } from './product/products/product.component';
 import { CustomerComponent } from './customer/customers/customer.component';
-import { AuthGuard } from './guards/auth.guard';
-import { AuthorizationGuard } from './guards/authorization.guard';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+
+
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient } from '@angular/common/http';
 import { CreateCustomerComponent } from './customer/create-customer/create-customer.component';
 import { CreateProductComponent } from './product/create-product/create-product.component';
 import { OrderComponent } from './order/orders/order.component';
@@ -62,6 +62,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from './shared/add-confirm-dialog/add-confirm-dialog.component';
 import { DialogAlertComponent } from './shared/dialog-alert/dialog-alert.component';
+import { AuthInterceptor } from './keycloak/auth.interceptor';
 
 
 
@@ -138,7 +139,7 @@ import { DialogAlertComponent } from './shared/dialog-alert/dialog-alert.compone
   
   ],
   providers: [
-   AuthGuard,AuthorizationGuard,[provideHttpClient()]
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
 
   bootstrap: [AppComponent]

@@ -8,8 +8,8 @@ import { CustomerComponent } from './customer/customers/customer.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './guards/auth.guard';
-import { AuthorizationGuard } from './guards/authorization.guard';
+
+
 import { OrderComponent } from './order/orders/order.component';
 import { PaymentComponent } from './payment/payments/payment.component';
 import { CreateCustomerComponent } from './customer/create-customer/create-customer.component';
@@ -40,12 +40,12 @@ import { OrderCreatedCompletedDetailsComponent } from './order/order-created-com
 const routes: Routes = [
   {path:"",component:LoginComponent},
   {path:"login",component:LoginComponent},
-  {path:"admin",component:AdminComponent, canActivate:[AuthGuard],
+  {path:"admin",component:AdminComponent,
     children:[
     {path:"home",component:HomeComponent},
     {path:"profile",component:ProfileComponent},
     {path:"chat-bot",component:ChatBotComponent},
-    {path:"product",component:ProductComponent,canActivate:[AuthorizationGuard],data :{roles:['ADMIN']}},
+    {path:"product",component:ProductComponent},
     {path:"create-product",component:CreateProductComponent},
     {path:"update-product/:productIdEvent",component:UpdateProductComponent},
     {path:"product-details/:productIdEvent",component:ProductDetailsComponent},
@@ -60,16 +60,16 @@ const routes: Routes = [
     {path:"order-details/:customerIdEvent",component:OrderDetailsComponent},
     {path:"order-created-completed-details/:orderIdEvent",component:OrderCreatedCompletedDetailsComponent},
     {path:"create-payment/:customerIdEvent",component:CreatePaymentComponent},
-    {path:"dashboard",component:DashboardComponent,canActivate:[AuthorizationGuard],data :{roles:['ADMIN']}},
+    {path:"dashboard",component:DashboardComponent},
     {path:"bill",component:BillComponent},
     {path:"create-bill",component:CreateBillComponent},
     {path:"bill-details/:orderRef",component:BillDetailsComponent},
     {path:"payment",component:PaymentComponent},
     {path:"payment-details/:paymentIdEvent",component:PaymentDetailsComponent},
     {path:"ship-order/:orderId",component:ShipOrderComponent},
-    {path:"shipped-orders",component:ShippedOrdersComponent,canActivate:[AuthorizationGuard],data :{roles:['ADMIN']}},
+    {path:"shipped-orders",component:ShippedOrdersComponent},
     {path:"deliver-order/:orderId",component:DeliverOrderComponent},
-    {path:"delivered-orders",component:DeliveredOrdersComponent,canActivate:[AuthorizationGuard],data :{roles:['ADMIN']}},
+    {path:"delivered-orders",component:DeliveredOrdersComponent},
     {path:"order-events",component:OrderEventsComponent},
   ]},
 ];

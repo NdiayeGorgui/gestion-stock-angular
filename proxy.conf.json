@@ -1,0 +1,11 @@
+{
+  "/auth": {
+    "target": "http://keycloak:8080",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/auth": ""
+    }
+  }
+}
+

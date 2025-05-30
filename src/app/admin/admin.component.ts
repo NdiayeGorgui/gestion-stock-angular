@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../services/authentication.service';
+
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDrawer } from '@angular/material/sidenav';
 
@@ -18,7 +18,7 @@ export class AdminComponent implements OnInit {
 
 
   constructor(
-    public authService: AuthenticationService,
+    
     private breakpointObserver: BreakpointObserver
   ) {
     this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet])
@@ -44,7 +44,7 @@ export class AdminComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+   
   }
 
   closeDrawerIfMobile(drawer: MatDrawer): void {

@@ -21,15 +21,21 @@
       <mat-icon matSuffix>chat</mat-icon> Chat bot zone
     </button>
      <div class="vertical-divider"></div>
-    <button mat-button routerLink="/admin/profile">
-      <mat-icon matSuffix>portrait</mat-icon> Profile
-    </button>
-    <button mat-button *ngIf="authService.authenticated">
-      <mat-icon matSuffix>person</mat-icon> {{ authService.username }}
-    </button>
-    <button routerLink="/login" mat-flat-button color="accent" (click)="logout()">
-      <mat-icon matSuffix>logout</mat-icon> Logout
-    </button>
+   <!-- Bouton avec menu déroulant -->
+<button mat-button  [matMenuTriggerFor]="userMenu">
+   <mat-icon>person</mat-icon>
+ <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>  authService.username 
+</button>
+
+<mat-menu #userMenu="matMenu">
+  <button mat-menu-item routerLink="/admin/profile">
+    <mat-icon>portrait</mat-icon> Profile
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>logout</mat-icon> Logout
+  </button>
+</mat-menu>
+
   </ng-container>
 
   <!-- Version Mobile -->
@@ -54,8 +60,8 @@
   <button mat-menu-item routerLink="/admin/profile">
     <mat-icon>portrait</mat-icon> Profile
   </button>
-  <button mat-menu-item *ngIf="authService.authenticated">
-    <mat-icon>person</mat-icon> {{ authService.username }}
+  <button mat-menu-item >
+    <mat-icon>person</mat-icon>  authService.username 
   </button>
   <button mat-menu-item routerLink="/login" (click)="logout()">
     <mat-icon>logout</mat-icon> Logout
@@ -78,12 +84,12 @@
 <mat-drawer-container>
   <mat-drawer #drawer [mode]="drawerMode" [opened]="drawerOpened">
     <mat-nav-list>
-      <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
+      <mat-list-item>
         <button routerLink="/admin/dashboard" mat-button (click)="closeDrawerIfMobile(drawer)">
           <mat-icon>dashboard</mat-icon> Dashboard
         </button>
       </mat-list-item>
-      <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
+      <mat-list-item >
         <button routerLink="/admin/product" mat-button (click)="closeDrawerIfMobile(drawer)">
           <mat-icon>inventory</mat-icon> Manage Products
         </button>
@@ -98,12 +104,12 @@
           <mat-icon>shopping</mat-icon> Create Orders
         </button>
       </mat-list-item>
-      <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
+      <mat-list-item >
         <button routerLink="/admin/shipped-orders" mat-button (click)="closeDrawerIfMobile(drawer)">
           <mat-icon>hail</mat-icon> Ship Orders
         </button>
       </mat-list-item>
-      <mat-list-item *ngIf="authService.roles.includes('ADMIN')">
+      <mat-list-item >
         <button routerLink="/admin/delivered-orders" mat-button (click)="closeDrawerIfMobile(drawer)">
           <mat-icon>local_shipping</mat-icon> Deliver Orders
         </button>
