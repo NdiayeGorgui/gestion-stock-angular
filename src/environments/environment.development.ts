@@ -19,5 +19,7 @@ export const environment = {
     backendShippingtHost:"http://localhost:8888/shipping-service/api/v1/ships",
     backendOrderEventtHost:"http://localhost:8888/order-service/api/v1/orders/events/all",
     backendProductMostOrderedHost:"http://localhost:8888/order-service/api/v1/orders/most-ordered-products",
-    backendTop10CustomersMostOrderedHost:"http://localhost:8888/order-service/api/v1/orders/top10"
+    backendTop10CustomersMostOrderedHost:"http://localhost:8888/order-service/api/v1/orders/top10",
+    backendCustomerExtistHost:"http://localhost:8888/customer-service/api/v1/customers/exists-by-email"
+    
 };

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDrawer } from '@angular/material/sidenav';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-admin',
@@ -16,8 +17,10 @@ export class AdminComponent implements OnInit {
   drawerOpened = true;
   isSmallScreen = false;
 
+  firstName: string = '';
 
-  constructor(
+
+  constructor(private keycloakService: KeycloakService,
     
     private breakpointObserver: BreakpointObserver
   ) {
@@ -39,12 +42,18 @@ export class AdminComponent implements OnInit {
   toggleDrawer(drawer: any) {
     drawer.toggle();
   }
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+     const profile = await this.keycloakService.loadUserProfile();
+    this.firstName = profile.firstName || '';
 
   }
 
-  logout() {
-   
+ logout(): void {
+    this.keycloakService.logout(window.location.origin); // Redirige vers la page d'accueil
+  }
+
+  get username(): string {
+    return this.keycloakService.getKeycloakInstance().tokenParsed?.['preferred_username'] || '';
   }
 
   closeDrawerIfMobile(drawer: MatDrawer): void {

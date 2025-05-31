@@ -17,14 +17,15 @@ export class LoginComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    this.loginFormGroup=this.fb.group({
-      username:this.fb.control(''),
-      password:this.fb.control('')
-    });
+   
   }
 
   login(){
+    
+
    
+      this.router.navigateByUrl("/admin/home");
+    
   }
 
 }

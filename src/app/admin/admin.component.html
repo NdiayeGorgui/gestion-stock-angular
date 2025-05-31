@@ -24,7 +24,7 @@
    <!-- Bouton avec menu déroulant -->
 <button mat-button  [matMenuTriggerFor]="userMenu">
    <mat-icon>person</mat-icon>
- <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>  authService.username 
+ <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>  {{ firstName }}  
 </button>
 
 <mat-menu #userMenu="matMenu">
@@ -61,7 +61,7 @@
     <mat-icon>portrait</mat-icon> Profile
   </button>
   <button mat-menu-item >
-    <mat-icon>person</mat-icon>  authService.username 
+    <mat-icon>person</mat-icon>  {{ firstName }} 
   </button>
   <button mat-menu-item routerLink="/login" (click)="logout()">
     <mat-icon>logout</mat-icon> Logout

@@ -1,23 +1,26 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpInterceptor, HttpRequest, HttpHandler, HttpEvent
-} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { KeycloakService } from './keycloak.service';
-
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { from, mergeMap, Observable, switchMap } from "rxjs";
+import { AuthenticationService } from "../services/authentication.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private keycloakService: KeycloakService) {}
+  constructor(private authService: AuthenticationService) {}
+
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.keycloakService.getToken();
-    if (token) {
-      const authReq = req.clone({
-        setHeaders: { Authorization: `Bearer ${token}` },
-      });
-      return next.handle(authReq);
-    }
-    return next.handle(req);
+    return from(this.authService.getToken()).pipe(
+      mergeMap(token => {
+        if (token) {
+          const clonedReq = req.clone({
+            setHeaders: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          return next.handle(clonedReq);
+        }
+        return next.handle(req);
+      })
+    );
   }
 }

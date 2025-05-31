@@ -103,7 +103,11 @@
       <tbody>
         <tr *ngFor="let item of orderItems; index as i">
           <td>{{ item.name }}</td>
-          <td>{{ item.qty }}</td>
+          <td><input type="number" min="1"
+           [(ngModel)]="item.qty"
+           (change)="onQtyChangeInCart(i)"
+           [max]="item.stock"
+           style="width: 60px;" /></td>
           <td>{{ item.price.toFixed(2) }} $</td>
           <td>{{ item.tax.toFixed(2) }} $</td>
           <td>{{ item.discount.toFixed(2) }} $</td>

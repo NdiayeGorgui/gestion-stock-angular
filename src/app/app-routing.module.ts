@@ -38,8 +38,7 @@ import { OrderCreatedCompletedDetailsComponent } from './order/order-created-com
 
 
 const routes: Routes = [
-  {path:"",component:LoginComponent},
-  {path:"login",component:LoginComponent},
+  { path: "", redirectTo: "/admin/home", pathMatch: "full" },
   {path:"admin",component:AdminComponent,
     children:[
     {path:"home",component:HomeComponent},

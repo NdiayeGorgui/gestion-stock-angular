@@ -16,6 +16,7 @@ import { Ship } from '../ship/Ship';
 import { OrderEventSourcing } from '../order/OrderEventSourcing';
 import { ProductStatDTO } from '../order/ProductStatDTO';
 import { CustomerDto } from '../order/customerDto';
+import { CustomerExistsResponse } from '../customer/create-customer/CustomerExistsResponse';
 
 
 @Injectable({
@@ -33,6 +34,11 @@ export class StockService {
   getCustomerOrderById(id: string): Observable<Custom> {
 
     return this.httpClient.get<Custom>(`${environment.backendOrderCustomerHost}/${id}`);
+  }
+
+   getCustomerExistByEmail(email: string): Observable<CustomerExistsResponse> {
+
+    return this.httpClient.get<CustomerExistsResponse>(`${environment.backendCustomerExtistHost}/${email}`);
   }
 
   getCustomersList(): Observable<Customers[]> {

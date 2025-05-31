@@ -121,7 +121,7 @@ addProductToOrder() {
     this.dialogAlready.open(DialogAlertComponent, {
       data: {
         title: 'Product already present',
-        message: 'This product is already in the cart.'
+        message: 'This product is already in the cart, please update quantity.'
       }
     });
     return;
@@ -138,14 +138,17 @@ addProductToOrder() {
     return;
   }
 
-  const newItem = {
-    ...this.selectedProduct,
-    qty: this.itemQty,
-    amount: this.amount,
-    price: this.price,
-    tax: this.tax,
-    discount: this.discount
-  };
+const newItem = {
+  ...this.selectedProduct,
+  qty: this.itemQty,
+  qtyAvailable: this.selectedProduct.qty,
+  unitPrice: Number(this.selectedProduct.price),
+  price: this.price,
+  tax: this.tax,
+  discount: this.discount,
+  amount: this.amount
+};
+
 
   this.orderItems.push(newItem);
   this.resetCurrentProduct();
@@ -277,4 +280,35 @@ async submitOrder() {
   goToCreatedOrders() {
     this.router.navigate(['/admin/order']);
   }
+
+  onQtyChangeInCart(index: number) {
+  const item = this.orderItems[index];
+
+  // Vérifie que la quantité est valide
+  if (item.qty <= 0) {
+    this.snackBar.open('Quantity must be at least 1.', 'Close', {
+      duration: 3000,
+      panelClass: 'snackbar-error'
+    });
+    item.qty = 1;
+    return;
+  }
+
+  if (item.qty > item.qtyAvailable) {
+    this.snackBar.open(`Only ${item.qtyAvailable} in stock.`, 'Close', {
+      duration: 3000,
+      panelClass: 'snackbar-error'
+    });
+    item.qty = item.qtyAvailable;
+    return;
+  }
+
+  // Recalcule les montants
+  const total = item.qty * item.unitPrice;
+  item.price = total;
+  item.tax = total * 0.2;
+  item.discount = this.getDiscount(item.qty, item.unitPrice);
+  item.amount = item.price + item.tax - item.discount;
+}
+
 }

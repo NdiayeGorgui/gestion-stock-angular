@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -64,7 +64,26 @@ import { AddConfirmDialogComponent } from './shared/add-confirm-dialog/add-confi
 import { DialogAlertComponent } from './shared/dialog-alert/dialog-alert.component';
 import { AuthInterceptor } from './keycloak/auth.interceptor';
 
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { HttpClientModule } from '@angular/common/http';
 
+
+
+export function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://keycloak:8080/',  // Ne mets JAMAIS "keycloak" ici côté frontend
+        realm: 'stock-realm',
+        clientId: 'app-stock',
+      },
+      initOptions: {
+        onLoad: 'login-required',
+        checkLoginIframe: false
+      },
+      loadUserProfileAtStartUp: true
+    });
+}
 
 
 @NgModule({
@@ -134,12 +153,24 @@ import { AuthInterceptor } from './keycloak/auth.interceptor';
     MatSnackBarModule,
     MatBadgeModule,
     BrowserAnimationsModule,
-    CreateOrderComponent
+    CreateOrderComponent,
+    KeycloakAngularModule,
+    HttpClientModule
     
   
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+     {
+    provide: APP_INITIALIZER,
+    useFactory: initializeKeycloak,
+    multi: true,
+    deps: [KeycloakService]
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }
   ],
 
   bootstrap: [AppComponent]

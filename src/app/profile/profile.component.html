@@ -1,11 +1,19 @@
 <div class="container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Profile</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-            Profile content
-        </mat-card-content>
-    </mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Profile Details</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <p><strong>First Name:</strong> {{ firstName }}</p>
+      <p><strong>Last Name:</strong> {{ lastName }}</p>
+      <p><strong>Email:</strong> {{ email }}</p>
+      <p><strong>Roles:</strong> {{ roles.join(', ') }}</p>
+
+      <!-- Optionnel : bouton pour modifier son profil sur Keycloak -->
+      <button mat-raised-button color="primary" (click)="manageAccount()">
+        Modifier mon profil
+      </button>
+    </mat-card-content>
+  </mat-card>
 </div>
