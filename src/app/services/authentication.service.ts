@@ -10,4 +10,11 @@ export class AuthenticationService {
   getToken(): Promise<string> {
     return this.keycloakService.getToken();
   }
+
+  isAdmin(): boolean {
+    // Récupérer les rôles du realm (realm roles)
+    const roles = this.keycloakService.getUserRoles(true); // true pour roles realm (false = client roles)
+    return roles.includes('ADMIN');
+  }
+  
 }

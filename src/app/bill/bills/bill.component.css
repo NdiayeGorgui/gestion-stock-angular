@@ -48,3 +48,11 @@ table {
 .icon-button {
   background-color: #f1f1f1;
 }
+.btn-yellow {
+  color: #fdd835; /* Couleur texte (mat-icon) */
+  background-color: #fff59d; /* Couleur de fond, si nécessaire */
+}
+
+.btn-yellow:hover {
+  background-color: #fbc02d;
+}

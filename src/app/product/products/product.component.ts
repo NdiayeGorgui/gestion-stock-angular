@@ -8,6 +8,7 @@ import { StockService } from '../../services/stock.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component'; 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-product',
@@ -22,12 +23,13 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/{
   public products:any;
   public dataSource:any;
   idProduct!:number;
+   isAdmin = false;
 
   public displayedColumns=["name","category","price","qty","qtyStatus","status","action"]
   
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!:MatSort;
-  constructor(private snackBar: MatSnackBar,private dialog: MatDialog,private router:Router, private stockService:StockService,private activatedRoute:ActivatedRoute){
+  constructor(private authService: AuthenticationService,private snackBar: MatSnackBar,private dialog: MatDialog,private router:Router, private stockService:StockService,private activatedRoute:ActivatedRoute){
   }
 
   public getProducts(){
@@ -46,6 +48,7 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/{
     
   }
   ngOnInit(): void {
+     this.isAdmin = this.authService.isAdmin();
     this.getProducts();
 
     this.stockService.productUpdated$.subscribe(() => {

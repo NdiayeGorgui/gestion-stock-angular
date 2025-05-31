@@ -84,7 +84,7 @@
 <mat-drawer-container>
   <mat-drawer #drawer [mode]="drawerMode" [opened]="drawerOpened">
     <mat-nav-list>
-      <mat-list-item>
+      <mat-list-item *ngIf="isAdmin"> 
         <button routerLink="/admin/dashboard" mat-button (click)="closeDrawerIfMobile(drawer)">
           <mat-icon>dashboard</mat-icon> Dashboard
         </button>

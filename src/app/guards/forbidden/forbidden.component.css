@@ -1,0 +1,18 @@
+.forbidden-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+}
+
+.forbidden-title {
+  font-size: 3rem;
+  color: #b00020; /* Rouge foncé */
+}
+
+.forbidden-message {
+  font-size: 1.5rem;
+  color: red;
+}

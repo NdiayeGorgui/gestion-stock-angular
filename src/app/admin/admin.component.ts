@@ -18,6 +18,7 @@ export class AdminComponent implements OnInit {
   isSmallScreen = false;
 
   firstName: string = '';
+    isAdmin =false;
 
 
   constructor(private keycloakService: KeycloakService,
@@ -43,8 +44,13 @@ export class AdminComponent implements OnInit {
     drawer.toggle();
   }
   async ngOnInit(): Promise<void> {
+    
      const profile = await this.keycloakService.loadUserProfile();
     this.firstName = profile.firstName || '';
+    // Récupère les rôles du realm (par défaut, true = realm roles)
+  const roles = this.keycloakService.getUserRoles(true);
+
+  this.isAdmin = roles.includes('ADMIN');
 
   }
 

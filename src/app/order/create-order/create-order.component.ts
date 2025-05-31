@@ -8,6 +8,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogAlertComponent } from '../../shared/dialog-alert/dialog-alert.component';
+import { OrderCartDialogComponent } from '../order-cart-dialog/order-cart-dialog.component';
 
 @Component({
   standalone: true,
@@ -51,7 +52,7 @@ export class CreateOrderComponent implements OnInit {
     private snackBar: MatSnackBar,
     private stockService: StockService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCustomers();
@@ -98,61 +99,62 @@ export class CreateOrderComponent implements OnInit {
     }
   }
 
-addProductToOrder() {
-  if (!this.selectedProduct) return;
+  addProductToOrder() {
+    if (!this.selectedProduct) return;
 
-  // Vérifie si la quantité est invalide (<= 0)
-  if (this.itemQty <= 0) {
-    this.dialogAlready.open(DialogAlertComponent, {
-      data: {
-        title: 'Invalid Quantity',
-        message: 'Please select a valid number.'
-      }
-    });
-    return;
+    // Vérifie si la quantité est invalide (<= 0)
+    if (this.itemQty <= 0) {
+      this.dialogAlready.open(DialogAlertComponent, {
+        data: {
+          title: 'Invalid Quantity',
+          message: 'Please select a valid number.'
+        }
+      });
+      return;
+    }
+
+    // Vérifie si le produit est déjà dans le panier
+    const alreadyExists = this.orderItems.some(
+      item => item.id === this.selectedProduct.id
+    );
+
+    if (alreadyExists) {
+      this.dialogAlready.open(DialogAlertComponent, {
+        data: {
+          title: 'Product already present',
+          message: 'This product is already in the cart, please update quantity.'
+        }
+      });
+      return;
+    }
+
+    // Vérifie si la quantité demandée dépasse le stock disponible
+    if (this.itemQty > this.selectedProduct.qty) {
+      this.dialogAlready.open(DialogAlertComponent, {
+        data: {
+          title: 'Insufficient Stock',
+          message: `Only ${this.selectedProduct.qty} items left in stock.`
+        }
+      });
+      return;
+    }
+
+    const newItem = {
+      ...this.selectedProduct,
+      qty: this.itemQty,
+      qtyAvailable: this.selectedProduct.qty,
+      unitPrice: Number(this.selectedProduct.price),
+      price: this.selectedProduct.price, // prix unitaire
+      tax: this.selectedProduct.price * this.itemQty * 0.2,
+      discount: this.getDiscount(this.itemQty, this.selectedProduct.price),
+      amount: this.itemQty * this.selectedProduct.price * 1.2 - this.getDiscount(this.itemQty, this.selectedProduct.price)
+
+    };
+
+
+    this.orderItems.push(newItem);
+    this.resetCurrentProduct();
   }
-
-  // Vérifie si le produit est déjà dans le panier
-  const alreadyExists = this.orderItems.some(
-    item => item.id === this.selectedProduct.id
-  );
-
-  if (alreadyExists) {
-    this.dialogAlready.open(DialogAlertComponent, {
-      data: {
-        title: 'Product already present',
-        message: 'This product is already in the cart, please update quantity.'
-      }
-    });
-    return;
-  }
-
-  // Vérifie si la quantité demandée dépasse le stock disponible
-  if (this.itemQty > this.selectedProduct.qty) {
-    this.dialogAlready.open(DialogAlertComponent, {
-      data: {
-        title: 'Insufficient Stock',
-        message: `Only ${this.selectedProduct.qty} items left in stock.`
-      }
-    });
-    return;
-  }
-
-const newItem = {
-  ...this.selectedProduct,
-  qty: this.itemQty,
-  qtyAvailable: this.selectedProduct.qty,
-  unitPrice: Number(this.selectedProduct.price),
-  price: this.price,
-  tax: this.tax,
-  discount: this.discount,
-  amount: this.amount
-};
-
-
-  this.orderItems.push(newItem);
-  this.resetCurrentProduct();
-}
 
 
   removeItem(index: number) {
@@ -160,19 +162,30 @@ const newItem = {
   }
 
   toggleOrderDetails() {
-    this.showOrderDetails = !this.showOrderDetails;
+    const dialogRef = this.dialog.open(OrderCartDialogComponent, {
+      width: '800px',
+      data: {
+        orderItems: this.orderItems,
+        selectedClient: this.selectedClient
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result?.placeOrder) {
+        this.submitOrder(); // ⬅️ ta méthode originale est appelée ici
+      }
+    });
   }
+
+
+
 
   get onePrice() {
     return this.orderItems.reduce((sum, item) => sum + item.price, 0);
   }
 
   get totalPrice() {
-  return this.orderItems.reduce((sum, item) => sum + (item.price ), 0);
-}
-
-  get totalAmount() {
-    return this.orderItems.reduce((sum, item) => sum + item.amount, 0);
+    return this.orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
   }
 
   get totalTax() {
@@ -183,9 +196,16 @@ const newItem = {
     return this.orderItems.reduce((sum, item) => sum + item.discount, 0);
   }
 
+  get totalAmount() {
+    return this.totalPrice + this.totalTax - this.totalDiscount;
+  }
+
+
   get totalItems() {
     return this.orderItems.reduce((sum, item) => sum + item.qty, 0);
   }
+
+
 
   getProducts() {
     this.stockService.getProductsOrderList().subscribe({
@@ -201,61 +221,61 @@ const newItem = {
     });
   }
 
-async submitOrder() {
-  if (!this.selectedClient || this.orderItems.length === 0) {
-    this.snackBar.open('Please select a customer and add at least one product.', 'Close', {
-      duration: 3000,
-      panelClass: 'snackbar-error'
+  async submitOrder() {
+    if (!this.selectedClient || this.orderItems.length === 0) {
+      this.snackBar.open('Please select a customer and add at least one product.', 'Close', {
+        duration: 3000,
+        panelClass: 'snackbar-error'
+      });
+      return;
+    }
+
+    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+      data: { message: 'Do you want to confirm this order?' }
     });
-    return;
-  }
 
-  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-    data: { message: 'Do you want to confirm this order?' }
-  });
+    dialogRef.afterClosed().subscribe(async confirmed => {
+      if (!confirmed) return;
 
-  dialogRef.afterClosed().subscribe(async confirmed => {
-    if (!confirmed) return;
+      try {
+        for (const item of this.orderItems) {
+          const orderToSubmit: any = {
+            customer: {
+              customerIdEvent: this.selectedClient.customerIdEvent
+            },
+            product: {
+              productIdEvent: item.productIdEvent
+            },
+            productItem: {
+              productQty: item.qty
+            }
+          };
 
-    try {
-      for (const item of this.orderItems) {
-        const orderToSubmit: any = {  
-          customer: {
-            customerIdEvent: this.selectedClient.customerIdEvent
-          },
-          product: {
-            productIdEvent: item.productIdEvent
-          },
-          productItem: {
-            productQty: item.qty
-          }
-        };
+          await this.stockService.createOrder(orderToSubmit).toPromise();
+          await new Promise(resolve => setTimeout(resolve, 300)); // délai de 300ms
+        }
 
-        await this.stockService.createOrder(orderToSubmit).toPromise();
-        await new Promise(resolve => setTimeout(resolve, 300)); // délai de 300ms
+        this.snackBar.open('Order submitted successfully!', 'Close', {
+          duration: 3000,
+          panelClass: 'snackbar-success'
+        });
+        this.showPaymentButton = true;
+        this.resetCart();
+      } catch (err: any) {
+        console.error('Error submitting order item:', err);
+
+        // Extraction du message d'erreur du backend
+        const errorMessage =
+          err?.error?.message || err?.error?.error || err?.message || 'Error while submitting order. Please try again.';
+
+        this.snackBar.open(errorMessage, 'Close', {
+          duration: 4000,
+          panelClass: 'snackbar-error'
+        });
       }
 
-      this.snackBar.open('Order submitted successfully!', 'Close', {
-        duration: 3000,
-        panelClass: 'snackbar-success'
-      });
-      this.showPaymentButton = true;
-      this.resetCart();
-    } catch (err: any) {
-  console.error('Error submitting order item:', err);
-
-  // Extraction du message d'erreur du backend
-  const errorMessage =
-  err?.error?.message || err?.error?.error || err?.message || 'Error while submitting order. Please try again.';
-
-  this.snackBar.open(errorMessage, 'Close', {
-    duration: 4000,
-    panelClass: 'snackbar-error'
-  });
-}
-
-  });
-}
+    });
+  }
 
   resetForm() {
     this.resetCart();
@@ -282,33 +302,36 @@ async submitOrder() {
   }
 
   onQtyChangeInCart(index: number) {
-  const item = this.orderItems[index];
+    const item = this.orderItems[index];
 
-  // Vérifie que la quantité est valide
-  if (item.qty <= 0) {
-    this.snackBar.open('Quantity must be at least 1.', 'Close', {
-      duration: 3000,
-      panelClass: 'snackbar-error'
-    });
-    item.qty = 1;
-    return;
+    // Vérifie que la quantité est valide
+    if (item.qty <= 0) {
+      this.snackBar.open('Quantity must be at least 1.', 'Close', {
+        duration: 3000,
+        panelClass: 'snackbar-error'
+      });
+      item.qty = 1;
+      return;
+    }
+
+    if (item.qty > item.qtyAvailable) {
+      this.snackBar.open(`Only ${item.qtyAvailable} in stock.`, 'Close', {
+        duration: 3000,
+        panelClass: 'snackbar-error'
+      });
+      item.qty = item.qtyAvailable;
+      return;
+    }
+
+    // Recalcule les montants
+    item.price = item.unitPrice; // prix unitaire
+    const total = item.qty * item.price;
+
+    item.tax = total * 0.2;
+    item.discount = this.getDiscount(item.qty, item.unitPrice);
+    item.amount = item.price + item.tax - item.discount;
   }
 
-  if (item.qty > item.qtyAvailable) {
-    this.snackBar.open(`Only ${item.qtyAvailable} in stock.`, 'Close', {
-      duration: 3000,
-      panelClass: 'snackbar-error'
-    });
-    item.qty = item.qtyAvailable;
-    return;
-  }
 
-  // Recalcule les montants
-  const total = item.qty * item.unitPrice;
-  item.price = total;
-  item.tax = total * 0.2;
-  item.discount = this.getDiscount(item.qty, item.unitPrice);
-  item.amount = item.price + item.tax - item.discount;
-}
 
 }

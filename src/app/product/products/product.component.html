@@ -17,7 +17,7 @@
           <input matInput (keyup)="filterProduct($event)" />
         </mat-form-field>
 
-        <button mat-flat-button color="primary" (click)="createProduct()" class="add-btn">
+        <button mat-flat-button color="primary" (click)="createProduct()" class="add-btn" *ngIf="isAdmin">
           <mat-icon>local_grocery_store</mat-icon>
           New Product
         </button>
@@ -81,10 +81,10 @@
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let element">
-              <button mat-icon-button color="warn" (click)="deleteProduct(element.productIdEvent)">
+              <button mat-icon-button color="warn" (click)="deleteProduct(element.productIdEvent)" *ngIf="isAdmin">
                 <mat-icon>delete</mat-icon>
               </button>
-              <button mat-icon-button color="primary" (click)="editProduct(element.productIdEvent)">
+              <button mat-icon-button color="primary" (click)="editProduct(element.productIdEvent)" *ngIf="isAdmin">
                 <mat-icon>edit</mat-icon>
               </button>
               <button mat-icon-button color="accent" (click)="getProduct(element.productIdEvent)">

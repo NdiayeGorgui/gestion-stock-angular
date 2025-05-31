@@ -14,12 +14,8 @@
       </span>
     </button>
 
-   
-
-
   </div>
 </div>
-
 
   <!-- Sélection client -->
   <div class="row mb-3">
@@ -86,50 +82,47 @@
     </div>
   </div>
 
-  <!-- Affichage des détails (si activé) -->
-  <div *ngIf="showOrderDetails" class="mt-4">
-    <h4>Order details</h4>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Amount</th>
-          <th>Tax</th>
-          <th>Discount</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of orderItems; index as i">
-          <td>{{ item.name }}</td>
-          <td><input type="number" min="1"
-           [(ngModel)]="item.qty"
-           (change)="onQtyChangeInCart(i)"
-           [max]="item.stock"
-           style="width: 60px;" /></td>
-          <td>{{ item.price.toFixed(2) }} $</td>
-          <td>{{ item.tax.toFixed(2) }} $</td>
-          <td>{{ item.discount.toFixed(2) }} $</td>
-          <td>
-            <button class="btn btn-sm btn-danger" (click)="removeItem(i)">Remove</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div *ngIf="orderItems.length > 0" class="mt-4">
+  <h4>Order details</h4>
 
-    <div class="text-end">
-      <h6>Total amount HT : {{ totalPrice | number: '1.2-2' }} $</h6>
-<h6>Total Tax : {{ totalTax | number: '1.2-2' }} $</h6>
-<h6>Total discount : {{ totalDiscount | number: '1.2-2' }} $</h6>
-<h5>Total amount : {{ totalAmount | number: '1.2-2' }} $</h5>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Amount</th>
+        <th>Tax</th>
+        <th>Discount</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of orderItems; index as i">
+        <td>{{ item.name }}</td>
+        <td>
+          <input type="number" min="1"
+                 [(ngModel)]="item.qty"
+                 (change)="onQtyChangeInCart(i)"
+                 [max]="item.stock"
+                 style="width: 60px;" />
+        </td>
+        <td>{{ item.price.toFixed(2) }} $</td>
+        <td>{{ item.tax.toFixed(2) }} $</td>
+        <td>{{ item.discount.toFixed(2) }} $</td>
+        <td>
+          <button class="btn btn-sm btn-danger" (click)="removeItem(i)">Remove</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-    </div>
-    <div class="text-end mt-3" *ngIf="orderItems.length > 0">
-  <button [disabled]="!selectedClient || orderItems.length === 0" class="btn btn-success" (click)="submitOrder()">
-    ✅ Place Order
-  </button>
+  <!-- Montants (sous le tableau) -->
+  <div class="text-end mt-3">
+    <h6>Total amount HT : {{ totalPrice | number: '1.2-2' }} $</h6>
+    <h6>Total Tax : {{ totalTax | number: '1.2-2' }} $</h6>
+    <h6>Total discount : {{ totalDiscount | number: '1.2-2' }} $</h6>
+    <h5>Total amount : {{ totalAmount | number: '1.2-2' }} $</h5>
+  </div>
 </div>
 
-  </div>
 </div>

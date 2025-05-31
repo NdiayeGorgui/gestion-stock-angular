@@ -66,6 +66,8 @@ import { AuthInterceptor } from './keycloak/auth.interceptor';
 
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { OrderCartDialogComponent } from './order/order-cart-dialog/order-cart-dialog.component';
+import { ForbiddenComponent } from './guards/forbidden/forbidden.component';
 
 
 
@@ -123,7 +125,9 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     OrderCreatedCompletedDetailsComponent,
     ConfirmDialogComponent,
     AddConfirmDialogComponent,
-    DialogAlertComponent
+    DialogAlertComponent,
+    OrderCartDialogComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

@@ -78,7 +78,7 @@ newCustomer() {
             next: () => {
               this.snackBar.open('Customer saved successfully!', 'Close', {
                 duration: 3000,
-                panelClass: 'snackbar-success'
+                panelClass: ['snackbar-success']
               });
               this.stockService.notifyCustomerCreated();
               this.router.navigate(['/admin/customer']);

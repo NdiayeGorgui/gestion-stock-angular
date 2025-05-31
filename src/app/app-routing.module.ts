@@ -34,6 +34,8 @@ import { DeliverOrderComponent } from './deliver/deliver-order/deliver-order.com
 import { DeliveredOrdersComponent } from './deliver/delivered-orders/delivered-orders.component';
 import { OrderEventsComponent } from './order/order-events/order-events.component';
 import { OrderCreatedCompletedDetailsComponent } from './order/order-created-completed-details/order-created-completed-details.component';
+import { AdminRoleGuard } from './guards/auth.guard';
+import { ForbiddenComponent } from './guards/forbidden/forbidden.component';
 
 
 
@@ -45,8 +47,8 @@ const routes: Routes = [
     {path:"profile",component:ProfileComponent},
     {path:"chat-bot",component:ChatBotComponent},
     {path:"product",component:ProductComponent},
-    {path:"create-product",component:CreateProductComponent},
-    {path:"update-product/:productIdEvent",component:UpdateProductComponent},
+    {path:"create-product",component:CreateProductComponent,canActivate: [AdminRoleGuard]},
+    {path:"update-product/:productIdEvent",component:UpdateProductComponent,canActivate: [AdminRoleGuard]},
     {path:"product-details/:productIdEvent",component:ProductDetailsComponent},
     {path:"customer",component:CustomerComponent},
     {path:"create-customer",component:CreateCustomerComponent},
@@ -59,7 +61,7 @@ const routes: Routes = [
     {path:"order-details/:customerIdEvent",component:OrderDetailsComponent},
     {path:"order-created-completed-details/:orderIdEvent",component:OrderCreatedCompletedDetailsComponent},
     {path:"create-payment/:customerIdEvent",component:CreatePaymentComponent},
-    {path:"dashboard",component:DashboardComponent},
+    {path:"dashboard",component:DashboardComponent,canActivate: [AdminRoleGuard]},
     {path:"bill",component:BillComponent},
     {path:"create-bill",component:CreateBillComponent},
     {path:"bill-details/:orderRef",component:BillDetailsComponent},
@@ -70,6 +72,7 @@ const routes: Routes = [
     {path:"deliver-order/:orderId",component:DeliverOrderComponent},
     {path:"delivered-orders",component:DeliveredOrdersComponent},
     {path:"order-events",component:OrderEventsComponent},
+    {path: 'forbidden',component: ForbiddenComponent},
   ]},
 ];
 
