@@ -5,20 +5,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .container{
     padding: 10px;
 }
-
-::ng-deep .snackbar-success {
-  background-color: #28a745 !important; /* Bootstrap green */
+::ng-deep .mat-mdc-snack-bar-container.snackbar-error {
+  background-color: #f44336 !important;
   color: white !important;
-  font-weight: bold;
-  text-align: center;
 }
 
-::ng-deep .snackbar-error {
-  background-color: #dc3545 !important; /* Bootstrap red */
+::ng-deep .mat-mdc-snack-bar-container.snackbar-success {
+  background-color: #4caf50 !important;
   color: white !important;
-  font-weight: bold;
-  text-align: center;
 }
+
+
 
   
   

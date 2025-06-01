@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 
 
 
@@ -75,14 +76,14 @@ export class CreateOrderComponent implements OnInit {
 
   onClientChange() {
     this.selectedClient = this.customers.find((c: { id: number }) => c.id == +this.selectedClientId);
-    
+
   }
 
   onProductChange() {
     this.selectedProduct = this.products.find((p: { id: number }) => p.id == +this.selectedProductId);
     this.itemQty = 1;
     this.updateAmounts();
-    
+
   }
 
   onCustomerChange() {
@@ -269,9 +270,14 @@ export class CreateOrderComponent implements OnInit {
 
   async submitOrder() {
     if (!this.selectedClient || this.orderItems.length === 0) {
-      this.snackBar.open('Please select a customer and add at least one product.', 'Close', {
+
+      this.snackBar.openFromComponent(SnakBarComponent, {
+        data: {
+          message: 'Please select a customer and add at least one product',
+          type: 'error'
+        },
         duration: 3000,
-        panelClass: 'snackbar-error'
+
       });
       return;
     }
@@ -301,9 +307,12 @@ export class CreateOrderComponent implements OnInit {
           await new Promise(resolve => setTimeout(resolve, 300)); // délai de 300ms
         }
 
-        this.snackBar.open('Order submitted successfully!', 'Close', {
-          duration: 3000,
-          panelClass: 'snackbar-success'
+        this.snackBar.openFromComponent(SnakBarComponent, {
+          data: {
+            message: 'Oders submited successfully !',
+            type: 'success'
+          },
+          duration: 3000
         });
         this.showPaymentButton = true;
         this.resetCart();
@@ -314,9 +323,13 @@ export class CreateOrderComponent implements OnInit {
         const errorMessage =
           err?.error?.message || err?.error?.error || err?.message || 'Error while submitting order. Please try again.';
 
-        this.snackBar.open(errorMessage, 'Close', {
-          duration: 4000,
-          panelClass: 'snackbar-error'
+        this.snackBar.openFromComponent(SnakBarComponent, {
+          data: {
+            message: errorMessage,
+            type: 'error'
+          },
+          duration: 3000,
+
         });
       }
 
@@ -352,18 +365,26 @@ export class CreateOrderComponent implements OnInit {
 
     // Vérifie que la quantité est valide
     if (item.qty <= 0) {
-      this.snackBar.open('Quantity must be at least 1.', 'Close', {
+      this.snackBar.openFromComponent(SnakBarComponent, {
+        data: {
+          message: 'Error, quantity must be at least 1.',
+          type: 'error'
+        },
         duration: 3000,
-        panelClass: 'snackbar-error'
+
       });
       item.qty = 1;
       return;
     }
 
     if (item.qty > item.qtyAvailable) {
-      this.snackBar.open(`Only ${item.qtyAvailable} in stock.`, 'Close', {
+      this.snackBar.openFromComponent(SnakBarComponent, {
+        data: {
+          message: 'Only ' + item.qtyAvailable + ' in stock',
+          type: 'error'
+        },
         duration: 3000,
-        panelClass: 'snackbar-error'
+
       });
       item.qty = item.qtyAvailable;
       return;

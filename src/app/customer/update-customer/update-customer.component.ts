@@ -8,6 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
+import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 
 @Component({
   selector: 'app-update-customer',
@@ -54,35 +55,44 @@ export class UpdateCustomerComponent implements OnInit {
 
   updateCustomer() {
     if (!this.customer.name || !this.customer.email || !this.customer.phone) {
-      this.snackBar.open('Veuillez remplir tous les champs requis.', 'Fermer', {
-        duration: 3000,
-        panelClass: 'snackbar-error'
-      });
+       this.snackBar.openFromComponent(SnakBarComponent, {
+                  data: {
+                    message: 'Please fill in all required fields !',
+                    type: 'error'
+                  },
+                  duration: 3000
+                });
       return;
     }
 
     const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-      data: { message: 'Do you want to update this customer?' }
+      data: { message: 'Do you want to update this customer ?' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.stockService.updateCustomer(this.customerIdEvent, this.customer).subscribe({
           next: (data) => {
-            this.snackBar.open('Customer updated successfully!', 'Close', {
-              duration: 3000,
-              panelClass: 'snackbar-success'
-            });
+             this.snackBar.openFromComponent(SnakBarComponent, {
+                              data: {
+                                message: 'Customer udated successfully!',
+                                type: 'success'
+                              },
+                              duration: 3000
+                            });
             this.stockService.notifyCustomerUpdated(); // 🚀 Notifie les observateurs
 
             this.router.navigate(['/admin/customer']);
           },
           error: (err) => {
             console.error('Error while updating customer :', err);
-            this.snackBar.open('Error while updating customer. Please try again.', 'Close', {
-              duration: 3000,
-              panelClass: 'snackbar-error'
-            });
+             this.snackBar.openFromComponent(SnakBarComponent, {
+                  data: {
+                    message: 'Error while updating Customer, please try again !',
+                    type: 'error'
+                  },
+                  duration: 3000
+                });
           }
         });
       }

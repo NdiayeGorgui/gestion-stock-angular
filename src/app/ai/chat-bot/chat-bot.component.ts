@@ -58,7 +58,7 @@ userMessage: string = '';
       this.isListening = true;
       this.recognition.start();
     } else {
-      alert("Reconnaissance vocale non supportée par votre navigateur.");
+      alert("Voice recognition not supported by your browser.");
     }
   }
 

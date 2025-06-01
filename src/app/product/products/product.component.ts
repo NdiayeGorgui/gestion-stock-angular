@@ -6,59 +6,60 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Products } from '../products';
 import { StockService } from '../../services/stock.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component'; 
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from '../../services/authentication.service';
+import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 
 @Component({
   selector: 'app-product',
   standalone: false,
-  
+
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
-export class ProductComponent implements OnInit/*, AfterViewInit*/{
+export class ProductComponent implements OnInit/*, AfterViewInit*/ {
 
   //products:Products[]=[];
-  public products:any;
-  public dataSource:any;
-  idProduct!:number;
-   isAdmin = false;
+  public products: any;
+  public dataSource: any;
+  idProduct!: number;
+  isAdmin = false;
 
-  public displayedColumns=["name","category","price","qty","qtyStatus","status","action"]
-  
-  @ViewChild(MatPaginator) paginator!:MatPaginator;
-  @ViewChild(MatSort) sort!:MatSort;
-  constructor(private authService: AuthenticationService,private snackBar: MatSnackBar,private dialog: MatDialog,private router:Router, private stockService:StockService,private activatedRoute:ActivatedRoute){
+  public displayedColumns = ["name", "category", "price", "qty", "qtyStatus", "status", "action"]
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  constructor(private authService: AuthenticationService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router, private stockService: StockService, private activatedRoute: ActivatedRoute) {
   }
 
-  public getProducts(){
+  public getProducts() {
     this.stockService.getProductsList().subscribe({
-      next: data=>{
-        this.products=data;
-        this.dataSource=new MatTableDataSource(this.products)
-        this.dataSource.paginator=this.paginator;
-        this.dataSource.sort=this.sort;
+      next: data => {
+        this.products = data;
+        this.dataSource = new MatTableDataSource(this.products)
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
-      error:err=>{
+      error: err => {
         console.log(err);
       }
 
     });
-    
+
   }
   ngOnInit(): void {
-     this.isAdmin = this.authService.isAdmin();
+    this.isAdmin = this.authService.isAdmin();
     this.getProducts();
 
     this.stockService.productUpdated$.subscribe(() => {
-    this.getProducts(); // recharge la liste
-  });
-this.stockService.productCreated$.subscribe(() => {
-    this.getProducts(); // recharge la liste
-  });
-  
-   
+      this.getProducts(); // recharge la liste
+    });
+    this.stockService.productCreated$.subscribe(() => {
+      this.getProducts(); // recharge la liste
+    });
+
+
   }
 
   /*ngOnInit(): void {
@@ -70,27 +71,27 @@ this.stockService.productCreated$.subscribe(() => {
      this.dataSource=new MatTableDataSource(this.products)
   }*/
 
- /* ngAfterViewInit(): void {
-    this.dataSource.paginator=this.paginator;
-    this.dataSource.sort=this.sort;
-  }*/
+  /* ngAfterViewInit(): void {
+     this.dataSource.paginator=this.paginator;
+     this.dataSource.sort=this.sort;
+   }*/
 
-  filterProduct(event:Event){
-    let value=(event.target as HTMLInputElement).value;
+  filterProduct(event: Event) {
+    let value = (event.target as HTMLInputElement).value;
     this.dataSource.filter = value;
   }
 
-  getPayments(element:any){
+  getPayments(element: any) {
     this.router.navigateByUrl("/payments")
   }
 
 
   deleteProduct(id: string) {
-  
-     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-          data: { message: 'Are you sure you want to delete this product?' }
-        });
-  
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: 'Are you sure you want to delete this product?' }
+    });
+
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.stockService.deleteProduct(id).subscribe({
@@ -98,34 +99,40 @@ this.stockService.productCreated$.subscribe(() => {
             // Suppression locale
             this.products = this.products.filter((p: { productIdEvent: string; }) => p.productIdEvent !== id);
             this.dataSource.data = this.products;
-  
-            this.snackBar.open('Product deleted successfully!', 'Close', {
-              duration: 3000,
-              panelClass: ['snackbar-success']
+
+            this.snackBar.openFromComponent(SnakBarComponent, {
+              data: {
+                message: 'Product deleted successfully !',
+                type: 'success'
+              },
+              duration: 3000
             });
           },
           error: () => {
-            this.snackBar.open('Error while deleting product.', 'Close', {
-              duration: 3000,
-              panelClass: ['snackbar-error']
+            this.snackBar.openFromComponent(SnakBarComponent, {
+              data: {
+                message: 'Error while deleting product !',
+                type: 'error'
+              },
+              duration: 3000
             });
           }
         });
       }
     });
   }
-  
-  
-  editProduct(productIdEvent:string){
-    this.router.navigate(['/admin/update-product',productIdEvent]);
-  
+
+
+  editProduct(productIdEvent: string) {
+    this.router.navigate(['/admin/update-product', productIdEvent]);
+
   }
 
-  getProduct(productIdEvent:string){
-    this.router.navigate(['/admin/product-details',productIdEvent]);
+  getProduct(productIdEvent: string) {
+    this.router.navigate(['/admin/product-details', productIdEvent]);
   }
 
-  createProduct(){
+  createProduct() {
     this.router.navigateByUrl("/admin/create-product");
   }
 

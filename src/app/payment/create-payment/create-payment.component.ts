@@ -10,6 +10,7 @@ import { AmountDto } from './amountDto';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
+import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class CreatePaymentComponent implements OnInit {
   { id: 2, name: 'CHEQUE' },
   { id: 3, name: 'VIREMENT' }];
 
-  constructor(private snackBar: MatSnackBar,private dialog: MatDialog,private stockService: StockService, private router: Router, private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef) {
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private stockService: StockService, private router: Router, private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef) {
 
   }
 
@@ -62,30 +63,36 @@ export class CreatePaymentComponent implements OnInit {
     const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
       data: { message: 'Do you want to confirm this payment?' }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.payment.customerIdEvent = this.customerIdEvent;
         this.stockService.createPayment(this.payment).subscribe({
           next: prod => {
-            this.snackBar.open('Payment created successfully!', 'Close', {
-              duration: 3000,
-              panelClass: ['snackbar-success']
+            this.snackBar.openFromComponent(SnakBarComponent, {
+              data: {
+                message: 'Payment created successfully !',
+                type: 'success'
+              },
+              duration: 3000
             });
             this.router.navigate(['/admin/payment']);
           },
           error: err => {
             console.log(err);
-            this.snackBar.open('Error while creating payment.', 'Close', {
-              duration: 3000,
-              panelClass: ['snackbar-error']
+           this.snackBar.openFromComponent(SnakBarComponent, {
+              data: {
+                message: 'Error while creating payment, please try again !',
+                type: 'error'
+              },
+              duration: 3000
             });
           }
         });
       }
     });
   }
-  
+
 
   getAmount() {
     this.stockService.getAmount(this.customerIdEvent, this.status).subscribe(
@@ -109,7 +116,7 @@ export class CreatePaymentComponent implements OnInit {
     const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
       data: { message: 'Do you want to confirm the payment and print the invoice?' }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         // 1. Imprimer la facture
@@ -117,38 +124,47 @@ export class CreatePaymentComponent implements OnInit {
           next: (response) => {
             const fileName = `Facture_${this.customerIdEvent}.xlsx`;
             this.saveExcelFile(response, fileName);
-  
+
             // 2. Une fois imprimé → enregistrer le paiement
             this.payment.customerIdEvent = this.customerIdEvent;
             this.stockService.createPayment(this.payment).subscribe({
               next: () => {
-                this.snackBar.open('Payment created and invoice printed!', 'Close', {
-                  duration: 3000,
-                  panelClass: ['snackbar-success']
-                });
+                this.snackBar.openFromComponent(SnakBarComponent, {
+              data: {
+                message: 'Payment created and invoice printed !',
+                type: 'success'
+              },
+              duration: 3000
+            });
                 this.router.navigate(['/admin/payment']);
               },
               error: err => {
                 console.error('Error creating payment:', err);
-                this.snackBar.open('Error during payment.', 'Close', {
-                  duration: 3000,
-                  panelClass: ['snackbar-error']
-                });
+                this.snackBar.openFromComponent(SnakBarComponent, {
+              data: {
+                message: 'Error during payment, please try again !',
+                type: 'error'
+              },
+              duration: 3000
+            });
               }
             });
           },
           error: err => {
             console.error('Error printing invoice:', err);
-            this.snackBar.open('Error printing invoice.', 'Close', {
-              duration: 3000,
-              panelClass: ['snackbar-error']
+             this.snackBar.openFromComponent(SnakBarComponent, {
+              data: {
+                message: 'Error printing invoice, please try again !',
+                type: 'error'
+              },
+              duration: 3000
             });
           }
         });
       }
     });
   }
-  
+
 
   exportToExcel(data: any[], fileName: string): void {
     // Convertir les données en feuille Excel

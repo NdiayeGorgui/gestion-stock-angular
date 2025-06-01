@@ -12,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 
 @Component({
   selector: 'app-order',
@@ -131,9 +132,23 @@ export class OrderComponent implements OnInit {
             this.createdOrders = this.createdOrders.filter(order => order.orderIdEvent !== orderIdEvent);
             this.dataSource.data = this.createdOrders; // met à jour la table
             this.groupOrders(); // recalcul des regroupements pour rowspan
+            this.snackBar.openFromComponent(SnakBarComponent, {
+              data: {
+                message: 'order canceled successfully !',
+                type: 'success'
+              },
+              duration: 3000
+            });
           },
           error: (err) => {
             console.error('Error cancelling order', err);
+            this.snackBar.openFromComponent(SnakBarComponent, {
+              data: {
+                message: 'Error cancelling order!',
+                type: 'error'
+              },
+              duration: 3000
+            });
           }
         });
       }
@@ -159,8 +174,6 @@ export class OrderComponent implements OnInit {
     });
   }
 
-
-
   shouldShowRowSpan(index: number): boolean {
     return this.growSpanMap.get(index)! > 0;
   }
@@ -168,8 +181,4 @@ export class OrderComponent implements OnInit {
   getRowSpan(index: number): number {
     return this.growSpanMap.get(index)!;
   }
-
-
-
-
 }

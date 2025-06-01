@@ -70,6 +70,7 @@ import { OrderCartDialogComponent } from './order/order-cart-dialog/order-cart-d
 import { ForbiddenComponent } from './guards/forbidden/forbidden.component';
 import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
+import { SnakBarComponent } from './shared/snak-bar/snak-bar.component';
 
 
 export function initializeKeycloak(keycloak: KeycloakService) {
@@ -128,7 +129,8 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     AddConfirmDialogComponent,
     DialogAlertComponent,
     OrderCartDialogComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    SnakBarComponent
   ],
   imports: [
     BrowserModule,
