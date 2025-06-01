@@ -1,11 +1,46 @@
-<div class="container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Chat bot</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-            Chat bot content
-        </mat-card-content>
-    </mat-card>
+<div class="container mt-4">
+  <mat-card class="chatbot-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>smart_toy</mat-icon> Chat Bot
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <!-- Zone d'affichage du chat -->
+      <div class="chat-window mb-3" style="max-height: 400px; overflow-y: auto; padding: 1rem; background-color: #f8f9fa; border-radius: 8px;">
+        <div *ngFor="let message of messages" class="mb-2">
+          <div [ngClass]="{'text-end': message.from === 'user', 'text-start': message.from === 'bot'}">
+            <span class="badge bg-primary" *ngIf="message.from === 'user'">Moi</span>
+            <span class="badge bg-secondary" *ngIf="message.from === 'bot'">Bot</span>
+            <div class="mt-1 p-2 rounded" [ngClass]="{
+              'bg-primary text-white': message.from === 'user',
+              'bg-light border': message.from === 'bot'
+            }">
+              {{ message.text }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulaire de message avec texte ou vocal -->
+      <form (ngSubmit)="sendMessage()" class="d-flex align-items-center">
+        <mat-form-field class="flex-grow-1 me-2" appearance="outline">
+          <mat-label>Your message</mat-label>
+          <input matInput [(ngModel)]="userMessage" name="userMessage" placeholder="Write here..." required>
+        </mat-form-field>
+
+        <button mat-icon-button color="primary" type="submit" [disabled]="!userMessage">
+          <mat-icon>send</mat-icon>
+        </button>
+
+        <button mat-icon-button color="accent" type="button" (click)="startVoiceInput()" [disabled]="isListening">
+          <mat-icon *ngIf="!isListening">mic</mat-icon>
+          <mat-icon *ngIf="isListening">mic_off</mat-icon>
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

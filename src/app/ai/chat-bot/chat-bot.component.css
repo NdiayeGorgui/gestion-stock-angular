@@ -3,3 +3,18 @@ mat-divider {
     margin-bottom: 20px;
     
   }
+
+  .chatbot-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.chat-window {
+  background: #f1f1f1;
+}
+mat-icon[color="accent"] {
+  transition: color 0.3s;
+}
+
+mat-icon[color="accent"].listening {
+  color: red !important;
+}

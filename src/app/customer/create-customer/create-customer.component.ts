@@ -50,7 +50,7 @@ newCustomer() {
   if (!this.customer.name || !this.customer.address || !this.customer.phone || !this.customer.email) {
     this.snackBar.open('Please fill in all required fields.', 'Close', {
       duration: 3000,
-      panelClass: 'snackbar-error'
+      panelClass: ['snackbar-error']
     });
     return;
   }
@@ -62,7 +62,7 @@ newCustomer() {
         // ❌ Affiche le message du backend si l’email existe déjà
         this.snackBar.open(res.message, 'Close', {
           duration: 3000,
-          panelClass: 'snackbar-error'
+          panelClass: ['snackbar-error']
         });
         return;
       }
@@ -87,7 +87,7 @@ newCustomer() {
               console.error('Error:', err);
               this.snackBar.open('Error while saving customer. Please try again.', 'Close', {
                 duration: 3000,
-                panelClass: 'snackbar-error'
+                panelClass: ['snackbar-error']
               });
             }
           });
@@ -98,7 +98,7 @@ newCustomer() {
       console.error('Error checking customer existence:', err);
       this.snackBar.open('Error checking email. Please try again.', 'Close', {
         duration: 3000,
-        panelClass: 'snackbar-error'
+        panelClass: ['snackbar-error']
       });
     }
   });

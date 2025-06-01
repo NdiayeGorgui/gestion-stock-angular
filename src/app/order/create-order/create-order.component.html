@@ -27,20 +27,7 @@
       {{ selectedClient?.name }}
     </mat-select-trigger>
 
-     <mat-option class="no-select-option" (click)="$event.stopPropagation()">
-      <mat-form-field appearance="fill" >
-    <mat-label>Search customer...</mat-label>
-      <input
-        matInput
-    
-        [(ngModel)]="customerFilter"
-        (ngModelChange)="filterCustomers()"
-        (click)="$event.stopPropagation()"
-        (keydown)="$event.stopPropagation()"
-        
-      />
-       </mat-form-field>
-    </mat-option>
+      
    
     <mat-option
       *ngFor="let customer of filteredCustomers"
@@ -80,21 +67,7 @@
       {{ selectedProduct?.name }} - {{ selectedProduct?.price }} $
     </mat-select-trigger>
 
-    <!-- Zone de recherche en "disabled" mat-option -->
-    <mat-option class="no-select-option" (click)="$event.stopPropagation()">
-      <mat-form-field appearance="fill" >
-    <mat-label>Search product...</mat-label>
-      <input
-        matInput
-        [(ngModel)]="productFilter"
-        (ngModelChange)="filterProducts()"
-        (click)="$event.stopPropagation()"
-        (keydown)="$event.stopPropagation()"
-        
-      />
-      
-      </mat-form-field>
-    </mat-option>
+
 
     <!-- Liste filtrée -->
     <mat-option
