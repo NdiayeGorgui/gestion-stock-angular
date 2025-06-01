@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
   <mat-card>
     <mat-card-header>
       <mat-card-title>Customer details</mat-card-title>
@@ -61,7 +61,16 @@
             <mat-icon matSuffix>email</mat-icon>
           </mat-form-field>
         </div>
+
       </div>
+ <!-- Bouton -->
+          <div class="text-center mt-3">
+            <button mat-flat-button color="primary" (click)="close()">
+              <mat-icon matSuffix>close</mat-icon>
+              Close
+            </button>
+          </div>
+      
 
     </mat-card-content>
   </mat-card>

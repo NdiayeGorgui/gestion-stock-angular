@@ -17,47 +17,111 @@
   </div>
 </div>
 
-  <!-- Sélection client -->
-  <div class="row mb-3">
-    <div class="col-md-4">
-      <label><b>Customer</b></label>
-      <select class="form-select" [(ngModel)]="selectedClientId" (change)="onClientChange()">
-        <option value="">-- Select customer --</option>
-        <option *ngFor="let client of customers" [value]="client.id">{{ client.name }}</option>
-      </select>
-    </div>
-    <div class="col-md-4">
-      <label><b>Name</b></label>
-      <input class="form-control" [value]="selectedClient?.name || ''" readonly />
-    </div>
-    <div class="col-md-4">
-      <label><b>Email</b></label>
-      <input class="form-control" [value]="selectedClient?.email || ''" readonly />
-    </div>
-  </div>
+ <!-- Sélection client avec recherche dans mat-select -->
+<div class="row mb-3">
+  <div class="col-md-4">
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>Customer</mat-label>
+  <mat-select [(value)]="selectedClientId" (selectionChange)="onClientChange()">
+    <mat-select-trigger>
+      {{ selectedClient?.name }}
+    </mat-select-trigger>
 
-  <hr>
+     <mat-option class="no-select-option" (click)="$event.stopPropagation()">
+      <mat-form-field appearance="fill" >
+    <mat-label>Search customer...</mat-label>
+      <input
+        matInput
+    
+        [(ngModel)]="customerFilter"
+        (ngModelChange)="filterCustomers()"
+        (click)="$event.stopPropagation()"
+        (keydown)="$event.stopPropagation()"
+        
+      />
+       </mat-form-field>
+    </mat-option>
+   
+    <mat-option
+      *ngFor="let customer of filteredCustomers"
+      [value]="customer.id"
+    >
+      {{ customer.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
-  <!-- Sélection produit -->
-  <div class="row mb-3">
-    <div class="col-md-4">
-      <label><b>Product</b></label>
-      <select class="form-select" [(ngModel)]="selectedProductId" (change)="onProductChange()">
-        <option value="">-- Select product --</option>
-        <option *ngFor="let product of products" [value]="product.id">
-          {{ product.name }} - {{ product.price }} $
-        </option>
-      </select>
-    </div>
-    <div class="col-md-4">
-      <label><b>Product Name</b></label>
-      <input class="form-control" [value]="selectedProduct?.name || ''" readonly />
-    </div>
-    <div class="col-md-4">
-      <label><b>Price ($)</b></label>
-      <input class="form-control" [value]="selectedProduct?.price || ''" readonly />
-    </div>
+
   </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline" class="w-100">
+   <mat-label> Name</mat-label>
+    <input matInput class="form-control" [value]="selectedClient?.name || ''" readonly />
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+     <mat-form-field appearance="outline" class="w-100">
+   <mat-label> Email</mat-label>
+    
+    <input matInput class="form-control" [value]="selectedClient?.email || ''" readonly />
+    </mat-form-field>
+  </div>
+</div>
+
+<hr>
+
+<!-- Sélection produit avec recherche dans mat-select -->
+<div class="row mb-3">
+  <div class="col-md-4">
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>Product</mat-label>
+  <mat-select [(value)]="selectedProductId" (selectionChange)="onProductChange()">
+    <mat-select-trigger>
+      {{ selectedProduct?.name }} - {{ selectedProduct?.price }} $
+    </mat-select-trigger>
+
+    <!-- Zone de recherche en "disabled" mat-option -->
+    <mat-option class="no-select-option" (click)="$event.stopPropagation()">
+      <mat-form-field appearance="fill" >
+    <mat-label>Search product...</mat-label>
+      <input
+        matInput
+        [(ngModel)]="productFilter"
+        (ngModelChange)="filterProducts()"
+        (click)="$event.stopPropagation()"
+        (keydown)="$event.stopPropagation()"
+        
+      />
+      
+      </mat-form-field>
+    </mat-option>
+
+    <!-- Liste filtrée -->
+    <mat-option
+      *ngFor="let product of filteredProducts"
+      [value]="product.id"
+    >
+      {{ product.name }} - {{ product.price }} $
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+  </div>
+  <div class="col-md-4">
+    <mat-form-field appearance="outline" class="w-100">
+   <mat-label> Product Name</mat-label>
+    <input matInput class="form-control" [value]="selectedProduct?.name || ''" readonly />
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+     <mat-form-field appearance="outline" class="w-100">
+       <mat-label> Price ($)</mat-label>
+    <input matInput class="form-control" [value]="selectedProduct?.price || ''" readonly />
+    </mat-form-field>
+  </div>
+</div>
+
 
   <!-- Quantité et calculs -->
   <div class="row mb-3" *ngIf="selectedProduct">
@@ -117,12 +181,14 @@
   </table>
 
   <!-- Montants (sous le tableau) -->
-  <div class="text-end mt-3">
-    <h6>Total amount HT : {{ totalPrice | number: '1.2-2' }} $</h6>
-    <h6>Total Tax : {{ totalTax | number: '1.2-2' }} $</h6>
-    <h6>Total discount : {{ totalDiscount | number: '1.2-2' }} $</h6>
-    <h5>Total amount : {{ totalAmount | number: '1.2-2' }} $</h5>
-  </div>
+<div class="text-end mt-3">
+  <h6 style="font-size: 1rem;"><strong>Total amount HT :</strong> <span style="font-size: 1rem;">{{ totalPrice | number: '1.2-2' }} $</span></h6>
+  <h6 style="font-size: 1rem;"><strong>Total Tax :</strong> <span style="font-size: 1rem;">{{ totalTax | number: '1.2-2' }} $</span></h6>
+  <h6 style="font-size: 1rem;"><strong>Total discount :</strong> <span style="font-size: 1rem;">{{ totalDiscount | number: '1.2-2' }} $</span></h6>
+  <h5 style="font-size: 1rem;"><strong>Total amount :</strong> <span style="font-size: 1rem;"><strong>{{ totalAmount | number: '1.2-2' }} $</strong></span></h5>
+</div>
+
+
 </div>
 
 </div>

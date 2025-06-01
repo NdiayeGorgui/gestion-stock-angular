@@ -63,12 +63,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from './shared/add-confirm-dialog/add-confirm-dialog.component';
 import { DialogAlertComponent } from './shared/dialog-alert/dialog-alert.component';
 import { AuthInterceptor } from './keycloak/auth.interceptor';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { OrderCartDialogComponent } from './order/order-cart-dialog/order-cart-dialog.component';
 import { ForbiddenComponent } from './guards/forbidden/forbidden.component';
-
+import { MatOptionModule } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
 
 
 export function initializeKeycloak(keycloak: KeycloakService) {
@@ -159,7 +160,9 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     BrowserAnimationsModule,
     CreateOrderComponent,
     KeycloakAngularModule,
-    HttpClientModule
+    HttpClientModule,
+    MatAutocompleteModule,
+    MatOptionModule
     
   
   ],

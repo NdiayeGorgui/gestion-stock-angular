@@ -33,6 +33,9 @@ export class CustomerDetailsComponent implements OnInit {
         });
         
       }
-    
+    close() {
+  this.router.navigate(['/admin/customer']);
+}
+
 
 }

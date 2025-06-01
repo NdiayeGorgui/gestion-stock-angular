@@ -77,4 +77,9 @@ export class PaymentDetailsComponent implements OnInit {
     });
   }
 
+  close() {
+  this.router.navigate(['/admin/payment']);
+}
+
+
 }

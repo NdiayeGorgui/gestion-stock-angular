@@ -7,10 +7,11 @@
     <mat-divider></mat-divider>
 
     <mat-card-content>
-     
       <!-- Champs -->
-      <div class="form-grid">
-        <!-- ORDER -->
+      <div class="form-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        <!-- 15 champs total, 5 lignes x 3 colonnes -->
+        
+        <!-- Ligne 1 -->
         <mat-form-field appearance="outline">
           <mat-label>Order IdEvent</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.orderIdEvent" />
@@ -29,13 +30,13 @@
           <mat-icon matSuffix>schedule</mat-icon>
         </mat-form-field>
 
+        <!-- Ligne 2 -->
         <mat-form-field appearance="outline">
           <mat-label>Order Status</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.order.orderStatus" />
           <mat-icon matSuffix>check_small</mat-icon>
         </mat-form-field>
 
-        <!-- CUSTOMER -->
         <mat-form-field appearance="outline">
           <mat-label>Customer IdEvent</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.order.customerIdEvent" />
@@ -48,6 +49,7 @@
           <mat-icon matSuffix>person</mat-icon>
         </mat-form-field>
 
+        <!-- Ligne 3 -->
         <mat-form-field appearance="outline">
           <mat-label>Customer Address</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.order.customer.address" />
@@ -66,7 +68,7 @@
           <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
 
-        <!-- PRODUCT -->
+        <!-- Ligne 4 -->
         <mat-form-field appearance="outline">
           <mat-label>Product IdEvent</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.product.productIdEvent" />
@@ -85,13 +87,13 @@
           <mat-icon matSuffix>category</mat-icon>
         </mat-form-field>
 
+        <!-- Ligne 5 -->
         <mat-form-field appearance="outline">
           <mat-label>Product Price</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.amount" />
           <mat-icon matSuffix>paid</mat-icon>
         </mat-form-field>
 
-        <!-- OTHER -->
         <mat-form-field appearance="outline">
           <mat-label>Discount</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.discount" />
@@ -103,6 +105,16 @@
           <input matInput readonly [(ngModel)]="orderEvent.quantity" />
           <mat-icon matSuffix>balance</mat-icon>
         </mat-form-field>
+
+        <!-- Bouton Close -->
+       <!-- Bouton Close -->
+<div style="grid-column: 1 / -1; margin-top: 24px; display: flex; justify-content: center;">
+  <button mat-flat-button color="primary" style="width: 50%; height: 56px;" (click)="close()">
+    <mat-icon>close</mat-icon>
+    Close
+  </button>
+</div>
+
       </div>
     </mat-card-content>
   </mat-card>

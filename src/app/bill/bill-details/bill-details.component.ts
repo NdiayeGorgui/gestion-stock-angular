@@ -32,5 +32,8 @@ export class BillDetailsComponent implements OnInit {
              }
              });       
       }
+close() {
+  this.router.navigate(['/admin/bill']);
+}
 
 }

@@ -1,0 +1,7 @@
+.no-select-option {
+  pointer-events: none; /* Empêche la sélection automatique de l'option */
+}
+
+.no-select-option input {
+  pointer-events: auto; /* Réactive les événements uniquement sur l'input */
+}

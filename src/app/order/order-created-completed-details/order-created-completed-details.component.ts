@@ -31,4 +31,20 @@ export class OrderCreatedCompletedDetailsComponent {
     });
 
   }
+
+ close() {
+  const status = this.orderEvent?.order?.orderStatus?.toLowerCase();
+
+  if (status === 'completed') {
+    this.router.navigate(['/admin/completed-order']);
+  } else if (status === 'canceled') {
+    this.router.navigate(['/admin/cancel-order']);
+  } else {
+    // Redirection par défaut
+    this.router.navigate(['/admin/orders']);
+  }
+}
+
+
+
 }

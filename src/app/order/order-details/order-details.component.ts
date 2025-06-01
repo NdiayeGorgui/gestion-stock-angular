@@ -95,6 +95,8 @@ export class OrderDetailsComponent implements OnInit {
     );
   }
 
-
+  close() {
+  this.router.navigate(['/admin/order']);
+}
 
 }

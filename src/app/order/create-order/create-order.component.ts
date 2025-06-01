@@ -6,9 +6,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { DialogAlertComponent } from '../../shared/dialog-alert/dialog-alert.component';
 import { OrderCartDialogComponent } from '../order-cart-dialog/order-cart-dialog.component';
+import { Observable } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+
+
 
 @Component({
   standalone: true,
@@ -23,9 +29,15 @@ import { OrderCartDialogComponent } from '../order-cart-dialog/order-cart-dialog
       ])
     ])
   ],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule]
 })
 export class CreateOrderComponent implements OnInit {
+  customerFilter: string = '';
+  filteredCustomers: any[] = [];
+
+  productFilter: string = '';
+  filteredProducts: any[] = [];
+
   public customers: any;
   public products: any;
 
@@ -59,15 +71,30 @@ export class CreateOrderComponent implements OnInit {
     this.getProducts();
   }
 
+
+
   onClientChange() {
     this.selectedClient = this.customers.find((c: { id: number }) => c.id == +this.selectedClientId);
+    
   }
 
   onProductChange() {
     this.selectedProduct = this.products.find((p: { id: number }) => p.id == +this.selectedProductId);
     this.itemQty = 1;
     this.updateAmounts();
+    
   }
+
+  onCustomerChange() {
+    this.selectedClient = this.customers.find((c: { id: number }) => c.id == +this.selectedClientId);
+
+  }
+  onCustomerSelected(customer: any) {
+    console.log('customer selected :', customer);
+    this.selectedClient = customer;
+    this.selectedClientId = customer.id.toString();
+  }
+
 
   onQtyChange() {
     this.updateAmounts();
@@ -204,22 +231,41 @@ export class CreateOrderComponent implements OnInit {
   get totalItems() {
     return this.orderItems.reduce((sum, item) => sum + item.qty, 0);
   }
+  getCustomers() {
+    this.stockService.getCustomersOrderList().subscribe({
+      next: data => {
+        this.customers = data;
+        this.filteredCustomers = [...this.customers]; // ← doit être ici, après réception
+      },
+      error: err => console.error(err)
+    });
+  }
 
-
+  filterCustomers() {
+    const filterValue = this.customerFilter.toLowerCase();
+    this.filteredCustomers = this.customers.filter((c: { name: string }) =>
+      c.name.toLowerCase().includes(filterValue)
+    );
+  }
 
   getProducts() {
     this.stockService.getProductsOrderList().subscribe({
-      next: data => this.products = data,
+      next: data => {
+        this.products = data;
+        this.filteredProducts = [...this.products]; // ← placé ici, après réception des données
+      },
       error: err => console.error(err)
     });
   }
 
-  getCustomers() {
-    this.stockService.getCustomersOrderList().subscribe({
-      next: data => this.customers = data,
-      error: err => console.error(err)
-    });
+
+  filterProducts() {
+    const filterValue = this.productFilter.toLowerCase();
+    this.filteredProducts = this.products.filter((p: { name: string }) =>
+      p.name.toLowerCase().includes(filterValue)
+    );
   }
+
 
   async submitOrder() {
     if (!this.selectedClient || this.orderItems.length === 0) {

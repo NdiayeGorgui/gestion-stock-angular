@@ -30,6 +30,9 @@ export class ProductDetailsComponent implements OnInit {
     });
 
   }
+close() {
+  this.router.navigate(['/admin/product']);
+}
 
 
 }
