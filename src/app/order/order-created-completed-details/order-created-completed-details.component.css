@@ -46,3 +46,34 @@ mat-form-field {
   width: 100%;
 }
 
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Mobile par défaut */
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr); /* Tablette */
+  }
+}
+
+@media (min-width: 960px) {
+  .form-grid {
+    grid-template-columns: repeat(3, 1fr); /* Bureau */
+  }
+}
+
+.close-button {
+  grid-column: 1 / -1;
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.close-button button {
+  width: 100%;
+  max-width: 400px;
+  height: 56px;
+}
+

@@ -7,10 +7,7 @@
     <mat-divider></mat-divider>
 
     <mat-card-content>
-      <!-- Champs -->
-      <div class="form-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-        <!-- 15 champs total, 5 lignes x 3 colonnes -->
-        
+      <div class="form-grid">
         <!-- Ligne 1 -->
         <mat-form-field appearance="outline">
           <mat-label>Order IdEvent</mat-label>
@@ -107,14 +104,12 @@
         </mat-form-field>
 
         <!-- Bouton Close -->
-       <!-- Bouton Close -->
-<div style="grid-column: 1 / -1; margin-top: 24px; display: flex; justify-content: center;">
-  <button mat-flat-button color="primary" style="width: 50%; height: 56px;" (click)="close()">
-    <mat-icon>close</mat-icon>
-    Close
-  </button>
-</div>
-
+        <div class="close-button">
+          <button mat-flat-button color="primary" (click)="close()">
+            <mat-icon>close</mat-icon>
+            Close
+          </button>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>
