@@ -143,7 +143,7 @@
                  [max]="item.stock"
                  style="width: 60px;" />
         </td>
-        <td>{{ item.price.toFixed(2) }} $</td>
+        <td>{{ (item.price * item.qty).toFixed(2) }} $</td>
         <td>{{ item.tax.toFixed(2) }} $</td>
         <td>{{ item.discount.toFixed(2) }} $</td>
         <td>

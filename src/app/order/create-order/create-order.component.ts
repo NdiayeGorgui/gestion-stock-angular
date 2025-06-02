@@ -371,34 +371,39 @@ export class CreateOrderComponent implements OnInit {
           type: 'error'
         },
         duration: 3000,
-
       });
       item.qty = 1;
-      return;
-    }
-
-    if (item.qty > item.qtyAvailable) {
+    } else if (item.qty > item.qtyAvailable) {
       this.snackBar.openFromComponent(SnakBarComponent, {
         data: {
           message: 'Only ' + item.qtyAvailable + ' in stock',
           type: 'error'
         },
         duration: 3000,
-
       });
       item.qty = item.qtyAvailable;
-      return;
     }
 
-    // Recalcule les montants
+    // Recalcule les montants ligne
     item.price = item.unitPrice; // prix unitaire
-    const total = item.qty * item.price;
+    const totalPrice = item.qty * item.unitPrice;
 
-    item.tax = total * 0.2;
+    item.tax = totalPrice * 0.2;  // taxe sur la ligne
     item.discount = this.getDiscount(item.qty, item.unitPrice);
-    item.amount = item.price + item.tax - item.discount;
+    item.amount = totalPrice + item.tax - item.discount;
+
+    // Recalcule les totaux globaux de la commande
+    this.calculateTotals();
   }
 
-
+  calculateTotals(): void {
+    this.amount = 0;
+    for (const item of this.orderItems) {
+      const validQty = item.qty && item.qty > 0 ? item.qty : 0;
+      this.amount += item.price * validQty;
+    }
+    this.tax = this.amount * 0.2;
+    this.discount = this.amount * 0.05;
+  }
 
 }
