@@ -1,71 +1,152 @@
-<div class="container">
-    <mat-card>
+<div class="container dashboard-container">
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ 'dashboard.title' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+
+      <!-- 🔹 En-tête : Titre + zone de recherche -->
+      <div class="dashboard-header">
+        <h3 class="dashboard-title">{{ 'dashboard.overview' | translate }}</h3>
+
+        <mat-form-field class="dashboard-search" appearance="outline">
+          <mat-label>{{ 'dashboard.searchLabel' | translate }}</mat-label>
+          <input matInput [placeholder]="'dashboard.searchPlaceholder'  | translate" [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()" />
+          <button *ngIf="searchTerm" matSuffix mat-icon-button aria-label="Clear" (click)="searchTerm=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <!-- 🔹 Cartes de statistiques -->
+      <div class="stat-cards">
+        <mat-card class="stat-card" *ngFor="let stat of stats">
+          <div class="stat-content">
+            <mat-icon class="stat-icon" [ngStyle]="{ color: stat.color }">{{ stat.icon }}</mat-icon>
+            <div>
+              <div class="stat-title">{{ stat.title }}</div>
+              <div class="stat-value">{{ stat.value }}</div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <!-- 🔹 Tableau de produits récents -->
+      <mat-card>
         <mat-card-header>
-            <mat-card-title>Dashboard</mat-card-title>
+          <mat-card-title>{{ 'dashboard.recentProducts' | translate }}</mat-card-title>
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content>
-         
-          <div class="chart-container">
-            <h3>Best-selling products</h3>
-            <div style="overflow: auto;">
-            <ngx-charts-bar-vertical
-              [view]="[barChartWidth, 450]"
-              [results]="mostOrderedProducts"
-              [scheme]="colorScheme"
-              [gradient]="true"
-              [xAxis]="true"
-              [yAxis]="true"
-              [legend]="true"
-              [legendPosition]="legendPosition"
-              [showDataLabel]="true"
-              [barPadding]="10"
-              [animations]="true"
-              [roundEdges]="true">
-            </ngx-charts-bar-vertical>
-          </div>
-          </div>
+          <table mat-table [dataSource]="filteredProducts" class="mat-elevation-z2" style="width: 100%;">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>{{ 'dashboard.name' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
 
-          <div class="chart-container">
-            <h3>Top 10 customers</h3>
-            <div style="overflow: auto;">
-            <ngx-charts-bar-vertical
-              [view]="[barChartWidth, 450]"
-              [results]="mostOrderedCustomers"
-              [scheme]="colorScheme"
-              [gradient]="true"
-              [xAxis]="true"
-              [yAxis]="true"
-              [legend]="true"
-              [legendPosition]="legendPosition"
-              [showDataLabel]="true"
-              [barPadding]="20"
-              [animations]="true"
-              [roundEdges]="true">
-            </ngx-charts-bar-vertical>
-          </div>
-          </div>
+            <ng-container matColumnDef="category">
+              <th mat-header-cell *matHeaderCellDef>{{ 'dashboard.category' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+            </ng-container>
 
-          <div class="chart-container">
-            <h3>Products with remaining quantities</h3>
-            <div style="overflow: auto;">
-            <ngx-charts-bar-vertical
-              [view]="[barChartWidth, 450]"
-              [results]="products"
-              [scheme]="colorScheme"
-              [gradient]="true"
-              [xAxis]="true"
-              [yAxis]="true"
-              [legend]="true"
-              [legendPosition]="legendPosition"
-              [showDataLabel]="true"
-              [barPadding]="10"
-              [animations]="true"
-              [roundEdges]="true">
-            </ngx-charts-bar-vertical>
-          </div>
-          </div>
-          
+            <ng-container matColumnDef="stock">
+              <th mat-header-cell *matHeaderCellDef>{{ 'dashboard.stock' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.stock }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef>{{ 'dashboard.price' | translate }}</th>
+              <td mat-cell *matCellDef="let element">${{ element.price }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>{{ 'dashboard.status' | translate }}</th>
+              <td mat-cell *matCellDef="let element">
+                <span [ngClass]="{
+                  'out-stock': element.stock === 0,
+                  'low-stock': element.stock > 0 && element.stock < 20,
+                  'in-stock': element.stock >= 20
+                }">
+                  {{
+                    element.stock === 0
+                      ? ('dashboard.outOfStock' | translate)
+                      : (element.stock < 20
+                          ? ('dashboard.lowStock' | translate)
+                          : ('dashboard.inStock' | translate))
+                  }}
+                </span>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
         </mat-card-content>
-    </mat-card>
+      </mat-card>
+
+      <!-- 🔹 Graphiques -->
+      <div class="chart-container">
+        <h3 class="chart-title">{{ 'dashboard.bestSellingProducts' | translate }}</h3>
+        <div style="overflow: auto;">
+          <ngx-charts-bar-vertical
+            [view]="[barChartWidth, 450]"
+            [results]="mostOrderedProducts"
+            [scheme]="colorScheme"
+            [gradient]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [legend]="true"
+            [legendPosition]="legendPosition"
+            [showDataLabel]="true"
+            [barPadding]="10"
+            [animations]="true"
+            [roundEdges]="true">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <h3 class="chart-title">{{ 'dashboard.topCustomers' | translate }}</h3>
+        <div style="overflow: auto;">
+          <ngx-charts-bar-vertical
+            [view]="[barChartWidth, 450]"
+            [results]="mostOrderedCustomers"
+            [scheme]="colorScheme"
+            [gradient]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [legend]="true"
+            [legendPosition]="legendPosition"
+            [showDataLabel]="true"
+            [barPadding]="20"
+            [animations]="true"
+            [roundEdges]="true">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <h3 class="chart-title">{{ 'dashboard.remainingQuantities' | translate }}</h3>
+        <div style="overflow: auto;">
+          <ngx-charts-bar-vertical
+            [view]="[barChartWidth, 450]"
+            [results]="products"
+            [scheme]="colorScheme"
+            [gradient]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [legend]="true"
+            [legendPosition]="legendPosition"
+            [showDataLabel]="true"
+            [barPadding]="10"
+            [animations]="true"
+            [roundEdges]="true">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
 </div>

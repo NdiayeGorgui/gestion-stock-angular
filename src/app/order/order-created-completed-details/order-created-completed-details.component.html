@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title><strong>Order Details</strong></mat-card-title>
+      <mat-card-title><strong>{{ 'orderDetails.title' | translate }}</strong></mat-card-title>
     </mat-card-header>
 
     <mat-divider></mat-divider>
@@ -10,95 +10,95 @@
       <div class="form-grid">
         <!-- Ligne 1 -->
         <mat-form-field appearance="outline">
-          <mat-label>Order IdEvent</mat-label>
+          <mat-label>{{ 'orderDetails.orderIdEvent' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.orderIdEvent" />
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Order Id</mat-label>
+          <mat-label>{{ 'orderDetails.orderId' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.id" />
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Order Date</mat-label>
+          <mat-label>{{ 'orderDetails.orderDate' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.order.date" />
           <mat-icon matSuffix>schedule</mat-icon>
         </mat-form-field>
 
         <!-- Ligne 2 -->
         <mat-form-field appearance="outline">
-          <mat-label>Order Status</mat-label>
-          <input matInput readonly [(ngModel)]="orderEvent.order.orderStatus" />
+          <mat-label>{{ 'orderDetails.orderStatus' | translate }}</mat-label>
+          <input matInput readonly [value]="'orderStatus.' + orderEvent.order.orderStatus | translate" />
           <mat-icon matSuffix>check_small</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Customer IdEvent</mat-label>
+          <mat-label>{{ 'orderDetails.customerIdEvent' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.order.customerIdEvent" />
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Customer Name</mat-label>
+          <mat-label>{{ 'orderDetails.customerName' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.order.customer.name" />
           <mat-icon matSuffix>person</mat-icon>
         </mat-form-field>
 
         <!-- Ligne 3 -->
         <mat-form-field appearance="outline">
-          <mat-label>Customer Address</mat-label>
+          <mat-label>{{ 'orderDetails.customerAddress' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.order.customer.address" />
           <mat-icon matSuffix>home</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Customer Email</mat-label>
+          <mat-label>{{ 'orderDetails.customerEmail' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.order.customer.email" />
           <mat-icon matSuffix>mail</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Customer Phone</mat-label>
+          <mat-label>{{ 'orderDetails.customerPhone' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.order.customer.phone" />
           <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
 
         <!-- Ligne 4 -->
         <mat-form-field appearance="outline">
-          <mat-label>Product IdEvent</mat-label>
+          <mat-label>{{ 'orderDetails.productIdEvent' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.product.productIdEvent" />
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Product Name</mat-label>
+          <mat-label>{{ 'orderDetails.productName' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.product.name" />
           <mat-icon matSuffix>inventory</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Product Category</mat-label>
+          <mat-label>{{ 'orderDetails.productCategory' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.product.category" />
           <mat-icon matSuffix>category</mat-icon>
         </mat-form-field>
 
         <!-- Ligne 5 -->
         <mat-form-field appearance="outline">
-          <mat-label>Product Price</mat-label>
+          <mat-label>{{ 'orderDetails.productPrice' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.amount" />
           <mat-icon matSuffix>paid</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Discount</mat-label>
+          <mat-label>{{ 'orderDetails.discount' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.discount" />
           <mat-icon matSuffix>percent</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Quantity</mat-label>
+          <mat-label>{{ 'orderDetails.quantity' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="orderEvent.quantity" />
           <mat-icon matSuffix>balance</mat-icon>
         </mat-form-field>
@@ -107,7 +107,7 @@
         <div class="close-button">
           <button mat-flat-button color="primary" (click)="close()">
             <mat-icon>close</mat-icon>
-            Close
+            {{ 'orderDetails.close' | translate }}
           </button>
         </div>
       </div>

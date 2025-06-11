@@ -1,0 +1,42 @@
+<div class="settings-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>⚙️ {{ 'SETTINGS.TITLE' | translate }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="settings-content">
+      <mat-slide-toggle [(ngModel)]="darkTheme" (change)="toggleTheme()">
+        <mat-icon>{{ darkTheme ? 'dark_mode' : 'light_mode' }}</mat-icon>
+        {{ 'SETTINGS.DARK_THEME' | translate }}
+      </mat-slide-toggle>
+
+      <mat-slide-toggle [(ngModel)]="notificationsEnabled">
+        {{ 'SETTINGS.NOTIFICATIONS' | translate }}
+      </mat-slide-toggle>
+
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'SETTINGS.LANGUAGE' | translate }}</mat-label>
+        <mat-select [(value)]="selectedLanguage" (selectionChange)="changeLanguage()">
+          <mat-option *ngFor="let lang of languages" [value]="lang.code">
+            {{ lang.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'SETTINGS.FONT_SIZE' | translate }}</mat-label>
+        <mat-select [(value)]="fontSize" (selectionChange)="applyFontSize()">
+          <mat-option *ngFor="let size of fontSizes" [value]="size">
+            {{ size | titlecase }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="warn" (click)="reset()">
+        {{ 'SETTINGS.RESET' | translate }}
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

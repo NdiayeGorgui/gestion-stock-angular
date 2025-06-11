@@ -1,0 +1,41 @@
+.settings-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Font size support */
+:root {
+  --font-size: medium;
+}
+
+body {
+  font-size: var(--font-size);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme classes */
+body.dark-theme {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-theme .mat-card {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+body.dark-theme .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: #2e2e2e;
+}
+mat-slide-toggle {
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+}

@@ -17,6 +17,7 @@ import { OrderEventSourcing } from '../order/OrderEventSourcing';
 import { ProductStatDTO } from '../order/ProductStatDTO';
 import { CustomerDto } from '../order/customerDto';
 import { CustomerExistsResponse } from '../customer/create-customer/CustomerExistsResponse';
+import { Notification } from '../admin/Notification';
 
 
 @Injectable({
@@ -228,5 +229,12 @@ export class StockService {
     this.customerUpdatedSource.next();
   }
 
+   getNotificationsList(): Observable<Notification[]> {
+    return this.httpClient.get<(Notification[])>(`${environment.backendNotificationHost}`);
+  }
 
+    markNotificationAsRead(id:number): Observable<Object> {
+
+    return this.httpClient.put(`${environment.backendNotificationHost}/${id}`,null);
+  }
 }

@@ -36,6 +36,7 @@ import { OrderEventsComponent } from './order/order-events/order-events.componen
 import { OrderCreatedCompletedDetailsComponent } from './order/order-created-completed-details/order-created-completed-details.component';
 import { AdminRoleGuard } from './guards/auth.guard';
 import { ForbiddenComponent } from './guards/forbidden/forbidden.component';
+import { SettingsComponent } from './settings/settings/settings.component';
 
 
 
@@ -73,6 +74,7 @@ const routes: Routes = [
     {path:"delivered-orders",component:DeliveredOrdersComponent},
     {path:"order-events",component:OrderEventsComponent},
     {path: 'forbidden',component: ForbiddenComponent},
+    {path: 'settings',component: SettingsComponent}
   ]},
 ];
 

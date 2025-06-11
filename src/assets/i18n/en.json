@@ -1,0 +1,503 @@
+{
+    "SETTINGS": {
+        "TITLE": "Settings",
+        "DARK_THEME": "Dark Theme",
+        "NOTIFICATIONS": "Enable Notifications",
+        "LANGUAGE": "Language",
+        "FONT_SIZE": "Font Size",
+        "RESET": "Reset to Default"
+    },
+    "APP": {
+        "TITLE": "Trocady Management System",
+        "HOME": "Home",
+        "NOTIFICATIONS": "Notifications",
+        "NO_NOTIFICATIONS": "No notifications",
+        "ORDERS_LIST": "Orders List",
+        "CHATBOT_ZONE": "Chatbot Zone",
+        "PROFILE": "Profile",
+        "SETTINGS": "Settings",
+        "LOGOUT": "Logout",
+        "DASHBOARD": "Dashboard",
+        "MANAGE_PRODUCTS": "Manage Products",
+        "MANAGE_CUSTOMERS": "Manage Customers",
+        "CREATE_ORDERS": "Create Orders",
+        "SHIP_ORDERS": "Ship Orders",
+        "DELIVER_ORDERS": "Deliver Orders",
+        "VIEW_BILLS": "View Bills",
+        "VIEW_PAYMENTS": "View Payments",
+        "VIEW_ORDER_EVENTS": "View Order Events",
+        "CREATED_ORDERS": "📋 Created Orders",
+        "COMPLETED_ORDERS": "✅ Completed Orders",
+        "CANCELED_ORDERS": "❌ Canceled Orders"
+    },
+    "customers": {
+        "title": "Customers",
+        "search": "Search",
+        "new": "New Customer",
+        "name": "Name",
+        "address": "Address",
+        "email": "Email",
+        "phone": "Phone",
+        "status": "Status",
+        "qtyStatus": "Quantity Status",
+        "action": "Actions",
+        "pagination": "Customer pagination"
+    },
+    "newCustomer": {
+        "title": "New Customer"
+    },
+    "updateCustomer": {
+        "title": "Update Customer"
+    },
+    "customerDetails": {
+        "title": "Customer Details"
+    },
+    "form": {
+        "id": {
+            "label": "Product ID"
+        },
+        "idevent": {
+            "label": "Product IdEvent"
+        },
+        "status": {
+            "label": "Product Status"
+        },
+        "qtyStatus": {
+            "label": "Quantity Status"
+        },
+        "name": {
+            "label": "Customer Name",
+            "idEvent": "Customer IdEvent",
+            "error": {
+                "required": "Name is required."
+            }
+        },
+        "address": {
+            "label": "Customer Address",
+            "error": {
+                "required": "Address is required."
+            }
+        },
+        "phone": {
+            "label": "Customer Phone",
+            "error": {
+                "required": "Phone is required.",
+                "pattern": "Invalid phone number (10 digits required)."
+            }
+        },
+        "email": {
+            "label": "Customer Email",
+            "error": {
+                "required": "Email is required.",
+                "email": "Invalid email format."
+            }
+        },
+        "product": {
+            "name": {
+                "label": "Product Name",
+                "error": {
+                    "required": "Product name is required."
+                }
+            },
+            "category": {
+                "label": "Product Category",
+                "error": {
+                    "required": "Product category is required."
+                }
+            },
+            "price": {
+                "label": "Product Price",
+                "error": {
+                    "required": "Price is required.",
+                    "min": "Price must be a positive number."
+                }
+            },
+            "qty": {
+                "label": "Product Quantity",
+                "error": {
+                    "required": "Quantity is required.",
+                    "min": "Quantity must be at least 1."
+                }
+            }
+        }
+    },
+    "newProduct": {
+        "title": "New Product"
+    },
+    "updateProduct": {
+        "title": "Update Product"
+    },
+    "productDetails": {
+        "title": "Product Details"
+    },
+    "button": {
+        "addCustomer": "Add Customer",
+        "updateCustomer": "Update Customer",
+        "close": "Close",
+        "addProduct": "Add Product",
+        "updateProduct": "Update Product"
+    },
+    "PRODUCTS": {
+        "TITLE": "Products",
+        "SEARCH": "Search",
+        "NEW": "New Product",
+        "NAME": "Name",
+        "CATEGORY": "Category",
+        "QUANTITY": "Quantity",
+        "PRICE": "Price",
+        "STATUS": "Status",
+        "QTY_STATUS": "Stock Status",
+        "OUT_OF_STOCK": "OUT OF STOCK",
+        "LOW_STOCK": "LOW STOCK",
+        "AVAILABLE": "AVAILABLE",
+        "PAGINATION": "Products pagination"
+    },
+    "ACTIONS": {
+        "ACTION": "Actions"
+    },
+    "deliveries": {
+        "title": "Deliveries List",
+        "search": "Search",
+        "orderId": "Order ID",
+        "customerName": "Customer Name",
+        "email": "Email",
+        "date": "Date",
+        "status": "Status",
+        "action": "Deliver Order"
+    },
+    "newDeliver": {
+        "title": "New Delivery",
+        "customerName": "Customer Name",
+        "customerMail": "Customer Email",
+        "orderId": "Order ID",
+        "customerId": "Customer ID",
+        "eventTimeStamp": "Created Date",
+        "status": "Status",
+        "deliverBtn": "Deliver Order",
+        "statusValues": {
+            "DELIVERED": "Delivered",
+            "DELIVERING": "Delivering"
+        }
+    },
+    "shippingList": {
+        "title": "Shippings List",
+        "search": "Search",
+        "orderId": "Order ID",
+        "customerName": "Customer Name",
+        "customerMail": "Email",
+        "eventTimeStamp": "Date",
+        "status": "Status",
+        "action": "Ship Order",
+        "statusValues": {
+            "SHIPPED": "Shipped",
+            "SHIPPING": "Shipping"
+        }
+    },
+    "newShipping": {
+        "title": "New Shipment",
+        "customerName": "Customer Name",
+        "customerMail": "Customer Email",
+        "orderId": "Order ID",
+        "customerId": "Customer ID",
+        "eventTimeStamp": "Created Date",
+        "status": "Status",
+        "button": "Ship Order"
+    },
+    "billList": {
+        "title": "Bills",
+        "search": "Search",
+        "customerName": "Customer",
+        "productName": "Product",
+        "quantity": "Quantity",
+        "price": "Price",
+        "discount": "Discount",
+        "billingDate": "Date",
+        "status": "Status",
+        "details": "Details",
+        "statusValues": {
+            "CREATED": "Created",
+            "COMPLETED": "Completed",
+            "CANCELED": "Canceled"
+        }
+    },
+    "billDetails": {
+        "title": "Bill Details",
+        "id": "Bill ID",
+        "orderRef": "Order Reference",
+        "customerIdEvent": "Customer ID Event",
+        "productIdEvent": "Product ID Event",
+        "customerName": "Customer Name",
+        "productName": "Product Name",
+        "customerPhone": "Customer Phone",
+        "price": "Product Price",
+        "discount": "Discount",
+        "quantity": "Quantity",
+        "date": "Date",
+        "status": "Status",
+        "close": "Close",
+        "statusValues": {
+            "CREATED": "Created",
+            "COMPLETED": "Completed",
+            "CANCELED": "Canceled"
+        }
+    },
+    "orderEvents": {
+        "eventTimeStampLabel": "Created date",
+        "statusLabel": "Status",
+        "detailsLabel": "Details",
+        "title": "Order Events List",
+        "search": "Search",
+        "orderId": "Order Id",
+        "customerId": "Customer Id",
+        "eventTimeStamp": "Created Date",
+        "status": {
+            "CREATED": "Created",
+            "CONFIRMED": "Confirmed",
+            "SHIPPED": "Shipped",
+            "DELIVERED": "Delivered"
+        },
+        "details": {
+            "CREATED": "Order Created",
+            "CONFIRMED": "Order Confirmed",
+            "SHIPPED": "Order Shipped",
+            "DELIVERED": "Order Delivered"
+        }
+    },
+    "payments": {
+        "title": "Payments",
+        "search": "Search",
+        "customer": "Customer",
+        "paymentMode": "Payment Mode",
+        "amount": "Amount",
+        "date": "Date",
+        "status": "Status",
+        "details": "Details",
+        "paymentStatusValues": {
+            "COMPLETED": "Completed"
+        }
+    },
+    "paymentDetails": {
+        "title": "Payment details",
+        "paymentIdEvent": "Payment IdEvent",
+        "timeStamp": "Payment Date",
+        "paymentMode": "Payment mode",
+        "paymentStatus": "Payment status",
+        "customerName": "Customer Name",
+        "amount": "Total Amount",
+        "close": "Close"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "overview": "General Overview",
+        "searchLabel": "Search product",
+        "searchPlaceholder": "Type to search...",
+        "recentProducts": "Recent Products",
+        "name": "Name",
+        "category": "Category",
+        "stock": "Stock",
+        "price": "Price",
+        "status": "Status",
+        "outOfStock": "Out of Stock",
+        "lowStock": "Low Stock",
+        "inStock": "In Stock",
+        "bestSellingProducts": "Best-selling products",
+        "topCustomers": "Top 10 customers",
+        "remainingQuantities": "Products with remaining quantities"
+    },
+    "newOrder": {
+        "title": "New Order",
+        "proceedToPayment": "💰 Proceed to Payment",
+        "cart": "🛒 Cart",
+        "customer": "Customer",
+        "address": "Address",
+        "email": "Email",
+        "product": "Product",
+        "category": "Category",
+        "price": "Price ($)",
+        "quantity": "Quantity",
+        "amount": "Amount ($)",
+        "tax": "Tax ($)",
+        "discount": "Discount ($)",
+        "addOrder": "Add order",
+        "orderDetails": "Order details",
+        "productHeader": "Product",
+        "quantityHeader": "Quantity",
+        "amountHeader": "Amount",
+        "taxHeader": "Tax",
+        "discountHeader": "Discount",
+        "actionsHeader": "Actions",
+        "remove": "Remove",
+        "totalAmountExclTax": "Total amount HT :",
+        "totalTax": "Total Tax :",
+        "totalDiscount": "Total discount :",
+        "totalAmount": "Total amount :"
+    },
+    "order": {
+        "new": "New Order",
+        "proceedToPayment": "Proceed to Payment",
+        "cart": "Cart",
+        "customer": "Customer",
+        "address": "Address",
+        "email": "Email",
+        "product": "Product",
+        "category": "Category",
+        "price": "Price",
+        "quantity": "Quantity",
+        "amount": "Amount",
+        "tax": "Tax",
+        "discount": "Discount",
+        "add": "Add to order",
+        "details": "Order details",
+        "actions": "Actions",
+        "remove": "Remove",
+        "totalHT": "Total amount HT :",
+        "totalTax": "Total Tax :",
+        "totalDiscount": "Total discount :",
+        "total": "Total amount :"
+    },
+    "createdOrders": {
+        "title": "Created Orders",
+        "customer": "Customer",
+        "product": "Product",
+        "price": "Price",
+        "quantity": "Quantity",
+        "payment": "Payment",
+        "details": "Details",
+        "cancel": "Cancel",
+        "paginator": "Select page of created orders"
+    },
+    "completedOrders": {
+        "title": "Completed Orders",
+        "search": "Search",
+        "customer": "Customer",
+        "product": "Product",
+        "price": "Price",
+        "quantity": "Quantity",
+        "amount": "Amount",
+        "discount": "Discount",
+        "date": "Date",
+        "status": "Status",
+        "details": "Details",
+        "paginator": "Select page of orders"
+    },
+    "canceledOrders": {
+        "title": "Canceled Orders",
+        "search": "Search",
+        "customer": "Customer",
+        "product": "Product",
+        "price": "Price",
+        "quantity": "Quantity",
+        "amount": "Amount",
+        "discount": "Discount",
+        "date": "Date",
+        "status": "Status",
+        "details": "Details",
+        "paginator": "Select page of orders"
+    },
+    "orderStatus": {
+        "COMPLETED": "Completed",
+        "CANCELED": "Canceled",
+        "CREATED": "Created",
+        "PENDING": "Pending",
+        "DELIVERING": "Delivering",
+        "DELIVERED": "Delivered"
+    },
+    "orderDetails": {
+        "title": "Order Details",
+        "customerId": "Customer ID",
+        "customerName": "Customer Name",
+        "customerPhone": "Customer Phone",
+        "customerAddress": "Customer Address",
+        "customerEmail": "Customer Email",
+        "totalTax": "Total Tax",
+        "productId": "Product ID",
+        "productName": "Product Name",
+        "category": "Category",
+        "price": "Price",
+        "quantity": "Quantity",
+        "discount": "Discount",
+        "amount": "Amount",
+        "status": "Status",
+        "totalAmount": "Total Amount",
+        "close": "Close",
+        "orderIdEvent": "Order IdEvent",
+        "orderId": "Order Id",
+        "orderDate": "Order Date",
+        "orderStatus": "Order Status",
+        "customerIdEvent": "Customer IdEvent",
+        "productIdEvent": "Product IdEvent",
+        "productCategory": "Product Category",
+        "productPrice": "Product Price"
+    },
+    "payment": {
+        "title": "New Payment",
+        "mode": "Payment mode",
+        "customerName": "Customer Name",
+        "tax": "Tax",
+        "discount": "Discount",
+        "amount": "Amount",
+        "totalAmount": "Total Amount",
+        "payNow": "Pay Now",
+        "errors": {
+            "modeRequired": "Payment mode is required."
+        }
+    },
+    "orderDialog": {
+        "title": "Order Details",
+        "emptyCart": "Your cart is empty.",
+        "product": "Product",
+        "quantity": "Quantity",
+        "amount": "Amount",
+        "tax": "Tax",
+        "discount": "Discount",
+        "totalHT": "Total amount HT",
+        "totalTax": "Total Tax",
+        "totalDiscount": "Total Discount",
+        "total": "Total amount",
+        "close": "Close",
+        "placeOrder": "Place Order"
+    },
+    "home": {
+        "title": "✨ Welcome to Trocady Store ✨",
+        "categories": {
+            "furniture": {
+                "title": "🛋️ FURNITURE!"
+            },
+            "appliances": {
+                "title": "🧊 APPLIANCES!"
+            },
+            "hightech": {
+                "title": "💻 HIGH-TECH!"
+            },
+            "cosmetics": {
+                "title": "🌿 COSMETICS!"
+            },
+            "construction": {
+                "title": "🏗️ CONSTRUCTION MATERIALS!"
+            },
+            "toys": {
+                "title": "🧸 TOYS!"
+            },
+            "textile": {
+                "title": "👕 TEXTILES!"
+            },
+            "food": {
+                "title": "🥖 FOOD!"
+            },
+            "office": {
+                "title": "🔌 OFFICE SUPPLIES!"
+            }
+        }
+    },
+    "chatbot": {
+        "title": "Chat Bot",
+        "user": "Me",
+        "bot": "Bot",
+        "label": "Your message",
+        "placeholder": "Write here..."
+    },
+    "NOTIF": {
+        "LOW_STOCK": "Product {{product}} is low on stock!",
+        "OUT_OF_STOCK": "Product {{product}} is out of stock!"
+    }
+}

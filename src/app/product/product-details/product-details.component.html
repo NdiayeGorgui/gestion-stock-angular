@@ -1,100 +1,108 @@
 <div class="container mt-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Product Details</mat-card-title>
+            <mat-card-title>{{ 'productDetails.title' | translate }}</mat-card-title>
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content>
-            <div class="row">
-                <!-- Product ID -->
-                <div class="col-sm-12 col-md-6">
-                    <mat-form-field class="w-100">
-                        <mat-label>Product ID</mat-label>
-                        <input matInput class="form-control" id="id" readonly [(ngModel)]="product.id" name="id">
-                        <mat-icon matSuffix>check_circle</mat-icon>
-                    </mat-form-field>
+            <form>
+                <div class="row">
+                    <!-- Product ID -->
+                    <div class="col-sm-12 col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>{{ 'form.id.label' | translate }}</mat-label>
+                            <input matInput class="form-control" id="id" readonly [(ngModel)]="product.id" name="id">
+                            <mat-icon matSuffix>check_circle</mat-icon>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Product IdEvent -->
+                    <div class="col-sm-12 col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>{{ 'form.idevent.label' | translate }}</mat-label>
+                            <input matInput class="form-control" id="productIdEvent" readonly
+                                [(ngModel)]="product.productIdEvent" name="productIdEvent">
+                            <mat-icon matSuffix>check_circle</mat-icon>
+                        </mat-form-field>
+                    </div>
                 </div>
 
-                <!-- Product IdEvent -->
-                <div class="col-sm-12 col-md-6">
-                    <mat-form-field class="w-100">
-                        <mat-label>Product IdEvent</mat-label>
-                        <input matInput class="form-control" id="productIdEvent" readonly
-                            [(ngModel)]="product.productIdEvent" name="productIdEvent">
-                        <mat-icon matSuffix>check_circle</mat-icon>
-                    </mat-form-field>
-                </div>
-            </div>
+                <div class="row">
+                    <!-- Product Name -->
+                    <div class="col-sm-12 col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>{{ 'form.product.name.label' | translate }}</mat-label>
+                            <input matInput class="form-control" id="name" readonly [(ngModel)]="product.name"
+                                name="name">
+                            <mat-icon matSuffix>inventory</mat-icon>
+                        </mat-form-field>
+                    </div>
 
-            <div class="row">
-                <!-- Product Name -->
-                <div class="col-sm-12 col-md-6">
-                    <mat-form-field class="w-100">
-                        <mat-label>Product Name</mat-label>
-                        <input matInput class="form-control" id="name" readonly [(ngModel)]="product.name" name="name">
-                        <mat-icon matSuffix>inventory</mat-icon>
-                    </mat-form-field>
-                </div>
-
-                <!-- Product Category -->
-                <div class="col-sm-12 col-md-6">
-                    <mat-form-field class="w-100">
-                        <mat-label>Product Category</mat-label>
-                        <input matInput class="form-control" id="category" readonly [(ngModel)]="product.category"
-                            name="category">
-                        <mat-icon matSuffix>category</mat-icon>
-                    </mat-form-field>
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- Product Price -->
-                <div class="col-sm-12 col-md-6">
-                    <mat-form-field class="w-100">
-                        <mat-label>Product Price</mat-label>
-                        <input matInput class="form-control" id="price" readonly [(ngModel)]="product.price"
-                            name="price">
-                        <mat-icon matSuffix>paid</mat-icon>
-                    </mat-form-field>
+                    <!-- Product Category -->
+                    <div class="col-sm-12 col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>{{ 'form.product.category.label' | translate }}</mat-label>
+                            <input matInput class="form-control" id="category" readonly [(ngModel)]="product.category"
+                                name="category">
+                            <mat-icon matSuffix>category</mat-icon>
+                        </mat-form-field>
+                    </div>
                 </div>
 
-                <!-- Product Quantity -->
-                <div class="col-sm-12 col-md-6">
-                    <mat-form-field class="w-100">
-                        <mat-label>Product Quantity</mat-label>
-                        <input matInput class="form-control" id="qty" readonly [(ngModel)]="product.qty" name="qty">
-                        <mat-icon matSuffix>balance</mat-icon>
-                    </mat-form-field>
-                </div>
-            </div>
+                <div class="row">
+                    <!-- Product Price -->
+                    <div class="col-sm-12 col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>{{ 'form.product.price.label' | translate }}</mat-label>
+                            <input matInput class="form-control" id="price" readonly [(ngModel)]="product.price"
+                                name="price">
+                            <mat-icon matSuffix>paid</mat-icon>
+                        </mat-form-field>
+                    </div>
 
-            <div class="row">
-                <!-- Quantity Status -->
-                <div class="col-sm-12 col-md-6">
-                    <mat-form-field class="w-100">
-                        <mat-label>Quantity Status</mat-label>
-                        <input matInput class="form-control" id="qtyStatus" readonly [(ngModel)]="product.qtyStatus"
-                            name="qtyStatus">
-                        <mat-icon matSuffix>event_available</mat-icon>
-                    </mat-form-field>
+                    <!-- Product Quantity -->
+                    <div class="col-sm-12 col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>{{ 'form.product.qty.label' | translate }}</mat-label>
+                            <input matInput class="form-control" id="qty" readonly [(ngModel)]="product.qty" name="qty">
+                            <mat-icon matSuffix>balance</mat-icon>
+                        </mat-form-field>
+                    </div>
                 </div>
 
-                <!-- Product Status -->
-                <div class="col-sm-12 col-md-6">
-                    <mat-form-field class="w-100">
-                        <mat-label>Product Status</mat-label>
-                        <input matInput class="form-control" id="status" readonly [(ngModel)]="product.status"
-                            name="status">
-                        <mat-icon matSuffix>check_small</mat-icon>
-                    </mat-form-field>
+                <div class="row">
+                    <!-- Quantity Status -->
+                    <div class="col-sm-12 col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>{{ 'form.qtyStatus.label' | translate }}</mat-label>
+                            <input matInput class="form-control" id="qtyStatus" readonly [(ngModel)]="product.qtyStatus"
+                                name="qtyStatus">
+                            <mat-icon matSuffix>event_available</mat-icon>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Product Status -->
+                    <div class="col-sm-12 col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>{{ 'form.status.label' | translate }}</mat-label>
+
+                            <input matInput class="form-control" id="status" readonly
+                                [value]="'orderStatus.' + product.status | translate" name="status">
+
+                            <mat-icon matSuffix>check_circle</mat-icon>
+                        </mat-form-field>
+                    </div>
+
                 </div>
-            </div>
-                 <div class="text-center mt-3">
-            <button mat-flat-button color="primary" (click)="close()">
-              <mat-icon matSuffix>close</mat-icon>
-              Close
-            </button>
-          </div>
+
+                <!-- Close Button -->
+                <mat-card-actions class="d-flex justify-content-center mt-3">
+                    <button mat-flat-button color="primary" (click)="close()">
+                        <mat-icon matSuffix>close</mat-icon>
+                        {{ 'button.close' | translate }}
+                    </button>
+                </mat-card-actions>
+            </form>
         </mat-card-content>
     </mat-card>
 </div>

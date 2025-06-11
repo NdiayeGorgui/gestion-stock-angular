@@ -33,3 +33,7 @@ table {
   width: 100%;
   min-width: 800px;
 }
+
+.centered-column {
+  text-align: center;
+}

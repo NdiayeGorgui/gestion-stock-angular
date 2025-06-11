@@ -1,19 +1,19 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Completed Orders</mat-card-title>
+      <mat-card-title>{{ 'completedOrders.title' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
 
     <mat-card-content>
       <!-- Barre d’actions -->
       <div class="order-actions">
-        <!-- Si tu veux remettre le champ de recherche plus tard -->
+        <!-- Champ de recherche à activer plus tard -->
         <!--
         <mat-form-field appearance="outline">
           <mat-label>
             <mat-icon matSuffix>search</mat-icon>
-            Search
+            {{ 'completedOrders.search' | translate }}
           </mat-label>
           <input matInput (keyup)="filterOrder($event)">
         </mat-form-field>
@@ -26,50 +26,52 @@
 
           <!-- Colonnes -->
           <ng-container matColumnDef="customerName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'completedOrders.customer' | translate }}</th>
             <td mat-cell *matCellDef="let element"> {{element.order.customer.name}} </td>
           </ng-container>
 
           <ng-container matColumnDef="productName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Product </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'completedOrders.product' | translate }}</th>
             <td mat-cell *matCellDef="let element"> {{element.product.name}} </td>
           </ng-container>
 
           <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'completedOrders.price' | translate }}</th>
             <td mat-cell *matCellDef="let element"> {{element.product.price | number:'0.2-2'}} </td>
           </ng-container>
 
           <ng-container matColumnDef="qty">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'completedOrders.quantity' | translate }}</th>
             <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
           </ng-container>
 
           <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'completedOrders.amount' | translate }}</th>
             <td mat-cell *matCellDef="let element"> {{element.amount | number:'0.2-2'}} </td>
           </ng-container>
 
           <ng-container matColumnDef="discount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Discount </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'completedOrders.discount' | translate }}</th>
             <td mat-cell *matCellDef="let element"> {{element.discount | number:'0.2-2'}} </td>
           </ng-container>
 
           <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'completedOrders.date' | translate }}</th>
             <td mat-cell *matCellDef="let element"> {{element.order.date | date: 'dd/MM/yyyy'}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-            <td mat-cell *matCellDef="let element"> {{element.order.orderStatus}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'completedOrders.status' | translate }}</th>
+            <td mat-cell *matCellDef="let element">
+              {{ 'orderStatus.' + element.order.orderStatus | translate }}
+            </td>
+
           </ng-container>
 
           <ng-container matColumnDef="details">
-            <th mat-header-cell *matHeaderCellDef> Details </th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'completedOrders.details' | translate }}</th>
             <td mat-cell *matCellDef="let element">
               <button (click)="getOrder(element.orderIdEvent)" mat-icon-button color="accent">
-               
                 <mat-icon>info</mat-icon>
               </button>
             </td>
@@ -81,7 +83,7 @@
         </table>
       </div>
 
-      <!-- Paginatation -->
+      <!-- Pagination -->
       <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons aria-label="Select page of orders">
       </mat-paginator>
     </mat-card-content>

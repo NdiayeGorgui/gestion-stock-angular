@@ -3,3 +3,66 @@ mat-divider {
     margin-bottom: 20px;
     
   }
+
+  .profile-container {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 16px;
+}
+
+.profile-card {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.avatar-icon {
+  background-color: #3f51b5;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-row {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+mat-chip {
+  margin: 4px;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 16px;
+}
+
+.profile-avatar {
+  background-color: #3f51b5;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+

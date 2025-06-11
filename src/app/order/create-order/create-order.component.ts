@@ -14,6 +14,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
+import { MatCardModule} from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { NotificationService } from '../../services/NotificationService';
+
 
 
 
@@ -30,7 +35,7 @@ import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
       ])
     ])
   ],
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule]
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule,MatCardModule,TranslateModule,MatDividerModule]
 })
 export class CreateOrderComponent implements OnInit {
   customerFilter: string = '';
@@ -64,7 +69,8 @@ export class CreateOrderComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private stockService: StockService,
-    private router: Router
+    private router: Router,
+    private notifService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -314,8 +320,10 @@ export class CreateOrderComponent implements OnInit {
           },
           duration: 3000
         });
+         this.notifService.getNotifications(); 
         this.showPaymentButton = true;
         this.resetCart();
+       
       } catch (err: any) {
         console.error('Error submitting order item:', err);
 

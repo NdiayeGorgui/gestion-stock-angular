@@ -6,7 +6,7 @@ import { KeycloakService } from 'keycloak-angular';
   standalone: false,
   
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
 

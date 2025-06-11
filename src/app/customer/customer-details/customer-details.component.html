@@ -1,7 +1,7 @@
 <div class="container mt-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Customer details</mat-card-title>
+      <mat-card-title>{{ 'customerDetails.title' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
@@ -10,26 +10,31 @@
       <div class="row">
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">
-            <mat-label>Customer IdEvent</mat-label>
+            <mat-label>{{ 'form.name.idEvent' | translate }}</mat-label>
             <mat-icon matSuffix>remember_me</mat-icon>
-            <input matInput class="form-control" id="customerIdEvent" readonly [(ngModel)]="customer.customerIdEvent" name="customerIdEvent">
+            <input matInput class="form-control" id="customerIdEvent" readonly [(ngModel)]="customer.customerIdEvent"
+              name="customerIdEvent">
           </mat-form-field>
         </div>
 
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">
-            <mat-label>Customer status</mat-label>
-            <input matInput class="form-control" id="status" readonly [(ngModel)]="customer.status" name="status">
+            <mat-label>{{ 'form.status.label' | translate }}</mat-label>
+
+            <input matInput class="form-control" id="status" readonly
+              [value]="'orderStatus.' + customer.status | translate" name="status">
+
             <mat-icon matSuffix>check_circle</mat-icon>
           </mat-form-field>
         </div>
+
       </div>
 
       <!-- Ligne 2 : Name & Address -->
       <div class="row">
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">
-            <mat-label>Customer Name</mat-label>
+            <mat-label>{{ 'form.name.label' | translate }}</mat-label>
             <input matInput class="form-control" id="name" [(ngModel)]="customer.name" name="name" readonly>
             <mat-icon matSuffix>person</mat-icon>
           </mat-form-field>
@@ -37,7 +42,7 @@
 
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">
-            <mat-label>Customer Address</mat-label>
+            <mat-label>{{ 'form.address.label' | translate }}</mat-label>
             <mat-icon matSuffix>home</mat-icon>
             <input matInput class="form-control" id="address" readonly [(ngModel)]="customer.address" name="address">
           </mat-form-field>
@@ -48,7 +53,7 @@
       <div class="row">
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">
-            <mat-label>Customer Phone</mat-label>
+            <mat-label>{{ 'form.phone.label' | translate }}</mat-label>
             <input matInput class="form-control" id="phone" readonly [(ngModel)]="customer.phone" name="phone">
             <mat-icon matSuffix>phone</mat-icon>
           </mat-form-field>
@@ -56,21 +61,20 @@
 
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">
-            <mat-label>Customer Email</mat-label>
+            <mat-label>{{ 'form.email.label' | translate }}</mat-label>
             <input matInput class="form-control" id="email" readonly [(ngModel)]="customer.email" name="email">
             <mat-icon matSuffix>email</mat-icon>
           </mat-form-field>
         </div>
-
       </div>
- <!-- Bouton -->
-          <div class="text-center mt-3">
-            <button mat-flat-button color="primary" (click)="close()">
-              <mat-icon matSuffix>close</mat-icon>
-              Close
-            </button>
-          </div>
-      
+
+      <!-- Bouton -->
+      <div class="text-center mt-3">
+        <button mat-flat-button color="primary" (click)="close()">
+          <mat-icon matSuffix>close</mat-icon>
+          {{ 'button.close' | translate }}
+        </button>
+      </div>
 
     </mat-card-content>
   </mat-card>

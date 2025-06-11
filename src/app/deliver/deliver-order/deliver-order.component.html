@@ -1,76 +1,77 @@
 <div class="container mt-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>New Deliver</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-            <form #customerForm="ngForm">
-                <div class="row">
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Customer Name</mat-label>
-                            <input matInput class="form-control" id="customerName" [(ngModel)]="delivered.customerName"
-                                name="customerName" readonly>
-                            <mat-icon matSuffix>person</mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Customer Email</mat-label>
-                            <input matInput class="form-control" id="customerMail" [(ngModel)]="delivered.customerMail"
-                                name="customerMail" readonly>
-                            <mat-icon matSuffix>email</mat-icon>
-                        </mat-form-field>
-                    </div>
-                </div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ 'newDeliver.title' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <form #customerForm="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newDeliver.customerName' | translate }}</mat-label>
+              <input matInput class="form-control" id="customerName" [(ngModel)]="delivered.customerName"
+                name="customerName" readonly>
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newDeliver.customerMail' | translate }}</mat-label>
+              <input matInput class="form-control" id="customerMail" [(ngModel)]="delivered.customerMail"
+                name="customerMail" readonly>
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Order Id</mat-label>
-                            <input matInput class="form-control" id="orderId" [(ngModel)]="delivered.orderId"
-                                name="orderId" readonly>
-                            <mat-icon matSuffix>check_circle</mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Customer Id</mat-label>
-                            <input matInput class="form-control" id="customerId" [(ngModel)]="delivered.customerId"
-                                name="customerId" readonly>
-                            <mat-icon matSuffix>check_circle</mat-icon>
-                        </mat-form-field>
-                    </div>
-                </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newDeliver.orderId' | translate }}</mat-label>
+              <input matInput class="form-control" id="orderId" [(ngModel)]="delivered.orderId"
+                name="orderId" readonly>
+              <mat-icon matSuffix>check_circle</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newDeliver.customerId' | translate }}</mat-label>
+              <input matInput class="form-control" id="customerId" [(ngModel)]="delivered.customerId"
+                name="customerId" readonly>
+              <mat-icon matSuffix>check_circle</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Created Date</mat-label>
-                            <input matInput class="form-control" id="eventTimeStamp"
-                                [(ngModel)]="delivered.eventTimeStamp" name="eventTimeStamp" readonly>
-                            <mat-icon matSuffix>date</mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Status</mat-label>
-                            <input matInput class="form-control" id="status" [(ngModel)]="delivered.status"
-                                name="status" readonly>
-                            <mat-icon matSuffix>pending</mat-icon>
-                        </mat-form-field>
-                    </div>
-                </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newDeliver.eventTimeStamp' | translate }}</mat-label>
+              <input matInput class="form-control" id="eventTimeStamp"
+                [(ngModel)]="delivered.eventTimeStamp" name="eventTimeStamp" readonly>
+              <mat-icon matSuffix>date</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newDeliver.status' | translate }}</mat-label>
+              <input matInput class="form-control"
+                [value]="'newDeliver.statusValues.' + delivered.status | translate"
+                id="status" name="status" readonly>
+              <mat-icon matSuffix>pending</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
 
-                <div class="text-center mt-4">
-                    <button mat-flat-button color="primary" (click)="newDeliver()"
-                        [disabled]="delivered.status === 'DELIVERED'">
-                        <mat-icon matSuffix>balance</mat-icon>
-                        Deliver Order
-                    </button>
-                </div>
-            </form>
-        </mat-card-content>
-    </mat-card>
+        <div class="text-center mt-4">
+          <button mat-flat-button color="primary" (click)="newDeliver()"
+            [disabled]="delivered.status === 'DELIVERED'">
+            <mat-icon matSuffix>balance</mat-icon>
+            {{ 'newDeliver.deliverBtn' | translate }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

@@ -1,23 +1,21 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Created Orders</mat-card-title>
+      <mat-card-title>{{ 'createdOrders.title' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
 
     <mat-card-content>
-      <!-- Actions (si tu veux y ajouter un filtre ou bouton plus tard) -->
       <div class="order-actions">
-        <!-- Ex: Champ de recherche ici plus tard -->
+        <!-- Filtre ou actions à venir -->
       </div>
 
-      <!-- Table Responsive -->
       <div class="table-container">
         <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
           <!-- Customer Column -->
           <ng-container matColumnDef="customerName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'createdOrders.customer' | translate }} </th>
             <td mat-cell *matCellDef="let element; let i = index">
               <span *ngIf="shouldShowRowSpan(i)" [attr.rowspan]="getRowSpan(i)">
                 {{ element.order.customer.name }}
@@ -27,25 +25,25 @@
 
           <!-- Product Column -->
           <ng-container matColumnDef="productName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Product </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'createdOrders.product' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{ element.product.name }} </td>
           </ng-container>
 
           <!-- Price Column -->
           <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'createdOrders.price' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{ element.product.price | number:'1.2-2' }} </td>
           </ng-container>
 
           <!-- Quantity Column -->
           <ng-container matColumnDef="qty">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'createdOrders.quantity' | translate }} </th>
             <td mat-cell *matCellDef="let element"> {{ element.quantity }} </td>
           </ng-container>
 
           <!-- Payment Button -->
           <ng-container matColumnDef="payment">
-            <th mat-header-cell *matHeaderCellDef> Payment </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'createdOrders.payment' | translate }} </th>
             <td mat-cell *matCellDef="let element; let i = index">
               <span *ngIf="shouldShowRowSpan(i)" [attr.rowspan]="getRowSpan(i)">
                 <button (click)="makePayment(element.order.customer.customerIdEvent)" mat-raised-button color="primary">
@@ -57,7 +55,7 @@
 
           <!-- Details Button -->
           <ng-container matColumnDef="details">
-            <th mat-header-cell *matHeaderCellDef> Details </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'createdOrders.details' | translate }} </th>
             <td mat-cell *matCellDef="let element; let i = index">
               <span *ngIf="shouldShowRowSpan(i)" [attr.rowspan]="getRowSpan(i)">
                 <button (click)="getOrder(element.order.customer.customerIdEvent)" mat-raised-button color="accent">
@@ -69,7 +67,7 @@
 
           <!-- Cancel Button -->
           <ng-container matColumnDef="cancel">
-            <th mat-header-cell *matHeaderCellDef> Cancel </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'createdOrders.cancel' | translate }} </th>
             <td mat-cell *matCellDef="let element">
               <button (click)="cancelOrder(element.orderIdEvent)" mat-raised-button color="warn">
                 <mat-icon>cancel</mat-icon>
@@ -77,13 +75,11 @@
             </td>
           </ng-container>
 
-          <!-- Header / Row -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
 
-      <!-- Paginator -->
       <mat-paginator
         [pageSizeOptions]="[5, 10, 20]"
         showFirstLastButtons

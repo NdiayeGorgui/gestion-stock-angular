@@ -1,22 +1,22 @@
-<h2 mat-dialog-title>🛒 Order Details</h2>
+<h2 mat-dialog-title>🛒 {{ 'orderDialog.title' | translate }}</h2>
 
 <mat-dialog-content>
 
-  <!-- Afficher si le panier est vide -->
+  <!-- Panier vide -->
   <div *ngIf="data.orderItems.length === 0" class="text-center text-muted">
-    <p><strong>Your cart is empty.</strong></p>
+    <p><strong>{{ 'orderDialog.emptyCart' | translate }}</strong></p>
   </div>
 
-  <!-- Sinon, afficher tableau et totaux -->
+  <!-- Panier avec des produits -->
   <div *ngIf="data.orderItems.length > 0">
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Amount</th>
-          <th>Tax</th>
-          <th>Discount</th>
+          <th>{{ 'orderDialog.product' | translate }}</th>
+          <th>{{ 'orderDialog.quantity' | translate }}</th>
+          <th>{{ 'orderDialog.amount' | translate }}</th>
+          <th>{{ 'orderDialog.tax' | translate }}</th>
+          <th>{{ 'orderDialog.discount' | translate }}</th>
         </tr>
       </thead>
       <tbody>
@@ -32,21 +32,21 @@
 
     <!-- Totaux -->
     <div class="mt-3 text-start">
-      <h6 style="font-size: 1rem;"><strong>Total amount HT :</strong> {{ getTotalPrice() | number: '1.2-2' }} $</h6>
-      <h6 style="font-size: 1rem;"><strong>Total Tax :</strong> {{ getTotalTax() | number: '1.2-2' }} $</h6>
-      <h6 style="font-size: 1rem;"><strong>Total Discount :</strong> {{ getTotalDiscount() | number: '1.2-2' }} $</h6>
-      <h5 style="font-size: 1rem;"><strong>Total amount : </strong><strong>{{ getTotalAmount() | number: '1.2-2' }} $</strong></h5>
+      <h6 style="font-size: 1rem;"><strong>{{ 'orderDialog.totalHT' | translate }}:</strong> {{ getTotalPrice() | number: '1.2-2' }} $</h6>
+      <h6 style="font-size: 1rem;"><strong>{{ 'orderDialog.totalTax' | translate }}:</strong> {{ getTotalTax() | number: '1.2-2' }} $</h6>
+      <h6 style="font-size: 1rem;"><strong>{{ 'orderDialog.totalDiscount' | translate }}:</strong> {{ getTotalDiscount() | number: '1.2-2' }} $</h6>
+      <h5 style="font-size: 1rem;"><strong>{{ 'orderDialog.total' | translate }}:</strong> <strong>{{ getTotalAmount() | number: '1.2-2' }} $</strong></h5>
     </div>
   </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="dialogRef.close()">Close</button>
+  <button mat-button (click)="dialogRef.close()">{{ 'orderDialog.close' | translate }}</button>
   <button
     mat-flat-button
     color="primary"
     (click)="submitOrder()"
     [disabled]="data.orderItems.length === 0 || !data.selectedClient">
-    ✅ Place Order
+    ✅ {{ 'orderDialog.placeOrder' | translate }}
   </button>
 </mat-dialog-actions>

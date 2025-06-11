@@ -1,54 +1,53 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.admin-container {
+  height: calc(100vh - 64px); /* assuming mat-toolbar height = 64px */
+}
+
+.admin-content {
+  padding: 16px;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
 .spacer {
-    flex: auto;
+  flex: 1 1 auto;
 }
-
-mat-toolbar {
-    background-color: rgb(103, 103, 203);
-}
-
-mat-card-footer {
-    text-align: center;
-    padding: 1rem 0;
-    background: rgb(103, 103, 203);
-    color: white;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-/* Centrage du titre */
-.welcome-title {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-/* Hover sur les cartes */
-.card:hover {
-    transform: scale(1.03);
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Taille uniforme des cartes */
-.card {
-    height: 100%;
-}
-
-/* Responsive */
-@media (max-width: 576px) {
-    .welcome-title {
-        font-size: 1.4rem;
-    }
-}
-
 
 .vertical-divider {
-    width: 1px;
-    height: 24px;
-    /* ou 100% pour toute la hauteur de la barre */
-    background-color: rgb(16, 15, 15);
-    margin: 0 12px;
+  height: px;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 8px;
 }
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.drawer-nav .drawer-item {
+  margin-bottom: 12px;         /* Espace entre chaque bouton */
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  align-items: center;
+}
+
+.drawer-nav .drawer-item .mat-icon {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.notification-menu .mat-menu-item mat-icon {
+  font-size: 10px;
+  margin-right: 5px;
+}
+
+
+

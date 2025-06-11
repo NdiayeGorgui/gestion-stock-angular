@@ -1,75 +1,69 @@
 <div class="container mt-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>New Ship</mat-card-title>
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content>
-            <form #customerForm="ngForm">
-                <div class="row">
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Customer Name</mat-label>
-                            <input matInput class="form-control" id="customerName"
-                                   [(ngModel)]="ship.customerName" name="customerName" readonly>
-                            <mat-icon matSuffix>person</mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Customer Email</mat-label>
-                            <input matInput class="form-control" id="customerMail"
-                                   [(ngModel)]="ship.customerMail" name="customerMail" readonly>
-                            <mat-icon matSuffix>email</mat-icon>
-                        </mat-form-field>
-                    </div>
-                </div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ 'newShipping.title' | translate }}</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <form #customerForm="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newShipping.customerName' | translate }}</mat-label>
+              <input matInput [(ngModel)]="ship.customerName" name="customerName" readonly />
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newShipping.customerMail' | translate }}</mat-label>
+              <input matInput [(ngModel)]="ship.customerMail" name="customerMail" readonly />
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Order Id</mat-label>
-                            <input matInput class="form-control" id="orderId"
-                                   [(ngModel)]="ship.orderId" name="orderId" readonly>
-                            <mat-icon matSuffix>check_circle</mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Customer Id</mat-label>
-                            <input matInput class="form-control" id="customerId"
-                                   [(ngModel)]="ship.customerId" name="customerId" readonly>
-                            <mat-icon matSuffix>check_circle</mat-icon>
-                        </mat-form-field>
-                    </div>
-                </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newShipping.orderId' | translate }}</mat-label>
+              <input matInput [(ngModel)]="ship.orderId" name="orderId" readonly />
+              <mat-icon matSuffix>check_circle</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newShipping.customerId' | translate }}</mat-label>
+              <input matInput [(ngModel)]="ship.customerId" name="customerId" readonly />
+              <mat-icon matSuffix>check_circle</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Created Date</mat-label>
-                            <input matInput class="form-control" id="eventTimeStamp"
-                                   [(ngModel)]="ship.eventTimeStamp" name="eventTimeStamp" readonly>
-                            <mat-icon matSuffix>date</mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-form-field class="w-100">
-                            <mat-label>Status</mat-label>
-                            <input matInput class="form-control" id="status"
-                                   [(ngModel)]="ship.status" name="status" readonly>
-                            <mat-icon matSuffix>pending</mat-icon>
-                        </mat-form-field>
-                    </div>
-                </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newShipping.eventTimeStamp' | translate }}</mat-label>
+              <input matInput [(ngModel)]="ship.eventTimeStamp" name="eventTimeStamp" readonly />
+              <mat-icon matSuffix>date_range</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'newShipping.status' | translate }}</mat-label>
+              <input matInput [value]="'shippingList.statusValues.' + ship.status | translate" readonly />
+              <mat-icon matSuffix>pending</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
 
-                <div class="text-center mt-4">
-                    <button mat-flat-button color="primary" (click)="newShip()" [disabled]="ship.status === 'SHIPPED'">
-                        <mat-icon matSuffix>balance</mat-icon>
-                        Ship Order
-                    </button>
-                </div>
-            </form>
-        </mat-card-content>
-    </mat-card>
+        <div class="text-center mt-4">
+          <button mat-flat-button color="primary" (click)="newShip()" [disabled]="ship.status === 'SHIPPED'">
+            <mat-icon matSuffix>balance</mat-icon>
+            {{ 'newShipping.button' | translate }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

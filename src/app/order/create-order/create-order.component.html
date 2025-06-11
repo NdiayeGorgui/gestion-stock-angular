@@ -1,167 +1,161 @@
-<div class="container mt-4">
- <div class="d-flex justify-content-between align-items-center mb-3">
-  <h2>New Order</h2>
-  <div [hidden]="!showPaymentButton">
-  <button class="btn btn-success mx-3" (click)="goToCreatedOrders()">
-    💰  Proceed to Payment
-  </button>
-</div>
-  <div class="d-flex gap-2">
-    <button class="btn btn-outline-primary position-relative" (click)="toggleOrderDetails()">
-      🛒 Cart
-      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-        {{ totalItems }}
-      </span>
-    </button>
+<div class="container mt-4"> 
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> <h2>{{ 'order.new' | translate }}</h2></mat-card-title>
+    </mat-card-header>
+     <mat-divider></mat-divider>
+    <mat-card-content>
 
-  </div>
-</div>
+      <!-- Proceed to Payment & Cart -->
+      <div class="d-flex align-items-center mb-3">
+        <div *ngIf="showPaymentButton">
+          <button class="btn btn-success me-3" (click)="goToCreatedOrders()">
+            💰 {{ 'order.proceedToPayment' | translate }}
+          </button>
+        </div>
 
- <!-- Sélection client avec recherche dans mat-select -->
-<div class="row mb-3">
-  <div class="col-md-4">
-<mat-form-field appearance="outline" class="w-100">
-  <mat-label>Customer</mat-label>
-  <mat-select [(value)]="selectedClientId" (selectionChange)="onClientChange()">
-    <mat-select-trigger>
-      {{ selectedClient?.name }}
-    </mat-select-trigger>
+        <div class="ms-auto">
+          <button class="btn btn-outline-primary position-relative" (click)="toggleOrderDetails()">
+            🛒 {{ 'order.cart' | translate }}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ totalItems }}
+            </span>
+          </button>
+        </div>
+      </div>
 
-      
-   
-    <mat-option
-      *ngFor="let customer of filteredCustomers"
-      [value]="customer.id"
-    >
-      {{ customer.name }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+      <!-- Sélection client -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{ 'order.customer' | translate }}</mat-label>
+            <mat-select [(value)]="selectedClientId" (selectionChange)="onClientChange()">
+              <mat-select-trigger>
+                {{ selectedClient?.name }}
+              </mat-select-trigger>
+              <mat-option *ngFor="let customer of filteredCustomers" [value]="customer.id">
+                {{ customer.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{ 'order.address' | translate }}</mat-label>
+            <input matInput class="form-control" [value]="selectedClient?.address || ''" readonly />
+          </mat-form-field>
+        </div>
 
-  </div>
-  <div class="col-md-4">
-    <mat-form-field appearance="outline" class="w-100">
-   <mat-label> Address</mat-label>
-    <input matInput class="form-control" [value]="selectedClient?.address || ''" readonly />
-    </mat-form-field>
-  </div>
-  <div class="col-md-4">
-     <mat-form-field appearance="outline" class="w-100">
-   <mat-label> Email</mat-label>
-    
-    <input matInput class="form-control" [value]="selectedClient?.email || ''" readonly />
-    </mat-form-field>
-  </div>
-</div>
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{ 'order.email' | translate }}</mat-label>
+            <input matInput class="form-control" [value]="selectedClient?.email || ''" readonly />
+          </mat-form-field>
+        </div>
+      </div>
 
-<hr>
+      <hr>
 
-<!-- Sélection produit avec recherche dans mat-select -->
-<div class="row mb-3">
-  <div class="col-md-4">
-<mat-form-field appearance="outline" class="w-100">
-  <mat-label>Product</mat-label>
-  <mat-select [(value)]="selectedProductId" (selectionChange)="onProductChange()">
-    <mat-select-trigger>
-      {{ selectedProduct?.name }} - {{ selectedProduct?.price }} $
-    </mat-select-trigger>
+      <!-- Sélection produit -->
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{ 'order.product' | translate }}</mat-label>
+            <mat-select [(value)]="selectedProductId" (selectionChange)="onProductChange()">
+              <mat-select-trigger>
+                {{ selectedProduct?.name }} - {{ selectedProduct?.price }} $
+              </mat-select-trigger>
+              <mat-option *ngFor="let product of filteredProducts" [value]="product.id">
+                {{ product.name }} - {{ product.price }} $
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{ 'order.category' | translate }}</mat-label>
+            <input matInput class="form-control" [value]="selectedProduct?.category || ''" readonly />
+          </mat-form-field>
+        </div>
 
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{ 'order.price' | translate }}</mat-label>
+            <input matInput class="form-control" [value]="selectedProduct?.price || ''" readonly />
+          </mat-form-field>
+        </div>
+      </div>
 
-    <!-- Liste filtrée -->
-    <mat-option
-      *ngFor="let product of filteredProducts"
-      [value]="product.id"
-    >
-      {{ product.name }} - {{ product.price }} $
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+      <!-- Quantité et calculs -->
+      <div class="row mb-3" *ngIf="selectedProduct">
+        <div class="col-md-2">
+          <label><b>{{ 'order.quantity' | translate }}</b></label>
+          <input type="number" class="form-control" [(ngModel)]="itemQty" (change)="onQtyChange()" min="1" />
+        </div>
+        <div class="col-md-2">
+          <label><b>{{ 'order.amount' | translate }} ($)</b></label>
+          <input class="form-control" [value]="amount.toFixed(2)" readonly />
+        </div>
+        <div class="col-md-2">
+          <label><b>{{ 'order.tax' | translate }} ($)</b></label>
+          <input class="form-control" [value]="tax.toFixed(2)" readonly />
+        </div>
+        <div class="col-md-2">
+          <label><b>{{ 'order.discount' | translate }} ($)</b></label>
+          <input class="form-control" [value]="discount.toFixed(2)" readonly />
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button class="btn btn-primary w-100" (click)="addProductToOrder()">
+            {{ 'order.add' | translate }}
+          </button>
+        </div>
+      </div>
 
+      <!-- Tableau de commande -->
+      <div *ngIf="orderItems.length > 0" class="mt-4">
+        <h4>{{ 'order.details' | translate }}</h4>
 
-  </div>
-  <div class="col-md-4">
-    <mat-form-field appearance="outline" class="w-100">
-   <mat-label> Category</mat-label>
-    <input matInput class="form-control" [value]="selectedProduct?.category || ''" readonly />
-    </mat-form-field>
-  </div>
-  <div class="col-md-4">
-     <mat-form-field appearance="outline" class="w-100">
-       <mat-label> Price ($)</mat-label>
-    <input matInput class="form-control" [value]="selectedProduct?.price || ''" readonly />
-    </mat-form-field>
-  </div>
-</div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>{{ 'order.product' | translate }}</th>
+              <th>{{ 'order.quantity' | translate }}</th>
+              <th>{{ 'order.amount' | translate }}</th>
+              <th>{{ 'order.tax' | translate }}</th>
+              <th>{{ 'order.discount' | translate }}</th>
+              <th>{{ 'order.actions' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of orderItems; index as i">
+              <td>{{ item.name }}</td>
+              <td>
+                <input type="number" min="1" [(ngModel)]="item.qty"
+                       (change)="onQtyChangeInCart(i)" [max]="item.stock" style="width: 60px;" />
+              </td>
+              <td>{{ (item.price * item.qty).toFixed(2) }} $</td>
+              <td>{{ item.tax.toFixed(2) }} $</td>
+              <td>{{ item.discount.toFixed(2) }} $</td>
+              <td>
+                <button class="btn btn-sm btn-danger" (click)="removeItem(i)">
+                  {{ 'order.remove' | translate }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
+        <!-- Totaux -->
+        <div class="text-end mt-3">
+          <h6><strong>{{ 'order.totalHT' | translate }}</strong> {{ totalPrice | number:'1.2-2' }} $</h6>
+          <h6><strong>{{ 'order.totalTax' | translate }}</strong> {{ totalTax | number:'1.2-2' }} $</h6>
+          <h6><strong>{{ 'order.totalDiscount' | translate }}</strong> {{ totalDiscount | number:'1.2-2' }} $</h6>
+          <h5><strong>{{ 'order.total' | translate }}</strong> <strong>{{ totalAmount | number:'1.2-2' }} $</strong></h5>
+        </div>
+      </div>
 
-  <!-- Quantité et calculs -->
-  <div class="row mb-3" *ngIf="selectedProduct">
-    <div class="col-md-2">
-      <label><b>Quantity</b></label>
-      <input type="number" class="form-control" [(ngModel)]="itemQty" (change)="onQtyChange()" min="1" />
-    </div>
-    <div class="col-md-2">
-      <label><b>Amount ($)</b></label>
-      <input class="form-control" [value]="amount.toFixed(2)" readonly />
-    </div>
-    <div class="col-md-2">
-      <label><b>Tax ($)</b></label>
-      <input class="form-control" [value]="tax.toFixed(2)" readonly />
-    </div>
-    <div class="col-md-2">
-      <label><b>Discount ($)</b></label>
-      <input class="form-control" [value]="discount.toFixed(2)" readonly />
-    </div>
-    <div class="col-md-2 d-flex align-items-end">
-      <button class="btn btn-primary w-100" (click)="addProductToOrder()">Add order</button>
-    </div>
-  </div>
-
-<div *ngIf="orderItems.length > 0" class="mt-4">
-  <h4>Order details</h4>
-
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Amount</th>
-        <th>Tax</th>
-        <th>Discount</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of orderItems; index as i">
-        <td>{{ item.name }}</td>
-        <td>
-          <input type="number" min="1"
-                 [(ngModel)]="item.qty"
-                 (change)="onQtyChangeInCart(i)"
-                 [max]="item.stock"
-                 style="width: 60px;" />
-        </td>
-        <td>{{ (item.price * item.qty).toFixed(2) }} $</td>
-        <td>{{ item.tax.toFixed(2) }} $</td>
-        <td>{{ item.discount.toFixed(2) }} $</td>
-        <td>
-          <button class="btn btn-sm btn-danger" (click)="removeItem(i)">Remove</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Montants (sous le tableau) -->
-<div class="text-end mt-3">
-  <h6 style="font-size: 1rem;"><strong>Total amount HT :</strong> <span style="font-size: 1rem;">{{ totalPrice | number: '1.2-2' }} $</span></h6>
-  <h6 style="font-size: 1rem;"><strong>Total Tax :</strong> <span style="font-size: 1rem;">{{ totalTax | number: '1.2-2' }} $</span></h6>
-  <h6 style="font-size: 1rem;"><strong>Total discount :</strong> <span style="font-size: 1rem;">{{ totalDiscount | number: '1.2-2' }} $</span></h6>
-  <h5 style="font-size: 1rem;"><strong>Total amount :</strong> <span style="font-size: 1rem;"><strong>{{ totalAmount | number: '1.2-2' }} $</strong></span></h5>
-</div>
-
-
-</div>
-
+    </mat-card-content>
+  </mat-card>
 </div>

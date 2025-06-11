@@ -28,7 +28,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { ProductComponent } from './product/products/product.component';
 import { CustomerComponent } from './customer/customers/customer.component';
-
+import {MatChipsModule} from '@angular/material/chips';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient } from '@angular/common/http';
 import { CreateCustomerComponent } from './customer/create-customer/create-customer.component';
@@ -71,6 +72,9 @@ import { ForbiddenComponent } from './guards/forbidden/forbidden.component';
 import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { SnakBarComponent } from './shared/snak-bar/snak-bar.component';
+import { SettingsComponent } from './settings/settings/settings.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 
 
 export function initializeKeycloak(keycloak: KeycloakService) {
@@ -87,6 +91,10 @@ export function initializeKeycloak(keycloak: KeycloakService) {
       },
       loadUserProfileAtStartUp: true
     });
+}
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 
@@ -130,7 +138,8 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     DialogAlertComponent,
     OrderCartDialogComponent,
     ForbiddenComponent,
-    SnakBarComponent
+    SnakBarComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -164,7 +173,16 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     HttpClientModule,
     MatAutocompleteModule,
-    MatOptionModule
+    MatOptionModule,
+    MatSlideToggleModule,
+
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
     
   
   ],

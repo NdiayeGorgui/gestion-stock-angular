@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title><strong>Bills</strong></mat-card-title>
+      <mat-card-title><strong>{{ 'billList.title' | translate }}</strong></mat-card-title>
     </mat-card-header>
 
     <mat-divider></mat-divider>
@@ -12,7 +12,7 @@
         <mat-form-field appearance="outline" class="search-field">
           <mat-label>
             <mat-icon matSuffix>search</mat-icon>
-            Search
+            {{ 'billList.search' | translate }}
           </mat-label>
           <input matInput (keyup)="filterBill($event)" />
         </mat-form-field>
@@ -22,54 +22,71 @@
       <div class="table-container">
         <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-          <!-- Customer -->
+          <!-- Client -->
           <ng-container matColumnDef="customerName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'billList.customerName' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.customerName }} </td>
           </ng-container>
 
-          <!-- Product -->
+          <!-- Produit -->
           <ng-container matColumnDef="productName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Product </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'billList.productName' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.productName }} </td>
           </ng-container>
 
-          <!-- Quantity -->
+          <!-- Quantité -->
           <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'billList.quantity' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.quantity }} </td>
           </ng-container>
 
-          <!-- Price -->
+          <!-- Prix -->
           <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'billList.price' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.price | number:'0.2-2' }} </td>
           </ng-container>
 
-          <!-- Discount -->
+          <!-- Remise -->
           <ng-container matColumnDef="discount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Discount </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'billList.discount' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.discount | number:'0.2-2' }} </td>
           </ng-container>
 
-          <!-- Billing Date -->
+          <!-- Date -->
           <ng-container matColumnDef="billingDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'billList.billingDate' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.billingDate | date:'dd/MM/yyyy' }} </td>
           </ng-container>
 
-          <!-- Status -->
+          <!-- Statut -->
           <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-            <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'billList.status' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ 'billList.statusValues.' + element.status | translate }}
+            </td>
           </ng-container>
 
-          <!-- Details -->
+          <!-- Détails -->
           <ng-container matColumnDef="details">
-            <th mat-header-cell *matHeaderCellDef> Details </th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ 'billList.details' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
               <button (click)="getBill(element.orderRef)" mat-icon-button color="accent">
-                
                 <mat-icon>info</mat-icon>
               </button>
             </td>
@@ -80,7 +97,7 @@
         </table>
       </div>
 
-      <!-- Pagination -->
+      <!-- Pagination non traduite comme demandé -->
       <mat-paginator
         [pageSizeOptions]="[10, 20, 40]"
         showFirstLastButtons

@@ -5,20 +5,41 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .container{
     padding: 10px;
 }
-::ng-deep .mat-mdc-snack-bar-container.snackbar-error {
-  background-color: #f44336 !important;
-  color: white !important;
-}
-
-::ng-deep .mat-mdc-snack-bar-container.snackbar-success {
-  background-color: #4caf50 !important;
-  color: white !important;
-}
 
 
 
-  
-  
 .spacer {
   flex: 1 1 auto;
 }
+
+/* styles.css */
+
+body.light-theme {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark-theme {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Appliquer la couleur à Angular Material cards */
+body.dark-theme mat-card {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.light-theme mat-card {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+
+
+mat-drawer {
+  max-width: 250px;
+  width: 100%;
+}
+
+

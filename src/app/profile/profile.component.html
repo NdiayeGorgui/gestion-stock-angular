@@ -1,19 +1,39 @@
-<div class="container">
-  <mat-card>
+<div class="profile-container">
+  <mat-card class="profile-card">
     <mat-card-header>
-      <mat-card-title>Profile Details</mat-card-title>
+      <div mat-card-avatar class="profile-avatar">
+        <mat-icon>person</mat-icon>
+      </div>
+      <mat-card-title>My Profile</mat-card-title>
+      <mat-card-subtitle>User Details Overview</mat-card-subtitle>
     </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-      <p><strong>First Name:</strong> {{ firstName }}</p>
-      <p><strong>Last Name:</strong> {{ lastName }}</p>
-      <p><strong>Email:</strong> {{ email }}</p>
-      <p><strong>Roles:</strong> {{ roles.join(', ') }}</p>
 
-      <!-- Optionnel : bouton pour modifier son profil sur Keycloak -->
-      <button mat-raised-button color="primary" (click)="manageAccount()">
-        Update my profile
-      </button>
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="profile-content">
+      <div class="profile-info">
+        <mat-icon color="primary">badge</mat-icon>
+        <span><strong>First Name:</strong> {{ firstName }}</span>
+      </div>
+      <div class="profile-info">
+        <mat-icon color="primary">badge</mat-icon>
+        <span><strong>Last Name:</strong> {{ lastName }}</span>
+      </div>
+      <div class="profile-info">
+        <mat-icon color="primary">email</mat-icon>
+        <span><strong>Email:</strong> {{ email }}</span>
+      </div>
+      <div class="profile-info">
+        <mat-icon color="primary">verified_user</mat-icon>
+        <span><strong>Roles:</strong> {{ roles.join(', ') }}</span>
+      </div>
     </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-flat-button color="primary" (click)="manageAccount()">
+        <mat-icon>edit</mat-icon>
+        &nbsp;Update My Profile
+      </button>
+    </mat-card-actions>
   </mat-card>
 </div>

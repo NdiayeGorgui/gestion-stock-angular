@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <mat-card>
     <mat-card-header>
-      <mat-card-title><strong>Shippings List</strong></mat-card-title>
+      <mat-card-title><strong>{{ 'shippingList.title' | translate }}</strong></mat-card-title>
     </mat-card-header>
 
     <mat-divider></mat-divider>
@@ -12,50 +12,66 @@
         <mat-form-field appearance="outline" class="search-field">
           <mat-label>
             <mat-icon matSuffix>search</mat-icon>
-            Search
+            {{ 'shippingList.search' | translate }}
           </mat-label>
           <input matInput (keyup)="filterShip($event)" />
         </mat-form-field>
       </div>
 
-      <!-- Tableau des shippings -->
+      <!-- Tableau des livraisons -->
       <div class="table-container">
         <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
           <!-- Order Id -->
           <ng-container matColumnDef="orderId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Id </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'shippingList.orderId' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.orderId }} </td>
           </ng-container>
 
           <!-- Customer Name -->
           <ng-container matColumnDef="customerName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'shippingList.customerName' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.customerName }} </td>
           </ng-container>
 
           <!-- Email -->
           <ng-container matColumnDef="customerMail">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'shippingList.customerMail' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.customerMail }} </td>
           </ng-container>
 
           <!-- Date -->
           <ng-container matColumnDef="eventTimeStamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-            <td mat-cell *matCellDef="let element"> {{ element.eventTimeStamp | date: 'dd/MM/yyyy' }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'shippingList.eventTimeStamp' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.eventTimeStamp | date: 'dd/MM/yyyy' }}
+            </td>
           </ng-container>
 
           <!-- Status -->
           <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-            <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'shippingList.status' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ 'shippingList.statusValues.' + element.status | translate }}
+            </td>
           </ng-container>
 
           <!-- Action -->
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Ship Order </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef class="centered-column">
+              {{ 'shippingList.action' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element" class="centered-column">
               <button mat-icon-button color="accent" (click)="shipOrder(element.orderId)">
                 <mat-icon>hail</mat-icon>
               </button>
@@ -68,7 +84,8 @@
       </div>
 
       <!-- Pagination -->
-      <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons aria-label="Shipping pagination">
+      <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons
+        aria-label="Shipping pagination">
       </mat-paginator>
     </mat-card-content>
   </mat-card>

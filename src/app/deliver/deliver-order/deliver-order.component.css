@@ -41,3 +41,7 @@ mat-divider {
     margin: 20px 0; /* Ajoute un espace au-dessus et en dessous */
     display: block; /* Assure qu'il occupe toute la largeur */
 }
+
+.centered-column {
+  text-align: center;
+}

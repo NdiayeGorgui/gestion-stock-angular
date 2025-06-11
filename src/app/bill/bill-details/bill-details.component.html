@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Bill details</mat-card-title>
+      <mat-card-title>{{ 'billDetails.title' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
 
@@ -9,85 +9,85 @@
       <div class="form-grid">
 
         <mat-form-field appearance="outline">
-          <mat-label>Bill id</mat-label>
+          <mat-label>{{ 'billDetails.id' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.id" name="id" />
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Order ref</mat-label>
+          <mat-label>{{ 'billDetails.orderRef' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.orderRef" name="orderRef" />
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Customer IdEvent</mat-label>
+          <mat-label>{{ 'billDetails.customerIdEvent' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.customerIdEvent" name="customerIdEvent" />
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Product IdEvent</mat-label>
+          <mat-label>{{ 'billDetails.productIdEvent' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.productIdEvent" name="productIdEvent" />
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Customer Name</mat-label>
+          <mat-label>{{ 'billDetails.customerName' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.customerName" name="customerName" />
           <mat-icon matSuffix>person</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Product Name</mat-label>
+          <mat-label>{{ 'billDetails.productName' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.productName" name="productName" />
           <mat-icon matSuffix>inventory</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Customer Phone</mat-label>
+          <mat-label>{{ 'billDetails.customerPhone' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.customerPhone" name="customerPhone" />
           <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Product Price</mat-label>
+          <mat-label>{{ 'billDetails.price' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.price" name="price" />
           <mat-icon matSuffix>attach_money</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Discount</mat-label>
+          <mat-label>{{ 'billDetails.discount' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.discount" name="discount" />
           <mat-icon matSuffix>paid</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Quantity</mat-label>
+          <mat-label>{{ 'billDetails.quantity' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.quantity" name="quantity" />
           <mat-icon matSuffix>balance</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Date</mat-label>
+          <mat-label>{{ 'billDetails.date' | translate }}</mat-label>
           <input matInput readonly [(ngModel)]="bill.billingDate" name="billingDate" />
           <mat-icon matSuffix>schedule</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Status</mat-label>
-          <input matInput readonly [(ngModel)]="bill.status" name="status" />
+          <mat-label>{{ 'billDetails.status' | translate }}</mat-label>
+          <input matInput readonly [value]="'billDetails.statusValues.' + bill.status | translate" name="status" />
           <mat-icon matSuffix>check_small</mat-icon>
         </mat-form-field>
 
       </div>
 
       <div class="text-center mt-3">
-            <button mat-flat-button color="primary" style="width: 50%; height: 56px;"(click)="close()">
-              <mat-icon matSuffix>close</mat-icon>
-              Close
-            </button>
-          </div>
+        <button mat-flat-button color="primary" style="width: 50%; height: 56px;" (click)="close()">
+          <mat-icon matSuffix>close</mat-icon>
+          {{ 'billDetails.close' | translate }}
+        </button>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>
