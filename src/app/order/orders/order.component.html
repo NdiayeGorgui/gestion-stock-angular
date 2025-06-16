@@ -6,8 +6,15 @@
     <mat-divider></mat-divider>
 
     <mat-card-content>
+        <!-- Barre de recherche -->
       <div class="order-actions">
-        <!-- Filtre ou actions à venir -->
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>
+            <mat-icon matSuffix>search</mat-icon>
+            {{ 'createdOrders.search' | translate }}
+          </mat-label>
+          <input matInput (keyup)="filterOrder($event)" />
+        </mat-form-field>
       </div>
 
       <div class="table-container">
@@ -81,7 +88,7 @@
       </div>
 
       <mat-paginator
-        [pageSizeOptions]="[5, 10, 20]"
+        [pageSizeOptions]="[10, 20, 40]"
         showFirstLastButtons
         aria-label="Select page of created orders">
       </mat-paginator>

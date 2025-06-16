@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Products } from '../products';
 import { StockService } from '../../services/stock.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-details',
@@ -14,7 +15,7 @@ export class ProductDetailsComponent implements OnInit {
 
   product: Products = new Products();
   productIdEvent!: string;
-  constructor(private stockService: StockService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private stockService: StockService, private activatedRoute: ActivatedRoute, private router: Router, private translate: TranslateService) {
 
   }
   ngOnInit(): void {
@@ -30,9 +31,22 @@ export class ProductDetailsComponent implements OnInit {
     });
 
   }
-close() {
-  this.router.navigate(['/admin/product']);
-}
+  close() {
+    this.router.navigate(['/admin/product']);
+  }
+
+  getQtyStatusLabel(status: string): string {
+    switch (status) {
+      case 'AVAILABLE':
+        return this.translate.instant('form.qtyStatus.available');
+      case 'UNAVAILABLE':
+        return this.translate.instant('form.qtyStatus.unavailable');
+      case 'LOW':
+        return this.translate.instant('form.qtyStatus.low');
+      default:
+        return status;
+    }
+  }
 
 
 }

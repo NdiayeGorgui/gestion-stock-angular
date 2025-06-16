@@ -5,3 +5,38 @@
 .no-select-option input {
   pointer-events: auto; /* Réactive les événements uniquement sur l'input */
 }
+
+
+.totals-section {
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  max-width: 280px;
+  margin-left: auto; /* pour aligner à droite */
+  font-size: 1rem;
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.total-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.total-value {
+  font-weight: normal;
+  color: #444;
+}
+
+.total-final .total-label {
+  font-size: 1.1rem;
+}
+
+.total-final .total-value {
+  font-size: 1.1rem;
+}
+

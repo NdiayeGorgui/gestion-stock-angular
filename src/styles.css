@@ -43,3 +43,37 @@ mat-drawer {
 }
 
 
+
+::ng-deep .mat-menu-panel.wrap-menu {
+  min-width: 280px !important;
+  max-width: 400px !important;
+  white-space: normal;
+}
+
+* {
+  font-size: var(--font-size);
+}
+
+.cloche-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px; /* ⬅️ Décalé un peu à droite (ajuste selon ton besoin) */
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  height: 20px;
+  width: 20px;
+  line-height: 16px;
+  text-align: center;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px white;
+}
+
+
+

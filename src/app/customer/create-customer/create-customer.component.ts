@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -27,7 +28,8 @@ export class CreateCustomerComponent implements OnInit {
 
   errorMessage = signal('');
 
-  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private stockService: StockService, private router: Router) {
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog,
+     private stockService: StockService, private router: Router,private translate: TranslateService) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -47,82 +49,79 @@ export class CreateCustomerComponent implements OnInit {
 
   }
 
-  newCustomer() {
-    if (!this.customer.name || !this.customer.address || !this.customer.phone || !this.customer.email) {
-       this.snackBar.openFromComponent(SnakBarComponent, {
-                  data: {
-                    message: 'Please fill in all required fields !',
-                    type: 'error'
-                  },
-                  duration: 3000
-                });
-      return;
-    }
-
-    // 🔍 Vérifier si le client existe
-    this.stockService.getCustomerExistByEmail(this.customer.email).subscribe({
-      next: (res) => {
-        if (res.exists) {
-          // ❌ Affiche le message du backend si l’email existe déjà
-          this.snackBar.openFromComponent(SnakBarComponent, {
-            data: {
-              message: 'Error , customer already exists !',
-              type: 'error'
-            },
-            duration: 3000,
-            panelClass: ['snackbar-error'] // ou 'snackbar-wrapper' si tu préfères
-          });
-          return;
-        }
-
-        // ✅ Demande de confirmation AVANT création si email est libre
-        const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-          data: { message: 'Do you want to save this customer?' }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-          if (result === true) {
-            this.stockService.createCustomer(this.customer).subscribe({
-              next: () => {
-                this.snackBar.openFromComponent(SnakBarComponent, {
-                  data: {
-                    message: 'Customer saved successfully !',
-                    type: 'success'
-                  },
-                  duration: 3000
-                });
-
-                this.stockService.notifyCustomerCreated();
-                this.router.navigate(['/admin/customer']);
-              },
-              error: (err) => {
-                console.error('Error:', err);
-                this.snackBar.openFromComponent(SnakBarComponent, {
-                  data: {
-                    message: 'Error while saving, please try again !',
-                    type: 'error'
-                  },
-                  duration: 3000,
-
-                });
-              }
-            });
-          }
-        });
+newCustomer() {
+  if (!this.customer.name || !this.customer.address || !this.customer.phone || !this.customer.email) {
+    this.snackBar.openFromComponent(SnakBarComponent, {
+      data: {
+        message: this.translate.instant('customer.fill_required'),
+        type: 'error'
       },
-      error: (err) => {
-        console.error('Error checking customer existence:', err);
+      duration: 3000
+    });
+    return;
+  }
+
+  this.stockService.getCustomerExistByEmail(this.customer.email).subscribe({
+    next: (res) => {
+      if (res.exists) {
         this.snackBar.openFromComponent(SnakBarComponent, {
           data: {
-            message: 'Error cheking email, please try again !',
+            message: this.translate.instant('customer.exists_error'),
             type: 'error'
           },
           duration: 3000,
-          panelClass: ['snackbar-error'] // ou 'snackbar-wrapper' si tu préfères
+          panelClass: ['snackbar-error']
         });
+        return;
       }
-    });
-  }
+
+      const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+        data: { message: this.translate.instant('customer.confirm_create') }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          this.stockService.createCustomer(this.customer).subscribe({
+            next: () => {
+              this.snackBar.openFromComponent(SnakBarComponent, {
+                data: {
+                  message: this.translate.instant('customer.create_success'),
+                  type: 'success'
+                },
+                duration: 3000
+              });
+
+              this.stockService.notifyCustomerCreated();
+              this.router.navigate(['/admin/customer']);
+            },
+            error: (err) => {
+              console.error('Error:', err);
+              this.snackBar.openFromComponent(SnakBarComponent, {
+                data: {
+                  message: this.translate.instant('customer.create_error'),
+                  type: 'error'
+                },
+                duration: 3000
+              });
+            }
+          });
+        }
+      });
+    },
+    error: (err) => {
+      console.error('Error checking customer existence:', err);
+      this.snackBar.openFromComponent(SnakBarComponent, {
+        data: {
+          message: this.translate.instant('customer.email_check_error'),
+          type: 'error'
+        },
+        duration: 3000,
+        panelClass: ['snackbar-error']
+      });
+    }
+  });
+}
+
 
 }
 

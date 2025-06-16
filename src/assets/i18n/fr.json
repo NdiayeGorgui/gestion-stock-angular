@@ -63,7 +63,10 @@
             "label": "Statut produit"
         },
         "qtyStatus": {
-            "label": "Statut quantité"
+            "label": "Statut quantité",
+            "available": "En stock",
+            "unavailable": "En rupture de stock",
+            "low": "Stock faible"
         },
         "name": {
             "label": "Nom du client",
@@ -135,7 +138,12 @@
         "updateCustomer": "Modifier le client",
         "close": "Fermer",
         "addProduct": "Ajouter un produit",
-        "updateProduct": "Modifier le produit"
+        "updateProduct": "Modifier le produit",
+        "Yes": "Oui",
+        "No": "Non",
+        "Cancel": "Annuler",
+        "Delete": "Supprimer",
+        "ConfirmDeletion": "Confirmer la suppression"
     },
     "PRODUCTS": {
         "TITLE": "Liste des produits",
@@ -147,9 +155,9 @@
         "PRICE": "Prix",
         "STATUS": "Statut",
         "QTY_STATUS": "Statut du stock",
-        "OUT_OF_STOCK": "RUPTURE DE STOCK",
-        "LOW_STOCK": "STOCK FAIBLE",
-        "AVAILABLE": "DISPONIBLE",
+        "OUT_OF_STOCK": "En rupture de stock",
+        "LOW_STOCK": "Stock faible",
+        "AVAILABLE": "En stock",
         "PAGINATION": "Pagination des produits"
     },
     "ACTIONS": {
@@ -181,7 +189,10 @@
         "statusValues": {
             "DELIVERING": "En cours de livraison",
             "DELIVERED": "Livrée"
-        }
+        },
+        "confirm_delivery": "Voulez-vous confirmer la livraison de cette commande ?",
+        "delivery_success": "Commande livrée avec succès !",
+        "delivery_error": "Erreur lors de la livraison de la commande, veuillez réessayer !"
     },
     "shippingList": {
         "title": "Liste des expéditions",
@@ -191,7 +202,7 @@
         "customerMail": "Email",
         "eventTimeStamp": "Date",
         "status": "Statut",
-        "action": "Expédier la commande",
+        "action": "Expédier",
         "statusValues": {
             "SHIPPED": "Expédiée",
             "SHIPPING": "En cours d'expédition"
@@ -205,7 +216,10 @@
         "customerId": "ID client",
         "eventTimeStamp": "Date de création",
         "status": "Statut",
-        "button": "Expédier la commande"
+        "button": "Expédier la commande",
+        "confirm_shipment": "Voulez-vous confirmer l'expédition de cette commande ?",
+        "ship_success": "Commande expédiée avec succès !",
+        "ship_error": "Erreur lors de l'expédition de la commande, veuillez réessayer !"
     },
     "billList": {
         "title": "Liste des factures",
@@ -258,13 +272,15 @@
             "CREATED": "Créée",
             "CONFIRMED": "Confirmée",
             "SHIPPED": "Expédiée",
-            "DELIVERED": "Livrée"
+            "DELIVERED": "Livrée",
+            "CANCELED": "Annulée"
         },
         "details": {
             "CREATED": "Commande créée",
             "CONFIRMED": "Commande confirmée",
             "SHIPPED": "Commande expédiée",
-            "DELIVERED": "Commande livrée"
+            "DELIVERED": "Commande livrée",
+            "CANCELED": "Commande annulée"
         }
     },
     "payments": {
@@ -301,12 +317,13 @@
         "stock": "Stock",
         "price": "Prix",
         "status": "Statut",
-        "outOfStock": "Rupture de stock",
+        "outOfStock": "En rupture de stock",
         "lowStock": "Stock faible",
         "inStock": "En stock",
         "bestSellingProducts": "Produits les plus vendus",
         "topCustomers": "Top 10 des clients",
-        "remainingQuantities": "Produits avec quantités restantes"
+        "remainingQuantities": "Produits avec quantités restantes",
+        "createdDate": "Date de création"
     },
     "newOrder": {
         "title": "Nouvelle commande",
@@ -350,18 +367,37 @@
         "amount": "Montant",
         "tax": "Taxe",
         "discount": "Remise",
-        "add": "Ajouter à la commande",
+        "add": "Ajouter au panier",
         "details": "Détails de la commande",
         "actions": "Actions",
         "remove": "Supprimer",
         "totalHT": "Montant total HT :",
         "totalTax": "Taxe totale :",
         "totalDiscount": "Remise totale :",
-        "total": "Montant total :"
-    },
+        "total": "Montant total :",
+        "fill_required": "Veuillez sélectionner un client et ajouter au moins un produit.",
+        "confirm_submission": "Voulez-vous confirmer cette commande ?",
+        "submission_success": "Commande envoyée avec succès !",
+        "submission_error": "Erreur lors de l'envoi de la commande. Veuillez réessayer.",
+        "qty_min_error": "Erreur, la quantité doit être au moins de 1.",
+        "qty_stock_error": "Seulement {{qty}} en stock.",
+        "invalid_qty_title": "Quantité invalide",
+        "invalid_qty_message": "Veuillez sélectionner une quantité valide.",
+        "duplicate_product_title": "Produit déjà présent",
+        "duplicate_product_message": "Ce produit est déjà dans le panier, veuillez modifier la quantité.",
+        "stock_error_title": "Stock insuffisant",
+        "stock_error_message": "Il ne reste que {{qty}} article(s) en stock.",
+        "cancel_title": "Êtes-vous sûr ?",
+        "cancel_message": "Cette commande sera supprimée définitivement.",
+        "confirm_delete": "Oui, supprimer",
+        "cancel": "Annuler",
+        "cancel_success": "Commande annulée avec succès !",
+        "cancel_error": "Erreur lors de l'annulation de la commande !"
+        },
     "createdOrders": {
         "title": "Commandes créées",
         "customer": "Client",
+        "search": "Rechercher",
         "product": "Produit",
         "price": "Prix",
         "quantity": "Quantité",
@@ -372,7 +408,7 @@
     },
     "completedOrders": {
         "title": "Commandes complétées",
-        "search": "Recherche",
+        "search": "Rechercher",
         "customer": "Client",
         "product": "Produit",
         "price": "Prix",
@@ -386,7 +422,7 @@
     },
     "canceledOrders": {
         "title": "Commandes annulées",
-        "search": "Recherche",
+        "search": "Rechercher",
         "customer": "Client",
         "product": "Produit",
         "price": "Prix",
@@ -444,7 +480,14 @@
         "payNow": "Payer maintenant",
         "errors": {
             "modeRequired": "Le mode de paiement est requis."
-        }
+        },
+        "confirm_message": "Voulez-vous confirmer ce paiement ?",
+        "success": "Paiement créé avec succès !",
+        "error": "Erreur lors de la création du paiement, veuillez réessayer !",
+        "print_confirm": "Voulez-vous confirmer le paiement et imprimer la facture ?",
+        "success_invoice": "Paiement créé et facture imprimée !",
+        "error_create": "Erreur lors du paiement, veuillez réessayer !",
+        "error_invoice": "Erreur lors de l'impression de la facture, veuillez réessayer !"
     },
     "orderDialog": {
         "title": "Détails de la commande",
@@ -501,7 +544,37 @@
         "placeholder": "Écrivez ici..."
     },
     "NOTIF": {
-        "LOW_STOCK": "Produit {{product}} est en faible stock!",
-        "OUT_OF_STOCK": "Produit {{product}} est en rupture de stock!"
-    }
+        "LOW_STOCK": "Produit {{product}} est faible en stock!",
+        "OUT_OF_STOCK": "Produit {{product}} est en rupture de stock!",
+        "marked_as_read": "Notification marquée comme lue ✔️",
+        "mark_as_read_error": "Erreur lors de la mise à jour ❌"
+    },
+    "product": {
+    "fill_required": "Veuillez remplir tous les champs obligatoires !",
+    "confirm_save": "Voulez-vous enregistrer ce produit ?",
+    "success": "Produit enregistré avec succès !",
+    "error": "Erreur lors de l'enregistrement du produit, veuillez réessayer !",
+    "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce produit ?",
+    "delete_success": "Produit supprimé avec succès !",
+    "delete_error": "Erreur lors de la suppression du produit !",
+    "update_confirm": "Voulez-vous mettre à jour ce produit ?",
+    "update_success": "Produit mis à jour avec succès !",
+    "update_error": "Erreur lors de la mise à jour du produit.",
+    "confirm_update": "Voulez-vous mettre à jour ce produit ?"
+  },
+  "customer": {
+    "fill_required": "Veuillez remplir tous les champs requis.",
+    "exists_error": "Erreur : ce client existe déjà !",
+    "confirm_create": "Voulez-vous enregistrer ce client ?",
+    "create_success": "Client enregistré avec succès !",
+    "create_error": "Erreur lors de l'enregistrement. Veuillez réessayer.",
+    "email_check_error": "Erreur lors de la vérification de l'email. Veuillez réessayer.",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce client ?",
+    "delete_success": "Client supprimé avec succès !",
+    "delete_error": "Erreur lors de la suppression du client !",
+    "confirm_update": "Voulez-vous modifier ce client ?",
+    "update_success": "Client modifié avec succès !",
+    "update_error": "Erreur lors de la modification du client, veuillez réessayer."
+  }
+
 }

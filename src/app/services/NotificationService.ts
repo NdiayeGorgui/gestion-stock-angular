@@ -19,8 +19,10 @@ export class NotificationService {
         const notifList = data.map((n: any) => ({
           id: n.id,
           message: n.message,
+          username:n.username,
           readValue: n.readValue,
-          archived: n.archived
+          archived: n.archived,
+          type: n.type
         }));
         this.notificationsSubject.next(notifList);
       },

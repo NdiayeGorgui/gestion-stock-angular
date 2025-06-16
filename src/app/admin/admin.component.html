@@ -11,10 +11,21 @@
       <mat-icon matSuffix>home</mat-icon> {{ 'APP.HOME' | translate }}
     </button>
     <div class="vertical-divider"></div>
-    <button mat-icon-button matBadge="{{ getUnreadCount() }}" matBadgeColor="warn"
-      matBadgeHidden="{{ getUnreadCount() === 0 }}" [matMenuTriggerFor]="notificationsMenu">
-      <mat-icon>notifications</mat-icon>
-    </button>
+<button mat-icon-button
+        class="notification-button"
+        [matMenuTriggerFor]="notificationsMenu">
+  <span class="cloche-wrapper">
+    <mat-icon>notifications</mat-icon>
+    <span
+      *ngIf="getUnreadCount() > 0"
+      class="notif-badge"
+    >
+      {{ getUnreadCount() }}
+    </span>
+  </span>
+</button>
+
+
     <button mat-button [matMenuTriggerFor]="importMenu">
       <mat-icon iconPositionEnd>arrow_drop_down</mat-icon> {{ 'APP.ORDERS_LIST' | translate }}
     </button>
@@ -40,9 +51,21 @@
 <mat-menu #notificationsMenu="matMenu" class="notification-menu">
   <ng-container *ngIf="getUnreadCount() > 0; else noNotif">
     <ng-container *ngFor="let notif of notifications">
-      <button mat-menu-item (click)="markAsRead(notif)">
-        <mat-icon color="warn" *ngIf="!notif.readValue">fiber_manual_record</mat-icon>
-        {{ notif.message | translate }}
+      <button mat-menu-item (click)="markAsRead(notif)" style="display: flex; align-items: center;" >
+        <mat-icon
+          [style.color]="notif.readValue ? 'gray' : 'red'"
+          style="margin-right: 8px;"
+        >
+          fiber_manual_record
+        </mat-icon>
+        <span
+          [ngStyle]="{
+            'font-weight': notif.readValue ? 'normal' : 'bold',
+            'color': notif.readValue ? '#666' : '#000'
+          }"
+        >
+          {{ notif.message | translate }}
+        </span>
       </button>
     </ng-container>
   </ng-container>
@@ -50,6 +73,7 @@
     <span class="px-2">{{ 'APP.NO_NOTIFICATIONS' | translate }}</span>
   </ng-template>
 </mat-menu>
+
 
 <mat-menu #userMenu="matMenu">
   <button mat-menu-item routerLink="/admin/profile">
@@ -105,7 +129,7 @@
 <mat-drawer-container class="admin-container">
   <mat-drawer #drawer [mode]="drawerMode" [opened]="drawerOpened">
     <mat-nav-list class="drawer-nav">
-      <button mat-button class="drawer-item" routerLink="/admin/dashboard" (click)="closeDrawerIfMobile(drawer)">
+      <button  *ngIf="isAdmin" mat-button class="drawer-item" routerLink="/admin/dashboard" (click)="closeDrawerIfMobile(drawer)">
         <mat-icon>dashboard</mat-icon> {{ 'APP.DASHBOARD' | translate }}
       </button>
       <button mat-button class="drawer-item" routerLink="/admin/product" (click)="closeDrawerIfMobile(drawer)">

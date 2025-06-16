@@ -72,14 +72,18 @@
 
                 <div class="row">
                     <!-- Quantity Status -->
+
                     <div class="col-sm-12 col-md-6">
                         <mat-form-field class="w-100">
                             <mat-label>{{ 'form.qtyStatus.label' | translate }}</mat-label>
-                            <input matInput class="form-control" id="qtyStatus" readonly [(ngModel)]="product.qtyStatus"
-                                name="qtyStatus">
+
+                            <input matInput class="form-control" id="qtyStatus" readonly
+                                [value]="getQtyStatusLabel(product.qtyStatus)" name="qtyStatus" />
+
                             <mat-icon matSuffix>event_available</mat-icon>
                         </mat-form-field>
                     </div>
+
 
                     <!-- Product Status -->
                     <div class="col-sm-12 col-md-6">

@@ -9,6 +9,10 @@ import { StockService } from '../services/stock.service';
 import { Notification } from './Notification';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from '../services/NotificationService';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationDialogComponent } from '../shared/notification-dialog/notification-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
+import { SnakBarComponent } from '../shared/snak-bar/snak-bar.component';
 
 
 @Component({
@@ -32,9 +36,13 @@ export class AdminComponent implements OnInit {
 
 
 
-  constructor(private keycloakService: KeycloakService, private snackBar: MatSnackBar,
+  constructor(private keycloakService: KeycloakService,
+     private snackBar: MatSnackBar,
 
-    private breakpointObserver: BreakpointObserver, private stockService: StockService, private notifService: NotificationService
+    private breakpointObserver: BreakpointObserver, 
+    private stockService: StockService, private notifService: NotificationService,
+    private dialog: MatDialog,
+    private translate: TranslateService
   ) {
     this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet])
       .subscribe(result => {
@@ -96,25 +104,35 @@ export class AdminComponent implements OnInit {
 
 
 
-  markAsRead(notif: Notification): void {
-    this.stockService.markNotificationAsRead(notif.id).subscribe({
-      next: () => {
-        notif.readValue = true; // ✅ mise à jour locale
-        this.snackBar.open('Notification marked as read ✔️', 'Close', {
-          duration: 3000,
-          verticalPosition: 'top'
-        });
+markAsRead(notif: Notification): void {
+  this.stockService.markNotificationAsRead(notif.id).subscribe({
+    next: () => {
+      notif.readValue = true; // ✅ mise à jour locale
 
-      },
-      error: err => {
-        console.error('Erreur lors du marquage comme lu', err);
-        this.snackBar.open('Erreur lors de la mise à jour ❌', 'Close', {
-          duration: 3000,
-          verticalPosition: 'top'
-        });
-      }
-    });
-  }
+      this.snackBar.openFromComponent(SnakBarComponent, {
+        data: {
+          message: this.translate.instant('NOTIF.marked_as_read'),
+          type: 'success'
+        },
+        duration: 3000,
+        verticalPosition: 'top'
+      });
+    },
+    error: err => {
+      console.error('Erreur lors du marquage comme lu', err);
+
+      this.snackBar.openFromComponent(SnakBarComponent, {
+        data: {
+          message: this.translate.instant('NOTIF.mark_as_read_error'),
+          type: 'error'
+        },
+        duration: 3000,
+        verticalPosition: 'top'
+      });
+    }
+  });
+}
+
 
   /*markAsRead(notif: Notification): void {
      notif.read = true;
@@ -127,7 +145,8 @@ export class AdminComponent implements OnInit {
           id: n.id,
           message: n.message,
           readValue: n.readValue,
-          archived: n.archived
+          archived: n.archived,
+          type: n.type
         } as Notification));
       },
       error: err => {
@@ -136,5 +155,13 @@ export class AdminComponent implements OnInit {
     });
 
   }
+
+  openNotifications(): void {
+  this.dialog.open(NotificationDialogComponent, {
+    width: '500px', // ou plus large selon ton design
+    data: {}        // tu peux passer des données ici si nécessaire
+  });
+}
+
 
 }

@@ -10,6 +10,7 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dial
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product',
@@ -30,7 +31,13 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/ {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private authService: AuthenticationService, private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router, private stockService: StockService, private activatedRoute: ActivatedRoute) {
+  constructor(private authService: AuthenticationService,
+     private snackBar: MatSnackBar,
+      private dialog: MatDialog, 
+      private router: Router,
+       private stockService: StockService,
+        private activatedRoute: ActivatedRoute,
+        private translate: TranslateService) {
   }
 
   public getProducts() {
@@ -86,41 +93,43 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/ {
   }
 
 
-  deleteProduct(id: string) {
+deleteProduct(id: string) {
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    data: {
+      message: this.translate.instant('product.delete_confirm')
+    }
+  });
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: 'Are you sure you want to delete this product?' }
-    });
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === true) {
+      this.stockService.deleteProduct(id).subscribe({
+        next: () => {
+          // Suppression locale
+          this.products = this.products.filter((p: { productIdEvent: string }) => p.productIdEvent !== id);
+          this.dataSource.data = this.products;
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.stockService.deleteProduct(id).subscribe({
-          next: () => {
-            // Suppression locale
-            this.products = this.products.filter((p: { productIdEvent: string; }) => p.productIdEvent !== id);
-            this.dataSource.data = this.products;
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('product.delete_success'),
+              type: 'success'
+            },
+            duration: 3000
+          });
+        },
+        error: () => {
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('product.delete_error'),
+              type: 'error'
+            },
+            duration: 3000
+          });
+        }
+      });
+    }
+  });
+}
 
-            this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Product deleted successfully !',
-                type: 'success'
-              },
-              duration: 3000
-            });
-          },
-          error: () => {
-            this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Error while deleting product !',
-                type: 'error'
-              },
-              duration: 3000
-            });
-          }
-        });
-      }
-    });
-  }
 
 
   editProduct(productIdEvent: string) {

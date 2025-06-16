@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-deliver-order',
@@ -19,7 +20,10 @@ export class DeliverOrderComponent implements OnInit {
   delivered: Deliverd = new Deliverd();
   orderId!: string;
 
-  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private stockService: StockService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private snackBar: MatSnackBar, 
+    private dialog: MatDialog, private stockService: StockService, 
+    private router: Router, private activatedRoute: ActivatedRoute,
+    private translate: TranslateService) {
 
   }
 
@@ -37,40 +41,41 @@ export class DeliverOrderComponent implements OnInit {
 
   }
 
-  newDeliver() {
-    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-      data: { message: 'Do you want to confirm delivery of this order?' }
-    });
+newDeliver() {
+  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+    data: { message: this.translate.instant('newDeliver.confirm_delivery') }
+  });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.stockService.createDeliveredCommand(this.delivered).subscribe({
-          next: (res) => {
-            console.log('Réponse du serveur:', res);
-            this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Order delivered successfully !',
-                type: 'success'
-              },
-              duration: 3000
-            });
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === true) {
+      this.stockService.createDeliveredCommand(this.delivered).subscribe({
+        next: (res) => {
+          console.log('Réponse du serveur:', res);
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('newDeliver.delivery_success'),
+              type: 'success'
+            },
+            duration: 3000
+          });
 
-            this.router.navigate(['/admin/delivered-orders'])
-              .then(success => console.log('Navigation réussie:', success))
-              .catch(err => console.error('Erreur de navigation:', err));
-          },
-          error: (err) => {
-            console.error('Error:', err);
-           this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Error while delivering order, please try again !',
-                type: 'error'
-              },
-              duration: 3000
-            });
-          }
-        });
-      }
-    });
-  }
+          this.router.navigate(['/admin/delivered-orders'])
+            .then(success => console.log('Navigation réussie:', success))
+            .catch(err => console.error('Erreur de navigation:', err));
+        },
+        error: (err) => {
+          console.error('Error:', err);
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('newDeliver.delivery_error'),
+              type: 'error'
+            },
+            duration: 3000
+          });
+        }
+      });
+    }
+  });
+}
+
 }

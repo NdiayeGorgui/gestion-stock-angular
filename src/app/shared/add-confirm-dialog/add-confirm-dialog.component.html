@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Confirmation</h2>
     <mat-dialog-content>{{ data.message }}</mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close>No</button>
-      <button mat-raised-button color="warn" (click)="confirm()">Yes</button>
+      <button mat-button mat-dialog-close> {{ 'button.No' | translate }}</button>
+      <button mat-raised-button color="warn" (click)="confirm()"> {{ 'button.Yes' | translate }}</button>
     </mat-dialog-actions>
     

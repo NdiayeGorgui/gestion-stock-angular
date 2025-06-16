@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 import { MatCardModule} from '@angular/material/card';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { NotificationService } from '../../services/NotificationService';
 
@@ -70,7 +70,8 @@ export class CreateOrderComponent implements OnInit {
     private snackBar: MatSnackBar,
     private stockService: StockService,
     private router: Router,
-    private notifService: NotificationService
+    private notifService: NotificationService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -133,45 +134,47 @@ export class CreateOrderComponent implements OnInit {
     }
   }
 
-  addProductToOrder() {
-    if (!this.selectedProduct) return;
+addProductToOrder() {
+  if (!this.selectedProduct) return;
 
-    // Vérifie si la quantité est invalide (<= 0)
-    if (this.itemQty <= 0) {
-      this.dialogAlready.open(DialogAlertComponent, {
-        data: {
-          title: 'Invalid Quantity',
-          message: 'Please select a valid number.'
-        }
-      });
-      return;
-    }
+  // ❌ Vérifie si la quantité est invalide (<= 0)
+  if (this.itemQty <= 0) {
+    this.dialogAlready.open(DialogAlertComponent, {
+      data: {
+        title: this.translate.instant('order.invalid_qty_title'),
+        message: this.translate.instant('order.invalid_qty_message')
+      }
+    });
+    return;
+  }
 
-    // Vérifie si le produit est déjà dans le panier
-    const alreadyExists = this.orderItems.some(
-      item => item.id === this.selectedProduct.id
-    );
+  // ❌ Vérifie si le produit est déjà dans le panier
+  const alreadyExists = this.orderItems.some(
+    item => item.id === this.selectedProduct.id
+  );
 
-    if (alreadyExists) {
-      this.dialogAlready.open(DialogAlertComponent, {
-        data: {
-          title: 'Product already present',
-          message: 'This product is already in the cart, please update quantity.'
-        }
-      });
-      return;
-    }
+  if (alreadyExists) {
+    this.dialogAlready.open(DialogAlertComponent, {
+      data: {
+        title: this.translate.instant('order.duplicate_product_title'),
+        message: this.translate.instant('order.duplicate_product_message')
+      }
+    });
+    return;
+  }
 
-    // Vérifie si la quantité demandée dépasse le stock disponible
-    if (this.itemQty > this.selectedProduct.qty) {
-      this.dialogAlready.open(DialogAlertComponent, {
-        data: {
-          title: 'Insufficient Stock',
-          message: `Only ${this.selectedProduct.qty} items left in stock.`
-        }
-      });
-      return;
-    }
+  // ❌ Vérifie si la quantité demandée dépasse le stock
+  if (this.itemQty > this.selectedProduct.qty) {
+    const qty = this.selectedProduct.qty;
+
+    this.dialogAlready.open(DialogAlertComponent, {
+      data: {
+        title: this.translate.instant('order.stock_error_title'),
+        message: this.translate.instant('order.stock_error_message', { qty })
+      }
+    });
+    return;
+  }
 
     const newItem = {
       ...this.selectedProduct,
@@ -274,75 +277,72 @@ export class CreateOrderComponent implements OnInit {
   }
 
 
-  async submitOrder() {
-    if (!this.selectedClient || this.orderItems.length === 0) {
+async submitOrder() {
+  if (!this.selectedClient || this.orderItems.length === 0) {
+    this.snackBar.openFromComponent(SnakBarComponent, {
+      data: {
+        message: this.translate.instant('order.fill_required'),
+        type: 'error'
+      },
+      duration: 3000
+    });
+    return;
+  }
+
+  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+    data: { message: this.translate.instant('order.confirm_submission') }
+  });
+
+  dialogRef.afterClosed().subscribe(async confirmed => {
+    if (!confirmed) return;
+
+    try {
+      for (const item of this.orderItems) {
+        const orderToSubmit: any = {
+          customer: {
+            customerIdEvent: this.selectedClient.customerIdEvent
+          },
+          product: {
+            productIdEvent: item.productIdEvent
+          },
+          productItem: {
+            productQty: item.qty
+          }
+        };
+
+        await this.stockService.createOrder(orderToSubmit).toPromise();
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
 
       this.snackBar.openFromComponent(SnakBarComponent, {
         data: {
-          message: 'Please select a customer and add at least one product',
+          message: this.translate.instant('order.submission_success'),
+          type: 'success'
+        },
+        duration: 3000
+      });
+
+      this.notifService.getNotifications();
+      this.showPaymentButton = true;
+      this.resetCart();
+
+    } catch (err: any) {
+      console.error('Error submitting order item:', err);
+
+      const errorMessage =
+        err?.error?.message || err?.error?.error || err?.message || this.translate.instant('order.submission_error');
+
+      this.snackBar.openFromComponent(SnakBarComponent, {
+        data: {
+          message: errorMessage,
           type: 'error'
         },
-        duration: 3000,
-
+        duration: 3000
       });
-      return;
     }
+  });
+}
 
-    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-      data: { message: 'Do you want to confirm this order?' }
-    });
-
-    dialogRef.afterClosed().subscribe(async confirmed => {
-      if (!confirmed) return;
-
-      try {
-        for (const item of this.orderItems) {
-          const orderToSubmit: any = {
-            customer: {
-              customerIdEvent: this.selectedClient.customerIdEvent
-            },
-            product: {
-              productIdEvent: item.productIdEvent
-            },
-            productItem: {
-              productQty: item.qty
-            }
-          };
-
-          await this.stockService.createOrder(orderToSubmit).toPromise();
-          await new Promise(resolve => setTimeout(resolve, 300)); // délai de 300ms
-        }
-
-        this.snackBar.openFromComponent(SnakBarComponent, {
-          data: {
-            message: 'Oders submited successfully !',
-            type: 'success'
-          },
-          duration: 3000
-        });
-         this.notifService.getNotifications(); 
-        this.showPaymentButton = true;
-        this.resetCart();
-       
-      } catch (err: any) {
-        console.error('Error submitting order item:', err);
-
-        // Extraction du message d'erreur du backend
-        const errorMessage =
-          err?.error?.message || err?.error?.error || err?.message || 'Error while submitting order. Please try again.';
-
-        this.snackBar.openFromComponent(SnakBarComponent, {
-          data: {
-            message: errorMessage,
-            type: 'error'
-          },
-          duration: 3000,
-
-        });
-      }
-
-    });
-  }
 
   resetForm() {
     this.resetCart();
@@ -368,41 +368,42 @@ export class CreateOrderComponent implements OnInit {
     this.router.navigate(['/admin/order']);
   }
 
-  onQtyChangeInCart(index: number) {
-    const item = this.orderItems[index];
+onQtyChangeInCart(index: number) {
+  const item = this.orderItems[index];
 
-    // Vérifie que la quantité est valide
-    if (item.qty <= 0) {
-      this.snackBar.openFromComponent(SnakBarComponent, {
-        data: {
-          message: 'Error, quantity must be at least 1.',
-          type: 'error'
-        },
-        duration: 3000,
-      });
-      item.qty = 1;
-    } else if (item.qty > item.qtyAvailable) {
-      this.snackBar.openFromComponent(SnakBarComponent, {
-        data: {
-          message: 'Only ' + item.qtyAvailable + ' in stock',
-          type: 'error'
-        },
-        duration: 3000,
-      });
-      item.qty = item.qtyAvailable;
-    }
-
-    // Recalcule les montants ligne
-    item.price = item.unitPrice; // prix unitaire
-    const totalPrice = item.qty * item.unitPrice;
-
-    item.tax = totalPrice * 0.2;  // taxe sur la ligne
-    item.discount = this.getDiscount(item.qty, item.unitPrice);
-    item.amount = totalPrice + item.tax - item.discount;
-
-    // Recalcule les totaux globaux de la commande
-    this.calculateTotals();
+  // Vérifie que la quantité est valide
+  if (item.qty <= 0) {
+    this.snackBar.openFromComponent(SnakBarComponent, {
+      data: {
+        message: this.translate.instant('order.qty_min_error'),
+        type: 'error'
+      },
+      duration: 3000,
+    });
+    item.qty = 1;
+  } else if (item.qty > item.qtyAvailable) {
+    this.snackBar.openFromComponent(SnakBarComponent, {
+      data: {
+        message: this.translate.instant('order.qty_stock_error', { qty: item.qtyAvailable }),
+        type: 'error'
+      },
+      duration: 3000,
+    });
+    item.qty = item.qtyAvailable;
   }
+
+  // Recalcule les montants ligne
+  item.price = item.unitPrice;
+  const totalPrice = item.qty * item.unitPrice;
+
+  item.tax = totalPrice * 0.2;
+  item.discount = this.getDiscount(item.qty, item.unitPrice);
+  item.amount = totalPrice + item.tax - item.discount;
+
+  // Recalcule les totaux globaux de la commande
+  this.calculateTotals();
+}
+
 
   calculateTotals(): void {
     this.amount = 0;

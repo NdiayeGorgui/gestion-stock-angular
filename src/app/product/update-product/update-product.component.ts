@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
+import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 
 @Component({
   selector: 'app-update-product',
@@ -17,7 +19,10 @@ export class UpdateProductComponent implements OnInit {
 
   product: Products = new Products();
   productIdEvent!: string;
-  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private stockService: StockService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private snackBar: MatSnackBar,
+     private dialog: MatDialog, private stockService: StockService,
+      private activatedRoute: ActivatedRoute, private router: Router,
+    private translate: TranslateService) {
 
   }
   ngOnInit(): void {
@@ -35,42 +40,53 @@ export class UpdateProductComponent implements OnInit {
   }
 
   updateProduct() {
-    if (!this.product.name || !this.product.category || this.product.price == null || this.product.qty == null) {
-      this.snackBar.open('Veuillez remplir tous les champs requis.', 'Fermer', {
-        duration: 3000,
-        panelClass: 'snackbar-error'
-      });
-      return;
-    }
-
-    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-      data: { message: 'Do you want to update this product?' }
+  if (!this.product.name || !this.product.category || this.product.price == null || this.product.qty == null) {
+    this.snackBar.openFromComponent(SnakBarComponent, {
+      data: {
+        message: this.translate.instant('product.fill_required'),
+        type: 'error'
+      },
+      duration: 3000
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.stockService.updateProduct(this.productIdEvent, this.product).subscribe({
-          next: () => {
-            this.snackBar.open('Product updated successfully!', 'Close', {
-              duration: 3000,
-              panelClass: 'snackbar-success'
-            });
-
-            this.stockService.notifyProductUpdated(); // 🚀 Notifie les observateurs
-
-            this.router.navigate(['/admin/product']);
-          },
-          error: (err) => {
-            console.error('Error while updating product:', err);
-            this.snackBar.open('Error while updating product.', 'Close', {
-              duration: 3000,
-              panelClass: 'snackbar-error'
-            });
-          }
-        });
-      }
-    });
+    return;
   }
+
+  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+    data: {
+      message: this.translate.instant('product.confirm_update')
+    }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === true) {
+      this.stockService.updateProduct(this.productIdEvent, this.product).subscribe({
+        next: () => {
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('product.update_success'),
+              type: 'success'
+            },
+            duration: 3000
+          });
+
+          this.stockService.notifyProductUpdated();
+          this.router.navigate(['/admin/product']);
+        },
+        error: (err) => {
+          console.error('Erreur lors de la mise à jour du produit :', err);
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('product.update_error'),
+              type: 'error'
+            },
+            duration: 3000
+          });
+        }
+      });
+    }
+  });
+}
+
 
 
 

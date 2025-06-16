@@ -46,3 +46,8 @@ table {
   background-color: #e0e0e0;
   color: #424242;
 }
+
+.search-field {
+  flex: 1 1 300px;
+  min-width: 200px;
+}

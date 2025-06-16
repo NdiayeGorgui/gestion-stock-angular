@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -34,11 +35,16 @@ export class CreatePaymentComponent implements OnInit {
   payment: Payment = new Payment();
   responseType: any;
 
-  public modes: Array<IModePayment> = [{ id: 1, name: 'COMPTANT' },
-  { id: 2, name: 'CHEQUE' },
-  { id: 3, name: 'VIREMENT' }];
+  public modes: Array<IModePayment> = [{ id: 1, name: 'CASH' },
+  { id: 2, name: 'CHECK' },
+  { id: 3, name: 'TRANSFERT' }];
 
-  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private stockService: StockService, private router: Router, private activatedRoute: ActivatedRoute, private cdr: ChangeDetectorRef) {
+  constructor(private snackBar: MatSnackBar,
+     private dialog: MatDialog,
+     private stockService: StockService,
+     private router: Router, private activatedRoute: ActivatedRoute, 
+     private cdr: ChangeDetectorRef,
+     private translate: TranslateService) {
 
   }
 
@@ -59,39 +65,42 @@ export class CreatePaymentComponent implements OnInit {
     });
   }
 
-  newPayment() {
-    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-      data: { message: 'Do you want to confirm this payment?' }
-    });
+newPayment() {
+  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+    data: {
+      message: this.translate.instant('payment.confirm_message')
+    }
+  });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.payment.customerIdEvent = this.customerIdEvent;
-        this.stockService.createPayment(this.payment).subscribe({
-          next: prod => {
-            this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Payment created successfully !',
-                type: 'success'
-              },
-              duration: 3000
-            });
-            this.router.navigate(['/admin/payment']);
-          },
-          error: err => {
-            console.log(err);
-           this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Error while creating payment, please try again !',
-                type: 'error'
-              },
-              duration: 3000
-            });
-          }
-        });
-      }
-    });
-  }
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === true) {
+      this.payment.customerIdEvent = this.customerIdEvent;
+      this.stockService.createPayment(this.payment).subscribe({
+        next: () => {
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('payment.success'),
+              type: 'success'
+            },
+            duration: 3000
+          });
+          this.router.navigate(['/admin/payment']);
+        },
+        error: (err) => {
+          console.error(err);
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('payment.error'),
+              type: 'error'
+            },
+            duration: 3000
+          });
+        }
+      });
+    }
+  });
+}
+
 
 
   getAmount() {
@@ -112,58 +121,61 @@ export class CreatePaymentComponent implements OnInit {
   }
 
 
-  printPayment() {
-    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-      data: { message: 'Do you want to confirm the payment and print the invoice?' }
-    });
+printPayment() {
+  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+    data: {
+      message: this.translate.instant('payment.print_confirm')
+    }
+  });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        // 1. Imprimer la facture
-        this.stockService.printInvoice(this.customerIdEvent, this.status).subscribe({
-          next: (response) => {
-            const fileName = `Facture_${this.customerIdEvent}.xlsx`;
-            this.saveExcelFile(response, fileName);
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === true) {
+      // 1. Imprimer la facture
+      this.stockService.printInvoice(this.customerIdEvent, this.status).subscribe({
+        next: (response) => {
+          const fileName = `Facture_${this.customerIdEvent}.xlsx`;
+          this.saveExcelFile(response, fileName);
 
-            // 2. Une fois imprimé → enregistrer le paiement
-            this.payment.customerIdEvent = this.customerIdEvent;
-            this.stockService.createPayment(this.payment).subscribe({
-              next: () => {
-                this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Payment created and invoice printed !',
-                type: 'success'
-              },
-              duration: 3000
-            });
-                this.router.navigate(['/admin/payment']);
-              },
-              error: err => {
-                console.error('Error creating payment:', err);
-                this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Error during payment, please try again !',
-                type: 'error'
-              },
-              duration: 3000
-            });
-              }
-            });
-          },
-          error: err => {
-            console.error('Error printing invoice:', err);
-             this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Error printing invoice, please try again !',
-                type: 'error'
-              },
-              duration: 3000
-            });
-          }
-        });
-      }
-    });
-  }
+          // 2. Créer le paiement
+          this.payment.customerIdEvent = this.customerIdEvent;
+          this.stockService.createPayment(this.payment).subscribe({
+            next: () => {
+              this.snackBar.openFromComponent(SnakBarComponent, {
+                data: {
+                  message: this.translate.instant('payment.success_invoice'),
+                  type: 'success'
+                },
+                duration: 3000
+              });
+              this.router.navigate(['/admin/payment']);
+            },
+            error: err => {
+              console.error('Error creating payment:', err);
+              this.snackBar.openFromComponent(SnakBarComponent, {
+                data: {
+                  message: this.translate.instant('payment.error_create'),
+                  type: 'error'
+                },
+                duration: 3000
+              });
+            }
+          });
+        },
+        error: err => {
+          console.error('Error printing invoice:', err);
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('payment.error_invoice'),
+              type: 'error'
+            },
+            duration: 3000
+          });
+        }
+      });
+    }
+  });
+}
+
 
 
   exportToExcel(data: any[], fileName: string): void {

@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Notifications</h2>
+
+<mat-dialog-content class="dialog-content">
+  <ng-container *ngIf="notifications.length > 0; else noNotif">
+    <div *ngFor="let notif of notifications" class="notif-item" (click)="markAsRead(notif)">
+
+      <mat-icon class="notif-dot" [ngClass]="notif.readValue ? 'read' : 'unread'">
+        fiber_manual_record
+      </mat-icon>
+      <span class="notif-text">{{ notif.message }}</span>
+    </div>
+  </ng-container>
+
+  <ng-template #noNotif>
+    <p>Aucune notification</p>
+  </ng-template>
+  <mat-dialog-actions align="end">
+  <button mat-button (click)="markAllAsRead()" *ngIf="notifications.length > 0">
+    Marquer tout comme lu
+  </button>
+</mat-dialog-actions>
+
+</mat-dialog-content>

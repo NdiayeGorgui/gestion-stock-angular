@@ -64,10 +64,20 @@ applyTheme(): void {
   }
 }
 
-  applyFontSize(): void {
-    document.documentElement.style.setProperty('--font-size', this.fontSize);
-    localStorage.setItem('fontSize', this.fontSize);
-  }
+applyFontSize(): void {
+  const sizeMap = {
+    small: '14px',
+    medium: '16px',
+    large: '20px'
+  };
+
+  const sizeKey = this.fontSize as keyof typeof sizeMap;
+  document.documentElement.style.setProperty('--font-size', sizeMap[sizeKey]);
+  localStorage.setItem('fontSize', this.fontSize);
+}
+
+
+
 
 changeLanguage() {
   this.translate.use(this.selectedLanguage);

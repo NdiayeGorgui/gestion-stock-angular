@@ -29,10 +29,10 @@
 }
 
 .order-actions {
-  margin-top: 24px;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  margin: 24px 0;
   align-items: center;
 }
 
@@ -49,3 +49,11 @@ table {
 mat-card-title {
   font-weight: 600;
 }
+.search-field {
+  flex: 1 1 300px;
+  min-width: 200px;
+}
+
+
+
+

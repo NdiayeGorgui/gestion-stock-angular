@@ -1,0 +1,35 @@
+.dialog-content {
+  min-width: 400px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.notif-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.notif-dot {
+  font-size: 10px;
+}
+
+.unread {
+  color: #f44336; /* rouge */
+}
+
+.read {
+  color: #9e9e9e; /* gris */
+}
+
+.notif-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+

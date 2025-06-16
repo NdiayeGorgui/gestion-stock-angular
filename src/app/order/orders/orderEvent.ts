@@ -8,6 +8,7 @@ export class OrderEvent{
     customer!:Customer;
     product!:Product;
     productItem!:ProductItem;
+  order: any;
 
      constructor(){
     

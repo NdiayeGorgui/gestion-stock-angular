@@ -148,12 +148,25 @@
         </table>
 
         <!-- Totaux -->
-        <div class="text-end mt-3">
-          <h6><strong>{{ 'order.totalHT' | translate }}</strong> {{ totalPrice | number:'1.2-2' }} $</h6>
-          <h6><strong>{{ 'order.totalTax' | translate }}</strong> {{ totalTax | number:'1.2-2' }} $</h6>
-          <h6><strong>{{ 'order.totalDiscount' | translate }}</strong> {{ totalDiscount | number:'1.2-2' }} $</h6>
-          <h5><strong>{{ 'order.total' | translate }}</strong> <strong>{{ totalAmount | number:'1.2-2' }} $</strong></h5>
-        </div>
+        <div class="totals-section text-end mt-4">
+  <div class="total-line">
+    <span class="total-label">{{ 'order.totalHT' | translate }}</span>
+    <span class="total-value">{{ totalPrice | number:'1.2-2' }} $</span>
+  </div>
+  <div class="total-line">
+    <span class="total-label">{{ 'order.totalTax' | translate }}</span>
+    <span class="total-value">{{ totalTax | number:'1.2-2' }} $</span>
+  </div>
+  <div class="total-line">
+    <span class="total-label">{{ 'order.totalDiscount' | translate }}</span>
+    <span class="total-value">{{ totalDiscount | number:'1.2-2' }} $</span>
+  </div>
+  <div class="total-line total-final">
+    <span class="total-label">{{ 'order.total' | translate }}</span>
+    <span class="total-value">{{ totalAmount | number:'1.2-2' }} $</span>
+  </div>
+</div>
+
       </div>
 
     </mat-card-content>

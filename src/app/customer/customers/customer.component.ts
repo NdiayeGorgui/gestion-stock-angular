@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-customer',
@@ -27,7 +28,9 @@ export class CustomerComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private router: Router, private stockService: StockService, private activatedRoute: ActivatedRoute) {
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog,
+     private router: Router, private stockService: StockService,
+      private activatedRoute: ActivatedRoute,private translate: TranslateService) {
   }
 
   public getCustomers() {
@@ -70,40 +73,42 @@ export class CustomerComponent implements OnInit {
     this.router.navigateByUrl("/admin/create-customer");
   }
 
-  deleteCustomer(id: string) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: 'Are you sure you want to delete this customer?' }
-    });
+deleteCustomer(id: string) {
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    data: {
+      message: this.translate.instant('customer.confirm_delete')
+    }
+  });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.stockService.deleteCustomer(id).subscribe({
-          next: () => {
-            // Suppression locale
-            this.customers = this.customers.filter((c: { customerIdEvent: string; }) => c.customerIdEvent !== id);
-            this.dataSource.data = this.customers;
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === true) {
+      this.stockService.deleteCustomer(id).subscribe({
+        next: () => {
+          this.customers = this.customers.filter((c: { customerIdEvent: string }) => c.customerIdEvent !== id);
+          this.dataSource.data = this.customers;
 
-            this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Customer deleted successfully !',
-                type: 'success'
-              },
-              duration: 3000
-            });
-          },
-          error: () => {
-            this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Error while deleting customer!',
-                type: 'error'
-              },
-              duration: 3000
-            });
-          }
-        });
-      }
-    });
-  }
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('customer.delete_success'),
+              type: 'success'
+            },
+            duration: 3000
+          });
+        },
+        error: () => {
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('customer.delete_error'),
+              type: 'error'
+            },
+            duration: 3000
+          });
+        }
+      });
+    }
+  });
+}
+
 
 
   editCustomer(customerIdEvent: string) {

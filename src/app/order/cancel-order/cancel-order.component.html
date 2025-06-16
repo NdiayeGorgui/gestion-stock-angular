@@ -8,16 +8,15 @@
     <mat-card-content>
       <!-- Barre d’actions -->
       <div class="order-actions">
-        <!-- Champ de recherche désactivé -->
-        <!--
-        <mat-form-field appearance="outline">
+       
+        <mat-form-field appearance="outline" class="search-field">
           <mat-label>
             <mat-icon matSuffix>search</mat-icon>
             {{ 'canceledOrders.search' | translate }}
           </mat-label>
           <input matInput (keyup)="filterOrder($event)">
         </mat-form-field>
-        -->
+       
       </div>
 
       <!-- Table responsive -->

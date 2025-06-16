@@ -49,5 +49,12 @@ html, body {
   margin-right: 5px;
 }
 
+.notification-menu .mat-menu-item,
+.notification-menu .notif-message {
+  font-size: 12px !important;
+}
+
+
+
 
 

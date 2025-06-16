@@ -40,21 +40,37 @@ export class CompletedOrderComponent implements OnInit {
   constructor(private stockService: StockService, private router: Router, private activatedRoute: ActivatedRoute) {
 
   }
-  public getCreatedOrders() {
-    this.stockService.getCreatedOrders(this.status).subscribe({
-      next: data => {
-        this.orders = data;
-        this.dataSource = new MatTableDataSource(this.orders)
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: err => {
-        console.log(err);
-      }
+public getCreatedOrders() {
+  this.stockService.getCreatedOrders(this.status).subscribe({
+    next: data => {
+      this.orders = data;
+      this.dataSource = new MatTableDataSource(this.orders);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
 
-    });
+      // ✅ Définir le filterPredicate ici
+      this.dataSource.filterPredicate = (data: any, filter: string) => {
+        const transformedFilter = filter.trim().toLowerCase();
 
-  }
+        const customerName = data.order?.customer?.name?.toLowerCase() || '';
+        const productName = data.product?.name?.toLowerCase() || '';
+        const orderStatus = data.order?.orderStatus?.toLowerCase() || '';
+        const orderDate = new Date(data.order?.date).toLocaleDateString('fr-FR');
+
+        return (
+          customerName.includes(transformedFilter) ||
+          productName.includes(transformedFilter) ||
+          orderStatus.includes(transformedFilter) ||
+          orderDate.includes(transformedFilter)
+        );
+      };
+    },
+    error: err => {
+      console.log(err);
+    }
+  });
+}
+
 
 
 

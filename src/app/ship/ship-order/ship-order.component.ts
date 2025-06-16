@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ship-order',
@@ -18,7 +19,10 @@ export class ShipOrderComponent implements OnInit {
   ship: Ship = new Ship();
   orderId!: string;
 
-  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private stockService: StockService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog,
+     private stockService: StockService,
+      private router: Router, private activatedRoute: ActivatedRoute,
+     private translate: TranslateService) {
 
   }
 
@@ -36,41 +40,42 @@ export class ShipOrderComponent implements OnInit {
 
   }
 
-  newShip() {
-    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-      data: { message: 'Do you want to confirm shipment of this order?' }
-    });
+newShip() {
+  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+    data: { message: this.translate.instant('newShipping.confirm_shipment') }
+  });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.stockService.createShip(this.ship).subscribe({
-          next: (res) => {
-            console.log('Réponse du serveur:', res);
-            this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Order shipped successfully !',
-                type: 'success'
-              },
-              duration: 3000
-            });
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === true) {
+      this.stockService.createShip(this.ship).subscribe({
+        next: (res) => {
+          console.log('Réponse du serveur:', res);
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('newShipping.ship_success'),
+              type: 'success'
+            },
+            duration: 3000
+          });
 
-            this.router.navigate(['/admin/shipped-orders'])
-              .then(success => console.log('Navigation réussie:', success))
-              .catch(err => console.error('Erreur de navigation:', err));
-          },
-          error: (err) => {
-            console.error('Error:', err);
-            this.snackBar.openFromComponent(SnakBarComponent, {
-              data: {
-                message: 'Error while shipping order, please try again !',
-                type: 'error'
-              },
-              duration: 3000
-            });
-          }
-        });
-      }
-    });
-  }
+          this.router.navigate(['/admin/shipped-orders'])
+            .then(success => console.log('Navigation réussie:', success))
+            .catch(err => console.error('Erreur de navigation:', err));
+        },
+        error: (err) => {
+          console.error('Error:', err);
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('newShipping.ship_error'),
+              type: 'error'
+            },
+            duration: 3000
+          });
+        }
+      });
+    }
+  });
+}
+
 
 }

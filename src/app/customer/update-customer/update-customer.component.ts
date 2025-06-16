@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-update-customer',
@@ -25,7 +26,9 @@ export class UpdateCustomerComponent implements OnInit {
 
   customer: Custom = new Custom();
   customerIdEvent!: string;
-  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private stockService: StockService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private snackBar: MatSnackBar, private dialog: MatDialog,
+     private stockService: StockService, private activatedRoute: ActivatedRoute,
+      private router: Router, private translate: TranslateService) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -53,51 +56,52 @@ export class UpdateCustomerComponent implements OnInit {
 
   }
 
-  updateCustomer() {
-    if (!this.customer.name || !this.customer.email || !this.customer.phone) {
-       this.snackBar.openFromComponent(SnakBarComponent, {
-                  data: {
-                    message: 'Please fill in all required fields !',
-                    type: 'error'
-                  },
-                  duration: 3000
-                });
-      return;
-    }
-
-    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-      data: { message: 'Do you want to update this customer ?' }
+updateCustomer() {
+  if (!this.customer.name || !this.customer.email || !this.customer.phone) {
+    this.snackBar.openFromComponent(SnakBarComponent, {
+      data: {
+        message: this.translate.instant('customer.fill_required'),
+        type: 'error'
+      },
+      duration: 3000
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.stockService.updateCustomer(this.customerIdEvent, this.customer).subscribe({
-          next: (data) => {
-             this.snackBar.openFromComponent(SnakBarComponent, {
-                              data: {
-                                message: 'Customer udated successfully!',
-                                type: 'success'
-                              },
-                              duration: 3000
-                            });
-            this.stockService.notifyCustomerUpdated(); // 🚀 Notifie les observateurs
-
-            this.router.navigate(['/admin/customer']);
-          },
-          error: (err) => {
-            console.error('Error while updating customer :', err);
-             this.snackBar.openFromComponent(SnakBarComponent, {
-                  data: {
-                    message: 'Error while updating Customer, please try again !',
-                    type: 'error'
-                  },
-                  duration: 3000
-                });
-          }
-        });
-      }
-    });
+    return;
   }
+
+  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+    data: { message: this.translate.instant('customer.confirm_update') }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === true) {
+      this.stockService.updateCustomer(this.customerIdEvent, this.customer).subscribe({
+        next: () => {
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('customer.update_success'),
+              type: 'success'
+            },
+            duration: 3000
+          });
+
+          this.stockService.notifyCustomerUpdated();
+          this.router.navigate(['/admin/customer']);
+        },
+        error: (err) => {
+          console.error('Error while updating customer:', err);
+          this.snackBar.openFromComponent(SnakBarComponent, {
+            data: {
+              message: this.translate.instant('customer.update_error'),
+              type: 'error'
+            },
+            duration: 3000
+          });
+        }
+      });
+    }
+  });
+}
+
 
 
 

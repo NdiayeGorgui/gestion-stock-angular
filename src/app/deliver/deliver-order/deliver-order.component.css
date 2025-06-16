@@ -42,6 +42,3 @@ mat-divider {
     display: block; /* Assure qu'il occupe toute la largeur */
 }
 
-.centered-column {
-  text-align: center;
-}

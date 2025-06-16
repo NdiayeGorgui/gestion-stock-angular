@@ -25,10 +25,12 @@ filteredProducts: any[] = []; // données filtrées à afficher
 
 
   public customers: any;
+  public productStatsData :any;
   public products: any;
   public mostOrderedProducts: any;
   public mostOrderedCustomers: any;
   legendPosition: LegendPosition = LegendPosition.Below;
+  
 
 stats: any[] = [];
 
@@ -54,7 +56,14 @@ stats: any[] = [];
     this.getTop10CustomersMostOrdered();
     this.getProducts();
     this.setBarChartWidth();
-    this.filteredProducts = [...this.recentProducts];
+    //this.filteredProducts = [...this.recentProducts];
+this.stockService.getProductsList().subscribe(products => {
+  this.products = products;
+  
+  this.filteredProducts = this.getTop10LatestProducts(products);
+});
+
+
   }
   constructor(private stockService: StockService) {
 
@@ -77,7 +86,7 @@ stats: any[] = [];
     this.stockService.getProductsList().subscribe({
       next: data => {
         // Transformer les données pour respecter le format attendu par ngx-charts
-        this.products = data.map(item => ({
+        this.productStatsData  = data.map(item => ({
           name: item.name,
           value: item.qty // Changer totalQuantite en value
         }));
@@ -209,24 +218,48 @@ isInLast7Days(dateStr: string): boolean {
   return inRange;
 }
 
+getTop10LatestProducts(products: any[]): any[] {
+  const sorted = [...products].sort((a, b) =>
+    new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
+  );
+
+  return sorted.slice(0, 10);
+}
 
 
+getLatestByStockStatus(products: any[]): any[] {
+  const withDate = products.filter(p => p.createdDate);
+  console.log("Produits avec date:", withDate);
 
-recentProducts = [
+  const sorted = [...withDate].sort((a, b) =>
+    new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
+  );
+
+  const latestOutOfStock = sorted.find(p => p.qty === 0);
+  const latestLowStock = sorted.find(p => p.qty > 0 && p.qty < 10);
+  const latestInStock = sorted.find(p => p.qty >= 10);
+
+  console.log("OUT:", latestOutOfStock, "LOW:", latestLowStock, "IN:", latestInStock);
+
+  return [latestOutOfStock, latestLowStock, latestInStock].filter(p => p);
+}
+
+/*recentProducts = [
   { name: 'Wireless Mouse', category: 'Accessories', stock: 45, price: 19.99 },
   { name: 'Mechanical Keyboard', category: 'Accessories', stock: 12, price: 89.99 },
   { name: 'Office Chair', category: 'Furniture', stock: 0, price: 129.99 }
-];
+];*/
 
 
-
-displayedColumns: string[] = ['name', 'category', 'stock', 'price', 'status'];
+displayedColumns: string[] = ['name', 'category', 'stock', 'price', 'status', 'createdDate'];
 
 searchTerm: string = '';
 
 applyFilter() {
   const term = this.searchTerm.toLowerCase();
-  this.filteredProducts = this.recentProducts.filter(product =>
+  const latest = this.getTop10LatestProducts(this.products);
+
+  this.filteredProducts = latest.filter(product =>
     product.name.toLowerCase().includes(term) ||
     product.category.toLowerCase().includes(term)
   );
