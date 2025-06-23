@@ -63,6 +63,8 @@ export class AdminComponent implements OnInit {
     drawer.toggle();
   }
   async ngOnInit(): Promise<void> {
+    this.notifService.startPolling(); // ✅ active le polling
+
 
     const profile = await this.keycloakService.loadUserProfile();
     this.firstName = profile.firstName || '';

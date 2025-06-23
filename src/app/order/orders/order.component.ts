@@ -96,6 +96,7 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      this.notifService.startPolling(); // ✅ active le polling
     this.stockService.getCreatedOrders('CREATED').subscribe({
       next: data => {
         this.createdOrders = data;

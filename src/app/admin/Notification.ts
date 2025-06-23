@@ -5,4 +5,6 @@ export interface Notification {
   readValue: boolean;
   archived: boolean;
   type: string;
+  productKey: string;
+
 }
