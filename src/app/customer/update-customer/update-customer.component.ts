@@ -102,8 +102,9 @@ updateCustomer() {
   });
 }
 
-
-
+   close() {
+  this.router.navigate(['/admin/customer']);
+   }
 
 }
 

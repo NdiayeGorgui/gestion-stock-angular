@@ -82,4 +82,8 @@ newProduct() {
     this.newProduct();
   }
 
+   close() {
+    this.router.navigate(['/admin/product']);
+  }
+
 }

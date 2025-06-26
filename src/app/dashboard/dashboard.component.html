@@ -62,33 +62,26 @@
               <td mat-cell *matCellDef="let element">${{ element.price }}</td>
             </ng-container>
 
-           <ng-container matColumnDef="status">
-  <th mat-header-cell *matHeaderCellDef>{{ 'dashboard.status' | translate }}</th>
-  <td mat-cell *matCellDef="let element">
-    <span
-      [ngClass]="{
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>{{ 'dashboard.status' | translate }}</th>
+              <td mat-cell *matCellDef="let element">
+                <span [ngClass]="{
         'out-stock': element.qty === 0,
         'low-stock': element.qty > 0 && element.qty < 10,
         'in-stock': element.qty >= 10
-      }"
-    >
-      <mat-icon style="vertical-align: middle; margin-right: 4px;">
-        {{
-          element.qty === 0
-            ? 'cancel'
-            : (element.qty < 10 ? 'warning' : 'check_circle')
-        }}
-      </mat-icon>
-      {{
-        element.qty === 0
-          ? ('dashboard.outOfStock' | translate)
-          : (element.qty < 10
-              ? ('dashboard.lowStock' | translate)
-              : ('dashboard.inStock' | translate))
-      }}
-    </span>
-  </td>
-</ng-container>
+      }">
+                  <mat-icon style="vertical-align: middle; margin-right: 4px;">
+                    {{
+                    element.qty === 0
+                    ? 'cancel'
+                    : (element.qty < 10 ? 'warning' : 'check_circle' ) }} </mat-icon>
+                      {{
+                      element.qty === 0
+                      ? ('dashboard.outOfStock' | translate)
+                      : (element.qty < 10 ? ('dashboard.lowStock' | translate) : ('dashboard.inStock' | translate)) }}
+                        </span>
+              </td>
+            </ng-container>
 
 
             <ng-container matColumnDef="createdDate">
@@ -117,12 +110,13 @@
       <div class="chart-container">
         <h3 class="chart-title">{{ 'dashboard.topCustomers' | translate }}</h3>
         <div style="overflow: auto;">
-          <ngx-charts-bar-vertical [view]="[barChartWidth, 450]" [results]="mostOrderedCustomers" [scheme]="colorScheme"
-            [gradient]="true" [xAxis]="true" [yAxis]="true" [legend]="true" [legendPosition]="legendPosition"
-            [showDataLabel]="true" [barPadding]="20" [animations]="true" [roundEdges]="true">
-          </ngx-charts-bar-vertical>
+          <ngx-charts-pie-chart [view]="[barChartWidth, 450]" [results]="mostOrderedCustomers" [scheme]="colorScheme"
+            [legend]="true" [legendPosition]="legendPosition" [labels]="true" [doughnut]="false" [explodeSlices]="false"
+            [animations]="true">
+          </ngx-charts-pie-chart>
         </div>
       </div>
+
 
       <div class="chart-container">
         <h3 class="chart-title">{{ 'dashboard.remainingQuantities' | translate }}</h3>

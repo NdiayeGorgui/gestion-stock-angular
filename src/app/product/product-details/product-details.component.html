@@ -1,7 +1,15 @@
-<div class="container mt-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+<div class="container mt-4" style="max-width: 700px; margin-left: auto; margin-right: auto;">
   <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{ 'productDetails.title' | translate }}</mat-card-title>
+   
+     <mat-card-header>
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <mat-card-title>
+         <mat-card-title>{{ 'productDetails.title' | translate }}</mat-card-title>
+        </mat-card-title>
+        <button mat-icon-button color="warn" (click)="close()" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
@@ -113,13 +121,7 @@
           </div>
         </div>
 
-        <!-- Close Button -->
-        <mat-card-actions class="d-flex justify-content-center mt-3">
-          <button mat-flat-button color="primary" (click)="close()">
-            <mat-icon matSuffix>close</mat-icon>
-            {{ 'button.close' | translate }}
-          </button>
-        </mat-card-actions>
+      
       </form>
     </mat-card-content>
   </mat-card>

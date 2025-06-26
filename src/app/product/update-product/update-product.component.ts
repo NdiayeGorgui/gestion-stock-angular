@@ -88,7 +88,9 @@ export class UpdateProductComponent implements OnInit {
 }
 
 
-
+ close() {
+    this.router.navigate(['/admin/product']);
+  }
 
 
 }

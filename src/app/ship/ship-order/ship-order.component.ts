@@ -95,6 +95,8 @@ newShip() {
     }
   });
 }
-
+   close() {
+    this.router.navigate(['/admin/shipped-orders']);
+  }
 
 }

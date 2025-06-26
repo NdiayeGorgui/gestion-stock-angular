@@ -96,5 +96,7 @@ newDeliver() {
     }
   });
 }
-
+   close() {
+    this.router.navigate(['/admin/delivered-orders']);
+  }
 }

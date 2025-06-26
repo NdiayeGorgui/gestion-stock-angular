@@ -325,7 +325,7 @@
     },
     "paymentDetails": {
         "title": "Payment details",
-        "paymentIdEvent": "Payment IdEvent",
+        "paymentIdEvent": "Payment Id",
         "timeStamp": "Payment Date",
         "paymentMode": "Payment mode",
         "paymentStatus": "Payment status",

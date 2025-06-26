@@ -230,4 +230,8 @@ printPayment() {
     //window.location.href = '/admin/order';  // Redirection forcée
   }
 
+   close(): void {
+    this.router.navigate(['/admin/order']);
+  }
+
 }

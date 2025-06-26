@@ -1,7 +1,16 @@
-<div class="container mt-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+<div class="container mt-4" style="max-width: 700px; margin-left: auto; margin-right: auto;">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>{{ 'customerDetails.title' | translate }}</mat-card-title>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <mat-card-title>
+          <mat-card-title>{{ 'customerDetails.title' | translate }}</mat-card-title>
+        </mat-card-title>
+        <button mat-icon-button color="warn" (click)="close()" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
@@ -12,8 +21,8 @@
           <mat-form-field class="w-100">
             <mat-label>{{ 'form.name.idEvent' | translate }}</mat-label>
             <mat-icon matSuffix>remember_me</mat-icon>
-            <input matInput class="form-control" id="customerIdEvent" readonly
-                   [(ngModel)]="customer.customerIdEvent" name="customerIdEvent">
+            <input matInput class="form-control" id="customerIdEvent" readonly [(ngModel)]="customer.customerIdEvent"
+              name="customerIdEvent">
           </mat-form-field>
         </div>
 
@@ -21,7 +30,7 @@
           <mat-form-field class="w-100">
             <mat-label>{{ 'form.status.label' | translate }}</mat-label>
             <input matInput class="form-control" id="status" readonly
-                   [value]="'orderStatus.' + customer.status | translate" name="status">
+              [value]="'orderStatus.' + customer.status | translate" name="status">
             <mat-icon matSuffix>check_circle</mat-icon>
           </mat-form-field>
         </div>
@@ -59,7 +68,8 @@
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">
             <mat-label>{{ 'form.postalCode.label' | translate }}</mat-label>
-            <input matInput class="form-control" id="postalCode" readonly [(ngModel)]="customer.postalCode" name="postalCode">
+            <input matInput class="form-control" id="postalCode" readonly [(ngModel)]="customer.postalCode"
+              name="postalCode">
             <mat-icon matSuffix>local_post_office</mat-icon>
           </mat-form-field>
         </div>
@@ -82,14 +92,6 @@
             <mat-icon matSuffix>email</mat-icon>
           </mat-form-field>
         </div>
-      </div>
-
-      <!-- Bouton -->
-      <div class="text-center mt-3">
-        <button mat-flat-button color="primary" (click)="close()">
-          <mat-icon matSuffix>close</mat-icon>
-          {{ 'button.close' | translate }}
-        </button>
       </div>
 
     </mat-card-content>

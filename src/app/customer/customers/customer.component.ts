@@ -119,6 +119,8 @@ deleteCustomer(id: string) {
   getCustomer(customerIdEvent: string) {
     this.router.navigate(['/admin/customer-details', customerIdEvent]);
   }
-
+   close() {
+  this.router.navigate(['/admin/customer']);
+   }
 
 }
