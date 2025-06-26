@@ -50,7 +50,7 @@ export class CreateCustomerComponent implements OnInit {
   }
 
 newCustomer() {
-  if (!this.customer.name || !this.customer.address || !this.customer.phone || !this.customer.email) {
+  if (!this.customer.name || !this.customer.address || !this.customer.phone || !this.customer.email|| !this.customer.city|| !this.customer.postalCode) {
     this.snackBar.openFromComponent(SnakBarComponent, {
       data: {
         message: this.translate.instant('customer.fill_required'),

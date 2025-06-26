@@ -1,69 +1,100 @@
-<div class="container mt-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+<div class="container mt-4" style="max-width: 860px; margin-left: auto; margin-right: auto;">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>{{ 'newShipping.title' | translate }}</mat-card-title>
+      <mat-card-title>
+        <strong>{{ 'newShipping.title' | translate }}</strong>
+      </mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-card-content>
-      <form #customerForm="ngForm">
-        <div class="row">
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <mat-label>{{ 'newShipping.customerName' | translate }}</mat-label>
-              <input matInput [(ngModel)]="ship.customerName" name="customerName" readonly />
-              <mat-icon matSuffix>person</mat-icon>
-            </mat-form-field>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <mat-label>{{ 'newShipping.customerMail' | translate }}</mat-label>
-              <input matInput [(ngModel)]="ship.customerMail" name="customerMail" readonly />
-              <mat-icon matSuffix>email</mat-icon>
-            </mat-form-field>
-          </div>
-        </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <mat-label>{{ 'newShipping.orderId' | translate }}</mat-label>
-              <input matInput [(ngModel)]="ship.orderId" name="orderId" readonly />
-              <mat-icon matSuffix>check_circle</mat-icon>
-            </mat-form-field>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <mat-label>{{ 'newShipping.customerId' | translate }}</mat-label>
-              <input matInput [(ngModel)]="ship.customerId" name="customerId" readonly />
-              <mat-icon matSuffix>check_circle</mat-icon>
-            </mat-form-field>
-          </div>
-        </div>
+    <!-- 🧾 Détails de la commande -->
+    <mat-card-content *ngIf="ship" class="mt-3">
+      <ul class="list-group mb-3">
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.orderId' | translate }} :</b> {{ ship.orderId }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'paymentDetails.paymentIdEvent' | translate }} :</b> {{ ship.paymentIdEvent }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.customerName' | translate }} :</b> {{ ship.customerName }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.customerEmail' | translate }} :</b> {{ ship.customerMail }}
+        </li>
 
-        <div class="row">
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <mat-label>{{ 'newShipping.eventTimeStamp' | translate }}</mat-label>
-              <input matInput [(ngModel)]="ship.eventTimeStamp" name="eventTimeStamp" readonly />
-              <mat-icon matSuffix>date_range</mat-icon>
-            </mat-form-field>
-          </div>
-          <div class="col-md-6">
-            <mat-form-field class="w-100">
-              <mat-label>{{ 'newShipping.status' | translate }}</mat-label>
-              <input matInput [value]="'shippingList.statusValues.' + ship.status | translate" readonly />
-              <mat-icon matSuffix>pending</mat-icon>
-            </mat-form-field>
-          </div>
-        </div>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.amount' | translate }} :</b> {{ ship.amount | number:'1.2-2' }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.totalTax' | translate }} :</b> {{ ship.totalTax | number:'1.2-2' }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.totalDiscount' | translate }} :</b> {{ ship.totalDiscount | number:'1.2-2' }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.status' | translate }} :</b> {{ ('shippingList.statusValues.' + ship.shippingStatus) |
+          translate }}
+        </li>
 
-        <div class="text-center mt-4">
-          <button mat-flat-button color="primary" (click)="newShip()" [disabled]="ship.status === 'SHIPPED'">
-            <mat-icon matSuffix>balance</mat-icon>
-            {{ 'newShipping.button' | translate }}
-          </button>
-        </div>
-      </form>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.timeStamp' | translate }} :</b> {{ ship.eventTimeStamp | date:'dd/MM/yyyy'}}
+        </li>
+      </ul>
+
+      <!-- 📦 Tableau des articles -->
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+          <!-- ID Produit -->
+          <ng-container matColumnDef="productId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.productId' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.productId }}</td>
+          </ng-container>
+
+          <!-- Nom Produit -->
+          <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.productName' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.productName }}</td>
+          </ng-container>
+
+          <!-- Quantité -->
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.quantity' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.quantity }}</td>
+          </ng-container>
+
+          <!-- Prix -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.price' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.price | number:'1.2-2' }}</td>
+          </ng-container>
+
+          <!-- Remise -->
+          <ng-container matColumnDef="discount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.discount' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.discount | number:'1.2-2' }}</td>
+          </ng-container>
+
+          <!-- Taxe -->
+          <ng-container matColumnDef="tax">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.tax' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.tax | number:'1.2-2' }}</td>
+          </ng-container>
+          <!-- Lignes -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+
+
+      <div class="text-center mt-4">
+        <button mat-flat-button color="primary" (click)="newShip()" [disabled]="ship.shippingStatus === 'SHIPPED'">
+          <mat-icon matSuffix>balance</mat-icon>
+          {{ 'newShipping.button' | translate }}
+        </button>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

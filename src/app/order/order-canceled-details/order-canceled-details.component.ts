@@ -1,24 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { StockService } from '../../services/stock.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { OrderEvent } from '../orders/orderEvent';
-import { ProductItem } from '../productItem';
-import { MatTableDataSource } from '@angular/material/table';
-import { Custom } from '../custom';
-import { AmountDto } from '../../payment/create-payment/amountDto';
+import { Component } from '@angular/core';
 import { OrderResponseDto } from '../../payment/OrderResponseDto';
 import { ProductItemResponseDto } from '../../payment/ProductItemResponseDto';
+import { MatTableDataSource } from '@angular/material/table';
+import { StockService } from '../../services/stock.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-order-details',
+  selector: 'app-order-canceled-details',
   standalone: false,
-
-  templateUrl: './order-details.component.html',
-  styleUrl: './order-details.component.css'
+  templateUrl: './order-canceled-details.component.html',
+  styleUrl: './order-canceled-details.component.css'
 })
-export class OrderDetailsComponent implements OnInit {
-
-  orderId!: string;
+export class OrderCanceledDetailsComponent {
+ orderId!: string;
   order: OrderResponseDto = {
     orderId: '',
     customerName: '',
@@ -28,7 +22,7 @@ export class OrderDetailsComponent implements OnInit {
     totalDiscount: 0,
     items: []  // ✅ Nécessaire pour éviter erreur sur table
   };
-   public status = 'CREATED';
+   public status = 'CANCELED';
 
   dataSource = new MatTableDataSource<ProductItemResponseDto>([]);
   displayedColumns: string[] = ['productId', 'productName', 'quantity', 'price', 'discount', 'tax'];
@@ -61,7 +55,11 @@ export class OrderDetailsComponent implements OnInit {
   });
 }
 
-  close(): void {
-    this.router.navigate(['/admin/order']);
-  }
+ close() {
+  const status = this.status.toLowerCase();
+    this.router.navigate(['/admin/cancel-order']);
+  
+}
+
+
 }

@@ -18,6 +18,11 @@ import { ProductStatDTO } from '../order/ProductStatDTO';
 import { CustomerDto } from '../order/customerDto';
 import { CustomerExistsResponse } from '../customer/create-customer/CustomerExistsResponse';
 import { Notification } from '../admin/Notification';
+import { OrderResponseDto } from '../payment/OrderResponseDto';
+import { PaymentResponseDto } from '../payment/PaymentResponseDto';
+import { BillResponseDto } from '../bill/BillResponseDto';
+import { ShipResponseDto } from '../ship/ShipResponseDto';
+import { DeliveredResponseDto } from '../deliver/DeliveredResponseDto';
 
 
 @Injectable({
@@ -102,9 +107,9 @@ export class StockService {
     return this.httpClient.post<(OrderEvent)>(`${environment.backendOrderHost}`, order);
   }
 
-  getOrderById(orderIdEvent: string): Observable<ProductItem> {
+  getOrderById(orderId: string): Observable<OrderResponseDto> {
 
-    return this.httpClient.get<ProductItem>(`${environment.backendOrderCancelHost}/${orderIdEvent}`);
+    return this.httpClient.get<OrderResponseDto>(`${environment.backendOrderHost}/${orderId}`);
   }
 
   getOrderByLongId(id: number): Observable<ProductItem> {
@@ -112,26 +117,39 @@ export class StockService {
     return this.httpClient.get<ProductItem>(`${environment.backendOrderHost}/${id}`);
   }
 
-  getCreatedOrders(status: string): Observable<ProductItem[]> {
-    return this.httpClient.get<(ProductItem[])>(`${environment.backendOrderStatusHost}/${status}`);
+  getCreatedOrders(status: string): Observable<OrderResponseDto[]> {
+    return this.httpClient.get<(OrderResponseDto[])>(`${environment.backendOrderStatusHost}/${status}`);
   }
+
+getCreatedOrdersById(status: string, orderId: string): Observable<OrderResponseDto> {
+  return this.httpClient.get<OrderResponseDto>(`${environment.backendOrderStatusHost}/${status}/id/${orderId}`);
+}
+
   getCreatedOrdersByCustomer(customerIdEvent: string, status: string): Observable<ProductItem[]> {
     return this.httpClient.get<(ProductItem[])>(`${environment.backendOrderCreatedHost}/${customerIdEvent}/${status}`)
   }
 
+    getCreatedOrdersByOderId(orderId: string, status: string): Observable<ProductItem[]> {
+    return this.httpClient.get<(ProductItem[])>(`${environment.backendOrderHost}/${orderId}/${status}`)
+  }
   cancelOrder(orderIdEvent: string): Observable<Object> {
 
     return this.httpClient.get(`${environment.backendOrderUpdateHost}/${orderIdEvent}`);
   }
 
-  printInvoice(customerIdEvent: string, status: string): Observable<Object> {
+  printInvoice(orderId: string, status: string): Observable<Object> {
 
-    return this.httpClient.get(`${environment.backendBillExportHost}/${customerIdEvent}/${status}`, { responseType: 'blob' });
+    return this.httpClient.get(`${environment.backendBillExportHost}/${orderId}/${status}`, { responseType: 'blob' });
   }
 
-  getAmount(customerIdEvent: string, status: string): Observable<AmountDto> {
+  getAmount(orderId: string): Observable<OrderResponseDto> {
 
-    return this.httpClient.get<AmountDto>(`${environment.backendOrderCustomerHost}/${customerIdEvent}/${status}`);
+    return this.httpClient.get<OrderResponseDto>(`${environment.backendOrderHost}/${orderId}`);
+  }
+
+  getOrderByCreatedOrder(orderId: string): Observable<OrderResponseDto> {
+
+    return this.httpClient.get<OrderResponseDto>(`${environment.backendOrderHost}/${orderId}`);
   }
 
   getBillsByCustomer(customerIdEvent: string, status: string): Observable<Bill[]> {
@@ -143,50 +161,50 @@ export class StockService {
     return this.httpClient.post<(Payment)>(`${environment.backendPaymentHost}`, payment);
   }
 
-  getPaymentList(): Observable<Payment[]> {
-    return this.httpClient.get<(Payment[])>(`${environment.backendPaymentHost}`);
+  getPaymentList(): Observable<PaymentResponseDto[]> {
+    return this.httpClient.get<(PaymentResponseDto[])>(`${environment.backendPaymentHost}`);
   }
 
-  getPaymentById(paymentIdEvent: string): Observable<Payment> {
+  getPaymentById(orderId: string): Observable<PaymentResponseDto> {
 
-    return this.httpClient.get<Payment>(`${environment.backendPaymentHost}/${paymentIdEvent}`);
+    return this.httpClient.get<PaymentResponseDto>(`${environment.backendPaymentHost}/${orderId}`);
   }
 
-  getBillList(): Observable<Bill[]> {
-    return this.httpClient.get<(Bill[])>(`${environment.backendBillHost}`);
+  getBillList(): Observable<BillResponseDto[]> {
+    return this.httpClient.get<(BillResponseDto[])>(`${environment.backendBillHost}`);
   }
 
-  getBillById(orderIdEvent: string): Observable<Bill> {
+  getBillById(orderId: string): Observable<BillResponseDto> {
 
-    return this.httpClient.get<Bill>(`${environment.backendBillHostId}/${orderIdEvent}`);
+    return this.httpClient.get<BillResponseDto>(`${environment.backendBillHost}/${orderId}`);
   }
 
-  getDeliveredQueryList(): Observable<Deliverd[]> {
-    return this.httpClient.get<(Deliverd[])>(`${environment.backendDeliveredQuerytHost}`);
+  getDeliveredQueryList(): Observable<DeliveredResponseDto[]> {
+    return this.httpClient.get<(DeliveredResponseDto[])>(`${environment.backendDeliveredQuerytHost}`);
   }
 
-  createDeliveredCommand(delivered: Deliverd): Observable<Object> {
+  createDeliveredCommand(delivered: DeliveredResponseDto): Observable<Object> {
 
-    return this.httpClient.post<(Deliverd)>(`${environment.backendDeliveredCommandtHost}`, delivered);
+    return this.httpClient.post<(DeliveredResponseDto)>(`${environment.backendDeliveredCommandtHost}`, delivered);
   }
 
-  getDeliveredById(orderId: string): Observable<Deliverd> {
+  getDeliveredById(orderId: string): Observable<DeliveredResponseDto> {
 
-    return this.httpClient.get<Deliverd>(`${environment.backendDeliveredQuerytHost}/${orderId}`);
+    return this.httpClient.get<DeliveredResponseDto>(`${environment.backendDeliveredQuerytHost}/${orderId}`);
   }
 
-  getShippingList(): Observable<Ship[]> {
-    return this.httpClient.get<(Ship[])>(`${environment.backendShippingtHost}`);
+  getShippingList(): Observable<ShipResponseDto[]> {
+    return this.httpClient.get<(ShipResponseDto[])>(`${environment.backendShippingtHost}`);
   }
 
-  createShip(ship: Ship): Observable<Object> {
+  createShip(ship: ShipResponseDto): Observable<Object> {
 
-    return this.httpClient.post<(Ship)>(`${environment.backendShippingtHost}`, ship);
+    return this.httpClient.post<(ShipResponseDto)>(`${environment.backendShippingtHost}`, ship);
   }
 
-  getShipById(orderId: string): Observable<Ship> {
+  getShipById(orderId: string): Observable<ShipResponseDto> {
 
-    return this.httpClient.get<Ship>(`${environment.backendShippingtHost}/${orderId}`);
+    return this.httpClient.get<ShipResponseDto>(`${environment.backendShippingtHost}/${orderId}`);
   }
 
   getOrderEventSourcingList(): Observable<OrderEventSourcing[]> {

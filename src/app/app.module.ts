@@ -75,7 +75,8 @@ import { SnakBarComponent } from './shared/snak-bar/snak-bar.component';
 import { SettingsComponent } from './settings/settings/settings.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { NotificationDialogComponent } from './shared/notification-dialog/notification-dialog.component'
+import { NotificationDialogComponent } from './shared/notification-dialog/notification-dialog.component';
+import { OrderCanceledDetailsComponent } from './order/order-canceled-details/order-canceled-details.component'
 
 
 export function initializeKeycloak(keycloak: KeycloakService) {
@@ -141,7 +142,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ForbiddenComponent,
     SnakBarComponent,
     SettingsComponent,
-    NotificationDialogComponent
+    NotificationDialogComponent,
+    OrderCanceledDetailsComponent
   ],
   imports: [
     BrowserModule,

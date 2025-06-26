@@ -6,12 +6,13 @@ import { Custom } from '../../customer/custom';
 import { IModePayment } from '../IModePayment';
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
-import { AmountDto } from './amountDto';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 import { TranslateService } from '@ngx-translate/core';
+
+import { OrderResponseDto } from '../OrderResponseDto';
 
 
 @Component({
@@ -23,9 +24,18 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class CreatePaymentComponent implements OnInit {
 
-  amountDto: AmountDto = { amount: 0, totalAmount: 0, tax: 0, discount: 0 };  // Défaut pour éviter undefined
+order: OrderResponseDto = {
+  orderId: '',
+  customerName: '',
+  customerEmail: '',
+  amount: 0,
+  totalTax: 0,
+  totalDiscount: 0,
+  items: []
+};
 
-  customerIdEvent!: string;
+
+  orderId!: string;
 
   status = "CREATED";
   mode!: string;
@@ -53,20 +63,25 @@ export class CreatePaymentComponent implements OnInit {
     // console.log(mode);
   }
 
-  ngOnInit(): void {
-    this.customerIdEvent = this.activatedRoute.snapshot.params['customerIdEvent'];
-    this.stockService.getCustomerById(this.customerIdEvent).subscribe({
-      next: data => {
-        this.customer = data;
-        this.getAmount();
-      }, error: err => {
-        console.log(err);
-      }
-    });
-  }
+
+ngOnInit() {
+  this.orderId = this.activatedRoute.snapshot.params['orderId'];
+  this.stockService.getOrderById(this.orderId).subscribe({
+    next: (data: OrderResponseDto) => {
+      this.order = data;
+      this.payment.amount = this.order.items.reduce((total, item) => {
+        return total + (item.price * item.quantity);
+      }, 0);
+    },
+    error: err => {
+      console.error(err);
+    }
+  });
+}
+
 
 newPayment() {
-  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+ const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
     data: {
       message: this.translate.instant('payment.confirm_message')
     }
@@ -74,7 +89,7 @@ newPayment() {
 
   dialogRef.afterClosed().subscribe(result => {
     if (result === true) {
-      this.payment.customerIdEvent = this.customerIdEvent;
+      this.payment.orderId = this.orderId;
       this.stockService.createPayment(this.payment).subscribe({
         next: () => {
           this.snackBar.openFromComponent(SnakBarComponent, {
@@ -103,22 +118,37 @@ newPayment() {
 
 
 
-  getAmount() {
-    this.stockService.getAmount(this.customerIdEvent, this.status).subscribe(
-      (data: AmountDto) => {
-        console.log("✅ Réponse API :", data);
+ getAmount() {
+  this.stockService.getOrderById(this.orderId).subscribe(
+    (data: OrderResponseDto) => {
+      console.log("✅ Réponse API :", data);
 
-        if (data && data.amount !== undefined && data.totalAmount !== undefined && data.tax !== undefined && data.discount !== undefined) {
-          this.amountDto = data;
-          this.cdr.detectChanges(); // 🔹 Force Angular à voir le changement
-          console.log("🎯 Montant récupéré :", this.amountDto.amount);
-        }
-      },
-      error => {
-        console.error("❌ Erreur API :", error);
+      // On suppose que `data.amount`, `data.totalTax`, `data.totalDiscount` existent dans OrderResponseDto
+      if (
+        data.amount !== undefined &&
+        data.totalTax !== undefined &&
+        data.totalDiscount !== undefined
+      ) {
+        this.order = {
+            orderId: '',
+            customerName: '',
+           customerEmail: '',
+          amount: data.amount,
+          totalTax: data.totalTax,
+          totalDiscount: data.totalDiscount,
+          items:data.items
+         
+        };
+        this.cdr.detectChanges(); // 🔄 Détecter le changement de vue
+        console.log("🎯 Montant récupéré :", this.order.amount);
       }
-    );
-  }
+    },
+    error => {
+      console.error("❌ Erreur API :", error);
+    }
+  );
+}
+
 
 
 printPayment() {
@@ -131,13 +161,13 @@ printPayment() {
   dialogRef.afterClosed().subscribe(result => {
     if (result === true) {
       // 1. Imprimer la facture
-      this.stockService.printInvoice(this.customerIdEvent, this.status).subscribe({
+      this.stockService.printInvoice(this.orderId, this.status).subscribe({
         next: (response) => {
-          const fileName = `Facture_${this.customerIdEvent}.xlsx`;
+          const fileName = `Facture_${this.orderId}.xlsx`;
           this.saveExcelFile(response, fileName);
 
           // 2. Créer le paiement
-          this.payment.customerIdEvent = this.customerIdEvent;
+          this.payment.orderId = this.orderId;
           this.stockService.createPayment(this.payment).subscribe({
             next: () => {
               this.snackBar.openFromComponent(SnakBarComponent, {

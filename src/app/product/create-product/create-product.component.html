@@ -8,19 +8,13 @@
 
     <mat-card-content>
       <form #productForm="ngForm">
+        <!-- Ligne 1 : Name & Category -->
         <div class="row">
           <!-- Product Name -->
           <div class="col-sm-12 col-md-6">
             <mat-form-field class="w-100">
               <mat-label>{{ 'form.product.name.label' | translate }}</mat-label>
-              <input
-                matInput
-                id="name"
-                name="name"
-                [(ngModel)]="product.name"
-                required
-                #nameCtrl="ngModel"
-              />
+              <input matInput id="name" name="name" [(ngModel)]="product.name" required #nameCtrl="ngModel" />
               <mat-icon matSuffix>inventory</mat-icon>
               <mat-error *ngIf="nameCtrl.invalid && nameCtrl.touched">
                 {{ 'form.product.name.error.required' | translate }}
@@ -32,14 +26,8 @@
           <div class="col-sm-12 col-md-6">
             <mat-form-field class="w-100">
               <mat-label>{{ 'form.product.category.label' | translate }}</mat-label>
-              <input
-                matInput
-                id="category"
-                name="category"
-                [(ngModel)]="product.category"
-                required
-                #categoryCtrl="ngModel"
-              />
+              <input matInput id="category" name="category" [(ngModel)]="product.category" required
+                #categoryCtrl="ngModel" />
               <mat-icon matSuffix>category</mat-icon>
               <mat-error *ngIf="categoryCtrl.invalid && categoryCtrl.touched">
                 {{ 'form.product.category.error.required' | translate }}
@@ -49,20 +37,40 @@
         </div>
 
         <div class="row">
+          <!-- Product Description -->
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'form.product.description.label' | translate }}</mat-label>
+              <textarea matInput id="description" name="description" [(ngModel)]="product.description" required  #descriptionCtrl="ngModel"
+                rows="3"></textarea>
+              <mat-icon matSuffix>description</mat-icon>
+              <mat-error *ngIf="descriptionCtrl.invalid && descriptionCtrl.touched">
+                {{ 'form.product.description.error.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Product Location  -->
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'form.product.location.label' | translate }}</mat-label>
+              <textarea matInput id="location" name="location" [(ngModel)]="product.location" required  #locationCtrl="ngModel" rows="3"></textarea>
+              <mat-icon matSuffix>location_on</mat-icon>
+              <mat-error *ngIf="locationCtrl.invalid && locationCtrl.touched">
+                {{ 'form.product.location.error.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Ligne 3 : Price & Quantity -->
+        <div class="row">
           <!-- Product Price -->
           <div class="col-sm-12 col-md-6">
             <mat-form-field class="w-100">
               <mat-label>{{ 'form.product.price.label' | translate }}</mat-label>
-              <input
-                matInput
-                type="number"
-                id="price"
-                name="price"
-                [(ngModel)]="product.price"
-                required
-                min="0"
-                #priceCtrl="ngModel"
-              />
+              <input matInput type="number" id="price" name="price" [(ngModel)]="product.price" required min="0"
+                #priceCtrl="ngModel" />
               <mat-icon matSuffix>paid</mat-icon>
               <mat-error *ngIf="priceCtrl.invalid && priceCtrl.touched">
                 <span *ngIf="priceCtrl.errors?.['required']">
@@ -79,16 +87,8 @@
           <div class="col-sm-12 col-md-6">
             <mat-form-field class="w-100">
               <mat-label>{{ 'form.product.qty.label' | translate }}</mat-label>
-              <input
-                matInput
-                type="number"
-                id="qty"
-                name="qty"
-                [(ngModel)]="product.qty"
-                required
-                min="1"
-                #qtyCtrl="ngModel"
-              />
+              <input matInput type="number" id="qty" name="qty" [(ngModel)]="product.qty" required min="1"
+                #qtyCtrl="ngModel" />
               <mat-icon matSuffix>balance</mat-icon>
               <mat-error *ngIf="qtyCtrl.invalid && qtyCtrl.touched">
                 <span *ngIf="qtyCtrl.errors?.['required']">
@@ -105,12 +105,7 @@
         <!-- Submit Button -->
         <div class="row">
           <div class="col-12 text-center mt-3">
-            <button
-              mat-flat-button
-              color="primary"
-              (click)="newProduct()"
-              [disabled]="productForm.invalid"
-            >
+            <button mat-flat-button color="primary" (click)="newProduct()" [disabled]="productForm.invalid">
               <mat-icon>add_shopping_cart</mat-icon>
               {{ 'button.addProduct' | translate }}
             </button>

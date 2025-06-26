@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
-import { MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { NotificationService } from '../../services/NotificationService';
@@ -35,7 +35,7 @@ import { NotificationService } from '../../services/NotificationService';
       ])
     ])
   ],
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule,MatCardModule,TranslateModule,MatDividerModule]
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatCardModule, TranslateModule, MatDividerModule]
 })
 export class CreateOrderComponent implements OnInit {
   customerFilter: string = '';
@@ -134,47 +134,47 @@ export class CreateOrderComponent implements OnInit {
     }
   }
 
-addProductToOrder() {
-  if (!this.selectedProduct) return;
+  addProductToOrder() {
+    if (!this.selectedProduct) return;
 
-  // ❌ Vérifie si la quantité est invalide (<= 0)
-  if (this.itemQty <= 0) {
-    this.dialogAlready.open(DialogAlertComponent, {
-      data: {
-        title: this.translate.instant('order.invalid_qty_title'),
-        message: this.translate.instant('order.invalid_qty_message')
-      }
-    });
-    return;
-  }
+    // ❌ Vérifie si la quantité est invalide (<= 0)
+    if (this.itemQty <= 0) {
+      this.dialogAlready.open(DialogAlertComponent, {
+        data: {
+          title: this.translate.instant('order.invalid_qty_title'),
+          message: this.translate.instant('order.invalid_qty_message')
+        }
+      });
+      return;
+    }
 
-  // ❌ Vérifie si le produit est déjà dans le panier
-  const alreadyExists = this.orderItems.some(
-    item => item.id === this.selectedProduct.id
-  );
+    // ❌ Vérifie si le produit est déjà dans le panier
+    const alreadyExists = this.orderItems.some(
+      item => item.id === this.selectedProduct.id
+    );
 
-  if (alreadyExists) {
-    this.dialogAlready.open(DialogAlertComponent, {
-      data: {
-        title: this.translate.instant('order.duplicate_product_title'),
-        message: this.translate.instant('order.duplicate_product_message')
-      }
-    });
-    return;
-  }
+    if (alreadyExists) {
+      this.dialogAlready.open(DialogAlertComponent, {
+        data: {
+          title: this.translate.instant('order.duplicate_product_title'),
+          message: this.translate.instant('order.duplicate_product_message')
+        }
+      });
+      return;
+    }
 
-  // ❌ Vérifie si la quantité demandée dépasse le stock
-  if (this.itemQty > this.selectedProduct.qty) {
-    const qty = this.selectedProduct.qty;
+    // ❌ Vérifie si la quantité demandée dépasse le stock
+    if (this.itemQty > this.selectedProduct.qty) {
+      const qty = this.selectedProduct.qty;
 
-    this.dialogAlready.open(DialogAlertComponent, {
-      data: {
-        title: this.translate.instant('order.stock_error_title'),
-        message: this.translate.instant('order.stock_error_message', { qty })
-      }
-    });
-    return;
-  }
+      this.dialogAlready.open(DialogAlertComponent, {
+        data: {
+          title: this.translate.instant('order.stock_error_title'),
+          message: this.translate.instant('order.stock_error_message', { qty })
+        }
+      });
+      return;
+    }
 
     const newItem = {
       ...this.selectedProduct,
@@ -221,20 +221,34 @@ addProductToOrder() {
     return this.orderItems.reduce((sum, item) => sum + item.price, 0);
   }
 
-  get totalPrice() {
-    return this.orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  // 1. Sous-total brut : price × qty
+  get totalPrice(): number {
+    const subtotal = this.orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    return Math.round(subtotal * 100) / 100;
   }
 
-  get totalTax() {
-    return this.orderItems.reduce((sum, item) => sum + item.tax, 0);
+  // 2. Discount basé sur les règles de seuils du backend
+  get totalDiscount(): number {
+    const discount = this.orderItems.reduce((sum, item) => {
+      const total = item.price * item.qty;
+      if (total < 100) return sum;
+      else if (total < 200) return sum + (0.005 * total);
+      else return sum + (0.01 * total);
+    }, 0);
+    return Math.round(discount * 100) / 100;
   }
 
-  get totalDiscount() {
-    return this.orderItems.reduce((sum, item) => sum + item.discount, 0);
+  // 3. Taxe : 20% de (totalPrice - totalDiscount)
+  get totalTax(): number {
+    const taxable = this.totalPrice - this.totalDiscount;
+    const tax = taxable * 0.20;
+    return Math.round(tax * 100) / 100;
   }
 
-  get totalAmount() {
-    return this.totalPrice + this.totalTax - this.totalDiscount;
+  // 4. Montant total à payer
+  get totalAmount(): number {
+    const total = (this.totalPrice - this.totalDiscount) + this.totalTax;
+    return Math.round(total * 100) / 100;
   }
 
 
@@ -277,71 +291,67 @@ addProductToOrder() {
   }
 
 
-async submitOrder() {
-  if (!this.selectedClient || this.orderItems.length === 0) {
-    this.snackBar.openFromComponent(SnakBarComponent, {
-      data: {
-        message: this.translate.instant('order.fill_required'),
-        type: 'error'
-      },
-      duration: 3000
-    });
-    return;
-  }
-
-  const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
-    data: { message: this.translate.instant('order.confirm_submission') }
-  });
-
-  dialogRef.afterClosed().subscribe(async confirmed => {
-    if (!confirmed) return;
-
-    try {
-      for (const item of this.orderItems) {
-        const orderToSubmit: any = {
-          customer: {
-            customerIdEvent: this.selectedClient.customerIdEvent
-          },
-          product: {
-            productIdEvent: item.productIdEvent
-          },
-          productItem: {
-            productQty: item.qty
-          }
-        };
-
-        await this.stockService.createOrder(orderToSubmit).toPromise();
-        await new Promise(resolve => setTimeout(resolve, 300));
-      }
-
+  async submitOrder() {
+    if (!this.selectedClient || this.orderItems.length === 0) {
       this.snackBar.openFromComponent(SnakBarComponent, {
         data: {
-          message: this.translate.instant('order.submission_success'),
-          type: 'success'
-        },
-        duration: 3000
-      });
-
-      this.notifService.getNotifications();
-      this.showPaymentButton = true;
-      this.resetCart();
-
-    } catch (err: any) {
-      console.error('Error submitting order item:', err);
-
-      const errorMessage =
-        err?.error?.message || err?.error?.error || err?.message || this.translate.instant('order.submission_error');
-
-      this.snackBar.openFromComponent(SnakBarComponent, {
-        data: {
-          message: errorMessage,
+          message: this.translate.instant('order.fill_required'),
           type: 'error'
         },
         duration: 3000
       });
+      return;
     }
-  });
-}
+
+    const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+      data: { message: this.translate.instant('order.confirm_submission') }
+    });
+
+    dialogRef.afterClosed().subscribe(async confirmed => {
+      if (!confirmed) return;
+
+      try {
+        const orderToSubmit: any = {
+          customer: {
+            customerIdEvent: this.selectedClient.customerIdEvent
+          },
+          productItems: this.orderItems.map(item => ({
+            productIdEvent: item.productIdEvent,
+            productQty: item.qty
+          }))
+        };
+
+        await this.stockService.createOrder(orderToSubmit).toPromise();
+
+        this.snackBar.openFromComponent(SnakBarComponent, {
+          data: {
+            message: this.translate.instant('order.submission_success'),
+            type: 'success'
+          },
+          duration: 3000
+        });
+
+        this.notifService.getNotifications();
+        this.showPaymentButton = true;
+        this.resetCart();
+
+      } catch (err: any) {
+        console.error('Error submitting order:', err);
+
+        const errorMessage =
+          err?.error?.message || err?.error?.error || err?.message || this.translate.instant('order.submission_error');
+
+        this.snackBar.openFromComponent(SnakBarComponent, {
+          data: {
+            message: errorMessage,
+            type: 'error'
+          },
+          duration: 3000
+        });
+      }
+    });
+  }
+
 
 
   resetForm() {
@@ -371,7 +381,7 @@ async submitOrder() {
 onQtyChangeInCart(index: number) {
   const item = this.orderItems[index];
 
-  // Vérifie que la quantité est valide
+  // 🔒 Sécurité : vérifier la quantité
   if (item.qty <= 0) {
     this.snackBar.openFromComponent(SnakBarComponent, {
       data: {
@@ -392,17 +402,21 @@ onQtyChangeInCart(index: number) {
     item.qty = item.qtyAvailable;
   }
 
-  // Recalcule les montants ligne
-  item.price = item.unitPrice;
-  const totalPrice = item.qty * item.unitPrice;
+  // ✅ Mise à jour ligne produit selon la logique back
+  item.price = item.unitPrice; // prix unitaire (brut)
+  const totalBrut = item.price * item.qty;
 
-  item.tax = totalPrice * 0.2;
   item.discount = this.getDiscount(item.qty, item.unitPrice);
-  item.amount = totalPrice + item.tax - item.discount;
 
-  // Recalcule les totaux globaux de la commande
+  const net = totalBrut - item.discount;
+  item.tax = Math.round(net * 0.2 * 100) / 100;
+
+  item.amount = Math.round((net + item.tax) * 100) / 100;
+
+  // 🔄 Recalcul global
   this.calculateTotals();
 }
+
 
 
   calculateTotals(): void {

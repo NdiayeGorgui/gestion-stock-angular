@@ -1,7 +1,12 @@
 import { Custom } from "./custom";
 
 export class ProductItem{
-    productQty!: number; 
-    customer!:Custom;
+   
+    orderId!: string; 
+    customerName!: string; 
+    customerEmail!:string;
+    amount!:number;
+    totalTax!:number;
+    discount!:number;
    
 }

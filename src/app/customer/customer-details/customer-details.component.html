@@ -12,22 +12,19 @@
           <mat-form-field class="w-100">
             <mat-label>{{ 'form.name.idEvent' | translate }}</mat-label>
             <mat-icon matSuffix>remember_me</mat-icon>
-            <input matInput class="form-control" id="customerIdEvent" readonly [(ngModel)]="customer.customerIdEvent"
-              name="customerIdEvent">
+            <input matInput class="form-control" id="customerIdEvent" readonly
+                   [(ngModel)]="customer.customerIdEvent" name="customerIdEvent">
           </mat-form-field>
         </div>
 
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">
             <mat-label>{{ 'form.status.label' | translate }}</mat-label>
-
             <input matInput class="form-control" id="status" readonly
-              [value]="'orderStatus.' + customer.status | translate" name="status">
-
+                   [value]="'orderStatus.' + customer.status | translate" name="status">
             <mat-icon matSuffix>check_circle</mat-icon>
           </mat-form-field>
         </div>
-
       </div>
 
       <!-- Ligne 2 : Name & Address -->
@@ -35,7 +32,7 @@
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">
             <mat-label>{{ 'form.name.label' | translate }}</mat-label>
-            <input matInput class="form-control" id="name" [(ngModel)]="customer.name" name="name" readonly>
+            <input matInput class="form-control" id="name" readonly [(ngModel)]="customer.name" name="name">
             <mat-icon matSuffix>person</mat-icon>
           </mat-form-field>
         </div>
@@ -43,13 +40,32 @@
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">
             <mat-label>{{ 'form.address.label' | translate }}</mat-label>
-            <mat-icon matSuffix>home</mat-icon>
             <input matInput class="form-control" id="address" readonly [(ngModel)]="customer.address" name="address">
+            <mat-icon matSuffix>home</mat-icon>
           </mat-form-field>
         </div>
       </div>
 
-      <!-- Ligne 3 : Phone & Email -->
+      <!-- Ligne 3 : City & Postal Code -->
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'form.city.label' | translate }}</mat-label>
+            <input matInput class="form-control" id="city" readonly [(ngModel)]="customer.city" name="city">
+            <mat-icon matSuffix>location_city</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-6">
+          <mat-form-field class="w-100">
+            <mat-label>{{ 'form.postalCode.label' | translate }}</mat-label>
+            <input matInput class="form-control" id="postalCode" readonly [(ngModel)]="customer.postalCode" name="postalCode">
+            <mat-icon matSuffix>local_post_office</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Ligne 4 : Phone & Email -->
       <div class="row">
         <div class="col-sm-12 col-md-6">
           <mat-form-field class="w-100">

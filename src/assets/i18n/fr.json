@@ -81,6 +81,18 @@
                 "required": "L'adresse est requise."
             }
         },
+         "city": {
+            "label": "Ville du client",
+            "error": {
+                "required": "La ville du client est requise."
+            }
+        },
+         "postalCode": {
+            "label": "Code postal du client",
+            "error": {
+                "required": "Le code postal du client est requis."
+            }
+        },
         "phone": {
             "label": "Téléphone du client",
             "error": {
@@ -106,6 +118,18 @@
                 "label": "Catégorie du produit",
                 "error": {
                     "required": "La catégorie du produit est requise."
+                }
+            },
+             "description": {
+                "label": "Description du produit",
+                "error": {
+                    "required": "La description du produit est requise."
+                }
+            },
+            "location": {
+                "label": "Localisation du produit",
+                "error": {
+                    "required": "La localisation du produit est requise."
                 }
             },
             "price": {
@@ -166,7 +190,7 @@
     "deliveries": {
         "title": "Liste des livraisons",
         "search": "Rechercher",
-        "orderId": "Numéro de commande",
+        "orderId": "N° de commande",
         "customerName": "Nom du client",
         "email": "Email",
         "date": "Date",
@@ -227,6 +251,7 @@
         "customerName": "Client",
         "productName": "Produit",
         "quantity": "Quantité",
+        "customerEmail": "Email",
         "price": "Prix",
         "discount": "Remise",
         "billingDate": "Date",
@@ -245,6 +270,7 @@
         "customerIdEvent": "ID Événement Client",
         "productIdEvent": "ID Événement Produit",
         "customerName": "Nom du client",
+         "customerMail": "Email",
         "productName": "Nom du produit",
         "customerPhone": "Téléphone du client",
         "price": "Prix du produit",
@@ -286,6 +312,7 @@
     "payments": {
         "title": "Liste des paiements",
         "search": "Rechercher",
+        "orderId": "Id Commande",
         "customer": "Client",
         "paymentMode": "Mode de paiement",
         "amount": "Montant",
@@ -397,6 +424,10 @@
     "createdOrders": {
         "title": "Commandes créées",
         "customer": "Client",
+        "orderId": "Id Commade",
+        "amount": "Montant",
+        "tax": "Taxe",
+        "discount": "Remise",
         "search": "Rechercher",
         "product": "Produit",
         "price": "Prix",
@@ -457,6 +488,8 @@
         "quantity": "Quantité",
         "discount": "Remise",
         "amount": "Montant",
+        "tax": "Taxe",
+        "totalDiscount": "Remise totale",
         "status": "Statut",
         "totalAmount": "Montant total",
         "close": "Fermer",

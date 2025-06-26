@@ -33,7 +33,7 @@ export class CreateProductComponent implements OnInit {
   }
 
 newProduct() {
-  if (!this.product.name || !this.product.category || this.product.price == null || this.product.qty == null) {
+  if (!this.product.name || !this.product.category || this.product.price == null || this.product.qty == null|| this.product.description == null|| this.product.location == null) {
     this.snackBar.openFromComponent(SnakBarComponent, {
       data: {
         message: this.translate.instant('product.fill_required'),

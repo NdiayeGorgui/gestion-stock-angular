@@ -81,6 +81,18 @@
                 "required": "Address is required."
             }
         },
+         "city": {
+            "label": "Customer City",
+            "error": {
+                "required": "City is required."
+            }
+        },
+         "postalCode": {
+            "label": "Customer Postal code",
+            "error": {
+                "required": "Customer postal code is required."
+            }
+        },
         "phone": {
             "label": "Customer Phone",
             "error": {
@@ -106,6 +118,18 @@
                 "label": "Product Category",
                 "error": {
                     "required": "Product category is required."
+                }
+            },
+            "description": {
+                "label": "Product Description",
+                "error": {
+                    "required": "Product description is required."
+                }
+            },
+            "location": {
+                "label": "Product Location",
+                "error": {
+                    "required": "Product location is required."
                 }
             },
             "price": {
@@ -227,6 +251,7 @@
         "customerName": "Customer",
         "productName": "Product",
         "quantity": "Quantity",
+        "customerEmail": "Email",
         "price": "Price",
         "discount": "Discount",
         "billingDate": "Date",
@@ -245,6 +270,7 @@
         "customerIdEvent": "Customer ID Event",
         "productIdEvent": "Product ID Event",
         "customerName": "Customer Name",
+         "customerMail": "Email",
         "productName": "Product Name",
         "customerPhone": "Customer Phone",
         "price": "Product Price",
@@ -286,6 +312,7 @@
     "payments": {
         "title": "Payments",
         "search": "Search",
+        "orderId": "order Id",
         "customer": "Customer",
         "paymentMode": "Payment Mode",
         "amount": "Amount",
@@ -397,6 +424,10 @@
     "createdOrders": {
         "title": "Created Orders",
         "customer": "Customer",
+        "orderId": "Order Id",
+        "amount": "Amount",
+        "tax": "Tax",
+        "discount": "Discount",
         "search": "Search",
         "product": "Product",
         "price": "Price",
@@ -457,6 +488,9 @@
         "quantity": "Quantity",
         "discount": "Discount",
         "amount": "Amount",
+        "tax": "Tax",
+        "timeStamp": "Date",
+        "totalDiscount": "Total Discount",
         "status": "Status",
         "totalAmount": "Total Amount",
         "close": "Close",

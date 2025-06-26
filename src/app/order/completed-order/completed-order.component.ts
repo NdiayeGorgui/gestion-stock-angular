@@ -5,6 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { StockService } from '../../services/stock.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../../services/NotificationService';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-completed-order',
@@ -15,109 +19,76 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class CompletedOrderComponent implements OnInit {
 
-  orderEvent: OrderEvent = new OrderEvent();
-  order: OrderEvent = new OrderEvent();
-  status = 'COMPLETED';
-  nom!: string;
+  public createdOrders: any[] = [];
+  public dataSource: MatTableDataSource<any>;
+  public status = 'COMPLETED';
 
-
-  public orders: any;
-  public dataSource: any;
-  //customerIdEvent!:string;
-
-  productItem: any = {
-
-    product: {},
-    order: {
-      customer: {}
-    }
-  };
-
-  public displayedColumns = ["customerName", "productName", "price", "qty", "amount", "discount", "date", "status", "details"]
+  public displayedColumns: string[] = [
+    'orderId',
+    'customerName',
+    'customerEmail',
+    'amount',
+    'totalDiscount',
+    'totalTax',
+    'details',
+  ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private stockService: StockService, private router: Router, private activatedRoute: ActivatedRoute) {
 
+  constructor(
+  
+    private stockService: StockService,
+    private router: Router,
+   
+  ) {
+    this.dataSource = new MatTableDataSource<any>([]);
   }
-public getCreatedOrders() {
+
+  ngOnInit(): void {
+  
+    this.getCreatedOrders();
+  }
+
+public getCreatedOrders(): void {
   this.stockService.getCreatedOrders(this.status).subscribe({
-    next: data => {
-      this.orders = data;
-      this.dataSource = new MatTableDataSource(this.orders);
+    next: (data) => {
+      // 💡 Pas de transformation manuelle des montants ici !
+      this.createdOrders = data;
+console.log('✔️ Received orders:', this.createdOrders);
+
+      this.dataSource = new MatTableDataSource(this.createdOrders);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
 
-      // ✅ Définir le filterPredicate ici
-      this.dataSource.filterPredicate = (data: any, filter: string) => {
-        const transformedFilter = filter.trim().toLowerCase();
-
-        const customerName = data.order?.customer?.name?.toLowerCase() || '';
-        const productName = data.product?.name?.toLowerCase() || '';
-        const orderStatus = data.order?.orderStatus?.toLowerCase() || '';
-        const orderDate = new Date(data.order?.date).toLocaleDateString('fr-FR');
-
+      this.dataSource.filterPredicate = (order: any, filter: string) => {
+        const lowercaseFilter = filter.trim().toLowerCase();
         return (
-          customerName.includes(transformedFilter) ||
-          productName.includes(transformedFilter) ||
-          orderStatus.includes(transformedFilter) ||
-          orderDate.includes(transformedFilter)
+          order.orderId?.toLowerCase().includes(lowercaseFilter) ||
+          order.customerName?.toLowerCase().includes(lowercaseFilter) ||
+          order.customerEmail?.toLowerCase().includes(lowercaseFilter) ||
+          order.amount?.toString().includes(lowercaseFilter) ||
+          order.totalTax?.toString().includes(lowercaseFilter) ||
+          order.totalDiscount?.toString().includes(lowercaseFilter)
         );
       };
     },
-    error: err => {
-      console.log(err);
+    error: (err) => {
+      console.error('Error fetching created orders:', err);
     }
   });
 }
 
 
+  filterOrder(event: Event): void {
+    const input = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = input.trim().toLowerCase();
+  }
 
-
-  ngOnInit(): void {
-    this.getCreatedOrders();
-
+  getOrder(orderId: string): void {
+    this.router.navigate(['/admin/order-created-completed-details', orderId]);
   }
 
 
-
-  filterOrder(event: Event) {
-    let value = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = value;
-  }
-
-  deleteOrder(customerIdEvent: string) {
-
-  }
-
-  getOrder(orderIdEvent: string) {
-    this.router.navigate(['/admin/order-created-completed-details', orderIdEvent]);
-  }
-
-  newOrder() {
-
-    this.stockService.createOrder(this.orderEvent).subscribe({
-      next: prod => {
-
-      },
-      error: err => {
-        console.log(err);
-      }
-
-    });
-    alert('Product saved successfuly !');
-    this.router.navigate(['/admin/order']);
-  }
-
-  searchTitle() {
-    if (this.nom != "") {
-      this.orders = this.orders.filter((res: { custom: { name: string; }; }) => {
-        return res.custom.name.toLowerCase().match(this.nom.toLowerCase());
-      });
-    } else if (this.nom == "") {
-      this.ngOnInit();
-    }
-
-  }
 
 }

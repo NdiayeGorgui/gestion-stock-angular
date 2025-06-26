@@ -37,6 +37,7 @@ import { OrderCreatedCompletedDetailsComponent } from './order/order-created-com
 import { AdminRoleGuard } from './guards/auth.guard';
 import { ForbiddenComponent } from './guards/forbidden/forbidden.component';
 import { SettingsComponent } from './settings/settings/settings.component';
+import { OrderCanceledDetailsComponent } from './order/order-canceled-details/order-canceled-details.component';
 
 
 
@@ -59,15 +60,16 @@ const routes: Routes = [
     {path:"create-order",component:CreateOrderComponent},
     {path:"cancel-order",component:CancelOrderComponent},
     {path:"completed-order",component:CompletedOrderComponent},
-    {path:"order-details/:customerIdEvent",component:OrderDetailsComponent},
-    {path:"order-created-completed-details/:orderIdEvent",component:OrderCreatedCompletedDetailsComponent},
-    {path:"create-payment/:customerIdEvent",component:CreatePaymentComponent},
+    {path:"order-details/:orderId",component:OrderDetailsComponent},
+    {path:"order-created-completed-details/:orderId",component:OrderCreatedCompletedDetailsComponent},
+    {path:"order-canceled-details/:orderId",component:OrderCanceledDetailsComponent},
+    {path:"create-payment/:orderId",component:CreatePaymentComponent},
     {path:"dashboard",component:DashboardComponent,canActivate: [AdminRoleGuard]},
     {path:"bill",component:BillComponent},
     {path:"create-bill",component:CreateBillComponent},
     {path:"bill-details/:orderRef",component:BillDetailsComponent},
     {path:"payment",component:PaymentComponent},
-    {path:"payment-details/:paymentIdEvent",component:PaymentDetailsComponent},
+    {path:"payment-details/:orderId",component:PaymentDetailsComponent},
     {path:"ship-order/:orderId",component:ShipOrderComponent},
     {path:"shipped-orders",component:ShippedOrdersComponent},
     {path:"deliver-order/:orderId",component:DeliverOrderComponent},

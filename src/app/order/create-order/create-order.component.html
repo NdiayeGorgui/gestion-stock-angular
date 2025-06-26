@@ -1,9 +1,11 @@
-<div class="container mt-4"> 
+<div class="container mt-4">
   <mat-card>
     <mat-card-header>
-      <mat-card-title> <h2>{{ 'order.new' | translate }}</h2></mat-card-title>
+      <mat-card-title>
+        <h2>{{ 'order.new' | translate }}</h2>
+      </mat-card-title>
     </mat-card-header>
-     <mat-divider></mat-divider>
+    <mat-divider></mat-divider>
     <mat-card-content>
 
       <!-- Proceed to Payment & Cart -->
@@ -88,30 +90,35 @@
         </div>
       </div>
 
-      <!-- Quantité et calculs -->
-      <div class="row mb-3" *ngIf="selectedProduct">
-        <div class="col-md-2">
-          <label><b>{{ 'order.quantity' | translate }}</b></label>
-          <input type="number" class="form-control" [(ngModel)]="itemQty" (change)="onQtyChange()" min="1" />
-        </div>
-        <div class="col-md-2">
-          <label><b>{{ 'order.amount' | translate }} ($)</b></label>
-          <input class="form-control" [value]="amount.toFixed(2)" readonly />
-        </div>
-        <div class="col-md-2">
-          <label><b>{{ 'order.tax' | translate }} ($)</b></label>
-          <input class="form-control" [value]="tax.toFixed(2)" readonly />
-        </div>
-        <div class="col-md-2">
-          <label><b>{{ 'order.discount' | translate }} ($)</b></label>
-          <input class="form-control" [value]="discount.toFixed(2)" readonly />
-        </div>
-        <div class="col-md-2 d-flex align-items-end">
-          <button class="btn btn-primary w-100" (click)="addProductToOrder()">
-            {{ 'order.add' | translate }}
-          </button>
-        </div>
-      </div>
+     <!-- Quantité et calculs -->
+<div class="row mb-3" *ngIf="selectedProduct">
+  <div class="col-md-2">
+    <label><b>{{ 'order.quantity' | translate }}</b></label>
+    <input type="number" class="form-control" [(ngModel)]="itemQty" (change)="onQtyChange()" min="1" />
+  </div>
+  <div class="col-md-2">
+    <label><b>{{ 'order.amount' | translate }} ($)</b></label>
+    <input class="form-control" [value]="amount.toFixed(2)" readonly />
+  </div>
+  <div class="col-md-2">
+    <label><b>{{ 'order.tax' | translate }} ($)</b></label>
+    <input
+      class="form-control"
+      [value]="((price - discount) * 0.2).toFixed(2)"
+      readonly
+    />
+  </div>
+  <div class="col-md-2">
+    <label><b>{{ 'order.discount' | translate }} ($)</b></label>
+    <input class="form-control" [value]="discount.toFixed(2)" readonly />
+  </div>
+  <div class="col-md-2 d-flex align-items-end">
+    <button class="btn btn-primary w-100" (click)="addProductToOrder()">
+      {{ 'order.add' | translate }}
+    </button>
+  </div>
+</div>
+
 
       <!-- Tableau de commande -->
       <div *ngIf="orderItems.length > 0" class="mt-4">
@@ -132,12 +139,19 @@
             <tr *ngFor="let item of orderItems; index as i">
               <td>{{ item.name }}</td>
               <td>
-                <input type="number" min="1" [(ngModel)]="item.qty"
-                       (change)="onQtyChangeInCart(i)" [max]="item.stock" style="width: 60px;" />
+                <input type="number" min="1" [(ngModel)]="item.qty" (change)="onQtyChangeInCart(i)"
+                  [max]="item.qtyAvailable" style="width: 60px;" />
               </td>
-              <td>{{ (item.price * item.qty).toFixed(2) }} $</td>
-              <td>{{ item.tax.toFixed(2) }} $</td>
-              <td>{{ item.discount.toFixed(2) }} $</td>
+
+              <!-- ✅ Montant brut (prix * qty) -->
+              <td>{{ (item.price * item.qty) | number:'1.2-2' }} $</td>
+
+              <!-- ✅ Taxe (calculée comme sur le backend : sur le net après réduction) -->
+              <td>{{ ((item.price * item.qty - item.discount) * 0.2) | number:'1.2-2' }} $</td>
+
+              <!-- ✅ Réduction affichée directement -->
+              <td>{{ item.discount | number:'1.2-2' }} $</td>
+
               <td>
                 <button class="btn btn-sm btn-danger" (click)="removeItem(i)">
                   {{ 'order.remove' | translate }}
@@ -147,25 +161,26 @@
           </tbody>
         </table>
 
+
         <!-- Totaux -->
         <div class="totals-section text-end mt-4">
-  <div class="total-line">
-    <span class="total-label">{{ 'order.totalHT' | translate }}</span>
-    <span class="total-value">{{ totalPrice | number:'1.2-2' }} $</span>
-  </div>
-  <div class="total-line">
-    <span class="total-label">{{ 'order.totalTax' | translate }}</span>
-    <span class="total-value">{{ totalTax | number:'1.2-2' }} $</span>
-  </div>
-  <div class="total-line">
-    <span class="total-label">{{ 'order.totalDiscount' | translate }}</span>
-    <span class="total-value">{{ totalDiscount | number:'1.2-2' }} $</span>
-  </div>
-  <div class="total-line total-final">
-    <span class="total-label">{{ 'order.total' | translate }}</span>
-    <span class="total-value">{{ totalAmount | number:'1.2-2' }} $</span>
-  </div>
-</div>
+          <div class="total-line">
+            <span class="total-label">{{ 'order.totalHT' | translate }}</span>
+            <span class="total-value">{{ totalPrice | number:'1.2-2' }} $</span>
+          </div>
+          <div class="total-line">
+            <span class="total-label">{{ 'order.totalTax' | translate }}</span>
+            <span class="total-value">{{ totalTax | number:'1.2-2' }} $</span>
+          </div>
+          <div class="total-line">
+            <span class="total-label">{{ 'order.totalDiscount' | translate }}</span>
+            <span class="total-value">{{ totalDiscount | number:'1.2-2' }} $</span>
+          </div>
+          <div class="total-line total-final">
+            <span class="total-label">{{ 'order.total' | translate }}</span>
+            <span class="total-value">{{ totalAmount | number:'1.2-2' }} $</span>
+          </div>
+        </div>
 
       </div>
 

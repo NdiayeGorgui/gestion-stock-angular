@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Custom } from '../../customer/custom';
+import { PaymentResponseDto } from '../PaymentResponseDto';
 
 @Component({
   selector: 'app-payment',
@@ -16,16 +17,21 @@ import { Custom } from '../../customer/custom';
 })
 export class PaymentComponent implements OnInit {
   public payments: any;
-  public dataSource: any;
-  public customer: any;
-  public customers: any;
-  public customerName: any;
-  public customerIdEvent!: string;
-
-
-  payment: Payment = new Payment();
-
-  public displayedColumns = ["customerId", "paymentMode", "amount", "timeStamp", "paymentStatus", "details"]
+  payment: PaymentResponseDto = {
+    paymentIdEvent: '',
+    orderId: '',
+    customerName: '',
+    customerMail: '',
+    paymentMode: '',
+    amount: 0,
+    totalTax: 0,
+    totalDiscount: 0,
+    paymentStatus: '',
+    timeStamp: new Date(),
+    products: []  // 
+  };
+  dataSource = new MatTableDataSource<PaymentResponseDto>([]);
+  public displayedColumns = ["orderId", "customerId", "paymentMode", "amount", "timeStamp", "paymentStatus", "details"]
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -39,29 +45,19 @@ export class PaymentComponent implements OnInit {
 
   }
 
-
   public getPayments() {
     this.stockService.getPaymentList().subscribe({
-      next: payments => {
+      next: data => {
 
-        this.stockService.getCustomersList().subscribe({
-          next: customers => {
 
-            // Créer un mapping ID → Nom
-            const customerMap = new Map(customers.map(c => [c.customerIdEvent, c.name]));
+        this.payments = data; // ✅ Tableau de BillResponseDto
+        this.dataSource = new MatTableDataSource(this.payments); // ✅ Assigner le tableau complet
 
-            // Associer `customerName` aux paiements
-            this.payments = payments.map(payment => ({
-              ...payment,
-              customerName: customerMap.get(payment.customerIdEvent) || 'Unknown'
-            }));
 
-            this.dataSource = new MatTableDataSource(this.payments);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          },
-          error: err => console.log(err)
-        });
+        this.dataSource = new MatTableDataSource(this.payments);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
       },
       error: err => console.log(err)
     });
@@ -72,12 +68,8 @@ export class PaymentComponent implements OnInit {
     this.dataSource.filter = value;
   }
 
-  getPayment(paymentIdEvent: string) {
-    this.router.navigate(['/admin/payment-details', paymentIdEvent]);
-  }
-
-  deletePayment(paymentIdEvent: string) {
-
+  getPayment(orderId: string) {
+    this.router.navigate(['/admin/payment-details', orderId]);
   }
 
 }

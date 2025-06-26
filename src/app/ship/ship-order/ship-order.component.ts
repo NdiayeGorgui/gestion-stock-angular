@@ -7,6 +7,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddConfirmDialogComponent } from '../../shared/add-confirm-dialog/add-confirm-dialog.component';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 import { TranslateService } from '@ngx-translate/core';
+import { ShipResponseDto } from '../ShipResponseDto';
+import { MatTableDataSource } from '@angular/material/table';
+import { ProductItemResponseDto } from '../../payment/ProductItemResponseDto';
 
 @Component({
   selector: 'app-ship-order',
@@ -16,8 +19,22 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrl: './ship-order.component.css'
 })
 export class ShipOrderComponent implements OnInit {
-  ship: Ship = new Ship();
+  ship: ShipResponseDto = {
+     orderId: '',
+     paymentIdEvent: '',
+     customerName: '',
+     customerMail: '',
+     amount: 0,
+     totalTax: 0,
+     totalDiscount: 0,
+     shippingStatus: '',
+     eventTimeStamp: new Date(),
+     products: []  // 
+   };
   orderId!: string;
+
+  dataSource = new MatTableDataSource<ProductItemResponseDto>([]);
+  displayedColumns: string[] = ['productId', 'productName', 'quantity', 'price', 'discount', 'tax'];
 
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog,
      private stockService: StockService,
@@ -32,6 +49,8 @@ export class ShipOrderComponent implements OnInit {
     this.stockService.getShipById(this.orderId).subscribe({
       next: data => {
         this.ship = data;
+         this.dataSource.data = data.products;
+        console.log('✅ Données chargées :', data);
       }, error: err => {
         console.log(err);
       }

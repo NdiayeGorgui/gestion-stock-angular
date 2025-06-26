@@ -4,18 +4,20 @@
       <mat-card-title>{{ 'payment.title' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
+
     <mat-card-content>
       <form #paymentForm="ngForm">
         <div class="row">
+          <!-- Mode de paiement -->
           <div class="col-md-6">
             <mat-form-field class="w-100">
               <mat-label>{{ 'payment.mode' | translate }}</mat-label>
               <mat-icon matSuffix>attach_money</mat-icon>
               <mat-select [(ngModel)]="payment.paymentMode" name="mode" required #paymentCtrl="ngModel"
-                (change)="modeChange(mode)">
-                @for (mod of modes; track mod) {
-                <mat-option [value]="mod.name">{{ mod.name }}</mat-option>
-                }
+                          (selectionChange)="modeChange($event.value)">
+                <mat-option *ngFor="let mod of modes" [value]="mod.name">
+                  {{ mod.name }}
+                </mat-option>
               </mat-select>
               <mat-error *ngIf="paymentCtrl.invalid && paymentCtrl.touched">
                 {{ 'payment.errors.modeRequired' | translate }}
@@ -23,67 +25,60 @@
             </mat-form-field>
           </div>
 
+          <!-- Nom du client -->
           <div class="col-md-6">
             <mat-form-field class="w-100">
-              <mat-label>{{ 'payment.customerName' | translate }}</mat-label>
-              <input matInput class="form-control" id="customerName" readonly
-                [(ngModel)]="customer.name" name="customerName" />
+              <mat-label>{{ 'order.customerName' | translate }}</mat-label>
+              <input matInput readonly [value]="order.customerName" />
               <mat-icon matSuffix>person</mat-icon>
             </mat-form-field>
           </div>
         </div>
 
         <div class="row">
+          <!-- Taxe -->
           <div class="col-md-6">
             <mat-form-field class="w-100">
               <mat-label>{{ 'payment.tax' | translate }}</mat-label>
-              <input matInput class="form-control" id="tax" readonly
-                [ngModel]="amountDto.tax | number:'1.2-2'"
-                (ngModelChange)="amountDto.tax = $event"
-                name="tax" />
+              <input matInput readonly [value]="order.totalTax | number:'1.2-2'" />
               <mat-icon matSuffix>paid</mat-icon>
             </mat-form-field>
           </div>
 
+          <!-- Réduction -->
           <div class="col-md-6">
             <mat-form-field class="w-100">
               <mat-label>{{ 'payment.discount' | translate }}</mat-label>
-              <input matInput class="form-control" id="discount" readonly
-                [(ngModel)]="amountDto.discount"
-                (ngModelChange)="amountDto.discount = $event"
-                name="discount" />
+              <input matInput readonly [value]="order.totalDiscount | number:'1.2-2'" />
               <mat-icon matSuffix>paid</mat-icon>
             </mat-form-field>
           </div>
         </div>
 
         <div class="row">
+          <!-- Montant -->
           <div class="col-md-6">
             <mat-form-field class="w-100">
               <mat-label>{{ 'payment.amount' | translate }}</mat-label>
-              <input matInput class="form-control" id="amount" readonly
-                [ngModel]="amountDto.amount | number:'1.2-2'"
-                (ngModelChange)="amountDto.amount = $event"
-                name="amount" />
+              <input matInput readonly [value]="payment.amount | number:'1.2-2'" />
               <mat-icon matSuffix>paid</mat-icon>
             </mat-form-field>
           </div>
 
+          <!-- Montant total -->
           <div class="col-md-6">
             <mat-form-field class="w-100">
               <mat-label>{{ 'payment.totalAmount' | translate }}</mat-label>
-              <input matInput class="form-control" id="totalAmount" readonly
-                [ngModel]="amountDto.totalAmount | number:'1.2-2'"
-                (ngModelChange)="amountDto.totalAmount = $event"
-                name="totalAmount" />
+              <input matInput readonly [value]="order.amount | number:'1.2-2'" />
               <mat-icon matSuffix>paid</mat-icon>
             </mat-form-field>
           </div>
         </div>
 
+        <!-- Bouton -->
         <div class="text-center mt-4">
           <button mat-flat-button color="primary" (click)="printPayment()" [disabled]="paymentForm.invalid">
-            <mat-icon matSuffix>paid</mat-icon>
+            <mat-icon>paid</mat-icon>
             {{ 'payment.payNow' | translate }}
           </button>
         </div>

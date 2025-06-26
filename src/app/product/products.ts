@@ -3,6 +3,8 @@ export class Products{
     productIdEvent!:string;
     name!: string;
     category!: string;
+    description!: string;
+    location!: string;
     qty!:number;
     price!: Number; 
     status!:string;

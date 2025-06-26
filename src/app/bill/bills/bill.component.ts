@@ -5,6 +5,8 @@ import { Bill } from '../bill';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { BillResponseDto } from '../BillResponseDto';
+import { ProductItemResponseDto } from '../../payment/ProductItemResponseDto';
 
 @Component({
   selector: 'app-bill',
@@ -15,12 +17,33 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class BillComponent implements OnInit {
 
+   bill: BillResponseDto = {
+          orderId: '',
+          customerName: '',
+          customerPhone: '',
+          customerMail: '',
+          paymentMode: '',
+          amount: 0,
+          totalTax: 0,
+          totalDiscount: 0,
+          billStatus: '',
+          billingDate: new Date(),
+          products: []  // 
+      };
+
   public bills:any;
-    public dataSource:any;
-  
-     bill:Bill=new Bill();
-  
-      public displayedColumns=["customerName","productName","quantity","price","discount","billingDate","status","details"]
+    dataSource = new MatTableDataSource<BillResponseDto>([]);
+
+         displayedColumns: string[] = [
+  'orderId',
+  'customerName',
+  'customerMail',
+  'amount',
+  'billingDate',
+  'billStatus',
+  'details'
+];
+
                
                @ViewChild(MatPaginator) paginator!:MatPaginator;
                @ViewChild(MatSort) sort!:MatSort;
@@ -36,21 +59,23 @@ export class BillComponent implements OnInit {
 
     
 
-       public getBills(){
-                  this.stockService.getBillList().subscribe({
-                    next: data=>{
-                      this.bills=data;
-                      this.dataSource=new MatTableDataSource(this.bills)
-                      this.dataSource.paginator=this.paginator;
-                      this.dataSource.sort=this.sort;
-                    },
-                    error:err=>{
-                      console.log(err);
-                    }
-              
-                  });
-                  
-                }
+   public getBills() {
+      this.stockService.getBillList().subscribe({
+        next: data => {
+          this.bills = data; // ✅ Tableau de BillResponseDto
+          this.dataSource = new MatTableDataSource(this.bills); // ✅ Assigner le tableau complet
+
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+
+          console.log('✅ Liste des factures chargée :', this.bills);
+        },
+        error: err => {
+          console.error('❌ Erreur lors du chargement des factures :', err);
+        }
+      });
+    }
+
       
                 filterBill(event:Event){
                   let value=(event.target as HTMLInputElement).value;
@@ -61,8 +86,6 @@ export class BillComponent implements OnInit {
                   this.router.navigate(['/admin/bill-details',orderRef]);
                 }
               
-                deleteBill(orderRef:string){
-                 
-                }
+  
 
 }

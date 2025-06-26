@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StockService } from '../../services/stock.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { ShipResponseDto } from '../ShipResponseDto';
 
 @Component({
   selector: 'app-shipped-orders',
@@ -15,10 +16,32 @@ import { MatTableDataSource } from '@angular/material/table';
 export class ShippedOrdersComponent implements OnInit{
 
    public ships:any;
-      public dataSource:any;
-      //customerIdEvent!:string;
+     ship: ShipResponseDto = {
+              orderId: '',
+              paymentIdEvent: '',
+              customerName: '',
+              customerMail: '',
+              amount: 0,
+              totalTax: 0,
+              totalDiscount: 0,
+              shippingStatus: '',
+              eventTimeStamp: new Date(),
+              products: []  // 
+          };
     
-      public displayedColumns=["orderId","customerName","customerMail","eventTimeStamp","status","action"]
+      public bills:any;
+        dataSource = new MatTableDataSource<ShipResponseDto>([]);
+    
+             displayedColumns: string[] = [
+      'orderId',
+      'customerName',
+      'customerMail',
+      'amount',
+      'eventTimeStamp',
+      'shippingStatus',
+      'action'
+    ];
+    
       
       @ViewChild(MatPaginator) paginator!:MatPaginator;
       @ViewChild(MatSort) sort!:MatSort;

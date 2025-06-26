@@ -35,6 +35,35 @@
         </div>
 
         <div class="row">
+          <!-- Customer City -->
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'form.city.label' | translate }}</mat-label>
+              <input matInput class="form-control" id="city" [(ngModel)]="customer.city" name="city" required
+                #cityCtrl="ngModel">
+              <mat-icon matSuffix>location_city</mat-icon>
+              <mat-error *ngIf="cityCtrl.invalid && cityCtrl.touched">
+                {{ 'form.city.error.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Customer Postal Code -->
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'form.postalCode.label' | translate }}</mat-label>
+              <input matInput class="form-control" id="postalCode" [(ngModel)]="customer.postalCode" name="postalCode" required
+                pattern="^[A-Za-z]\d[A-Za-z][ ]\d[A-Za-z]\d$" #postalCodeCtrl="ngModel">
+              <mat-icon matSuffix>local_post_office</mat-icon>
+              <mat-error *ngIf="postalCodeCtrl.invalid && postalCodeCtrl.touched">
+                <span *ngIf="postalCodeCtrl.errors?.['required']">{{ 'form.postalCode.error.required' | translate }}</span>
+                <span *ngIf="postalCodeCtrl.errors?.['pattern']">{{ 'form.postalCode.error.pattern' | translate }}</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
           <!-- Customer Phone -->
           <div class="col-sm-12 col-md-6">
             <mat-form-field class="w-100">
@@ -64,7 +93,7 @@
           </div>
         </div>
 
-        <!-- Bouton d'action -->
+        <!-- Action Button -->
         <div class="row">
           <div class="col-12 text-center mt-3">
             <button mat-flat-button color="primary" (click)="newCustomer()" [disabled]="customerForm.invalid">

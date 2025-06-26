@@ -1,93 +1,96 @@
-<div class="container">
+<div class="container mt-4" style="max-width: 860px; margin-left: auto; margin-right: auto;">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>{{ 'billDetails.title' | translate }}</mat-card-title>
+      <mat-card-title>
+        <strong>{{ 'billDetails.title' | translate }}</strong>
+      </mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
 
-    <mat-card-content>
-      <div class="form-grid">
+    <!-- 🧾 Détails de la commande -->
+    <mat-card-content *ngIf="bill" class="mt-3">
+      <ul class="list-group mb-3">
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.orderId' | translate }} :</b> {{ bill.orderId }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.customerName' | translate }} :</b> {{ bill.customerName }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'billDetails.customerMail' | translate }} :</b> {{ bill.customerMail }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.amount' | translate }} :</b> {{ bill.amount | number:'1.2-2' }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.totalTax' | translate }} :</b> {{ bill.totalTax | number:'1.2-2' }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.totalDiscount' | translate }} :</b> {{ bill.totalDiscount | number:'1.2-2' }}
+        </li>
+        <li class="list-group-item">
+          <b>{{ 'orderDetails.status' | translate }} :</b>
+          {{ ('billDetails.statusValues.' + bill.billStatus) | translate }}
+        </li>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.id' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.id" name="id" />
-          <mat-icon matSuffix>check_circle</mat-icon>
-        </mat-form-field>
+      </ul>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.orderRef' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.orderRef" name="orderRef" />
-          <mat-icon matSuffix>check_circle</mat-icon>
-        </mat-form-field>
+      <!-- 📦 Tableau des articles -->
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.customerIdEvent' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.customerIdEvent" name="customerIdEvent" />
-          <mat-icon matSuffix>check_circle</mat-icon>
-        </mat-form-field>
+          <!-- ID Produit -->
+          <ng-container matColumnDef="productId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.productId' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.productId }}</td>
+          </ng-container>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.productIdEvent' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.productIdEvent" name="productIdEvent" />
-          <mat-icon matSuffix>check_circle</mat-icon>
-        </mat-form-field>
+          <!-- Nom Produit -->
+          <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.productName' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.productName }}</td>
+          </ng-container>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.customerName' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.customerName" name="customerName" />
-          <mat-icon matSuffix>person</mat-icon>
-        </mat-form-field>
+          <!-- Quantité -->
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.quantity' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.quantity }}</td>
+          </ng-container>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.productName' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.productName" name="productName" />
-          <mat-icon matSuffix>inventory</mat-icon>
-        </mat-form-field>
+          <!-- Prix -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.price' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.price | number:'1.2-2' }}</td>
+          </ng-container>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.customerPhone' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.customerPhone" name="customerPhone" />
-          <mat-icon matSuffix>phone</mat-icon>
-        </mat-form-field>
+          <!-- Remise -->
+          <ng-container matColumnDef="discount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.discount' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.discount | number:'1.2-2' }}</td>
+          </ng-container>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.price' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.price" name="price" />
-          <mat-icon matSuffix>attach_money</mat-icon>
-        </mat-form-field>
+          <!-- Taxe -->
+          <ng-container matColumnDef="tax">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'orderDetails.tax' | translate }}</th>
+            <td mat-cell *matCellDef="let item">{{ item.tax | number:'1.2-2' }}</td>
+          </ng-container>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.discount' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.discount" name="discount" />
-          <mat-icon matSuffix>paid</mat-icon>
-        </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.quantity' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.quantity" name="quantity" />
-          <mat-icon matSuffix>balance</mat-icon>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.date' | translate }}</mat-label>
-          <input matInput readonly [(ngModel)]="bill.billingDate" name="billingDate" />
-          <mat-icon matSuffix>schedule</mat-icon>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billDetails.status' | translate }}</mat-label>
-          <input matInput readonly [value]="'billDetails.statusValues.' + bill.status | translate" name="status" />
-          <mat-icon matSuffix>check_small</mat-icon>
-        </mat-form-field>
-
+          <!-- Lignes -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
       </div>
 
-      <div class="text-center mt-3">
-        <button mat-flat-button color="primary" style="width: 50%; height: 56px;" (click)="close()">
-          <mat-icon matSuffix>close</mat-icon>
-          {{ 'billDetails.close' | translate }}
+      <!-- 🔙 Bouton de retour -->
+
+      <div class="mt-4 d-flex justify-content-end">
+        <button mat-flat-button color="warn" (click)="close()">
+          <mat-icon>close</mat-icon>
+          {{ 'orderDetails.close' | translate }}
         </button>
       </div>
+
     </mat-card-content>
   </mat-card>
 </div>

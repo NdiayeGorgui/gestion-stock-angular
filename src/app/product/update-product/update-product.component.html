@@ -35,6 +35,44 @@
         </div>
 
         <div class="row">
+          <!-- Description -->
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'form.product.description.label' | translate }}</mat-label>
+              <textarea
+                matInput
+                id="description"
+                name="description" required #descriptionCtrl="ngModel"
+                [(ngModel)]="product.description"
+                rows="3"
+              ></textarea>
+              <mat-icon matSuffix>description</mat-icon>
+              <mat-error *ngIf="descriptionCtrl.invalid && descriptionCtrl.touched">
+                {{ 'form.product.description.error.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Location -->
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="w-100">
+              <mat-label>{{ 'form.product.location.label' | translate }}</mat-label>
+              <textarea
+                matInput
+                id="location"
+                name="location"  required #locationCtrl="ngModel"
+                [(ngModel)]="product.location"
+                rows="3"
+              ></textarea>
+              <mat-icon matSuffix>location_on</mat-icon>
+              <mat-error *ngIf="locationCtrl.invalid && locationCtrl.touched">
+                {{ 'form.product.location.error.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
           <!-- Prix du produit -->
           <div class="col-sm-12 col-md-6">
             <mat-form-field class="w-100">
