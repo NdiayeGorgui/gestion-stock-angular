@@ -303,7 +303,7 @@
         },
         "details": {
             "CREATED": "Commande créée",
-            "CONFIRMED": "Commande confirmée",
+            "CONFIRMED": "Commande confirmée après paiement",
             "SHIPPED": "Commande expédiée",
             "DELIVERED": "Commande livrée",
             "CANCELED": "Commande annulée"
@@ -500,7 +500,8 @@
         "customerIdEvent": "ID Événement client",
         "productIdEvent": "ID Événement produit",
         "productCategory": "Catégorie du produit",
-        "productPrice": "Prix du produit"
+        "productPrice": "Prix du produit",
+        "paymentId": "ID paiement"
     },
     "payment": {
         "title": "Nouveau Paiement",

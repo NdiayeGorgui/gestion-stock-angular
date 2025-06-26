@@ -303,7 +303,7 @@
         },
         "details": {
             "CREATED": "Order Created",
-            "CONFIRMED": "Order Confirmed",
+            "CONFIRMED": "Order Confirmed after payment",
             "SHIPPED": "Order Shipped",
             "DELIVERED": "Order Delivered",
             "CANCELED": "Order canceled"
@@ -501,7 +501,8 @@
         "customerIdEvent": "Customer IdEvent",
         "productIdEvent": "Product IdEvent",
         "productCategory": "Product Category",
-        "productPrice": "Product Price"
+        "productPrice": "Product Price",
+         "paymentId": "Payment Id"
     },
     "payment": {
         "title": "New Payment",

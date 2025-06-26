@@ -22,7 +22,7 @@ export class DeliverOrderComponent implements OnInit {
 
  delivered: DeliveredResponseDto = {
       orderId: '',
-      paymentIdEvent: '',
+      paymentId: '',
       customerName: '',
       customerMail: '',
       amount: 0,

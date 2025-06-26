@@ -21,7 +21,7 @@ import { ProductItemResponseDto } from '../../payment/ProductItemResponseDto';
 export class ShipOrderComponent implements OnInit {
   ship: ShipResponseDto = {
      orderId: '',
-     paymentIdEvent: '',
+     paymentId: '',
      customerName: '',
      customerMail: '',
      amount: 0,

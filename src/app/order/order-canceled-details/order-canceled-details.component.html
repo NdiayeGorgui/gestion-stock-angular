@@ -1,10 +1,16 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>
-        <strong>{{ 'orderDetails.title' | translate }}</strong>
-      </mat-card-title>
-    </mat-card-header>
+  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <mat-card-title>
+      <strong>{{ 'orderDetails.title' | translate }}</strong>
+    </mat-card-title>
+    <button mat-icon-button color="warn" (click)="close()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</mat-card-header>
+
     <mat-divider></mat-divider>
 
     <!-- 🧾 Détails de la commande -->
@@ -75,15 +81,6 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
-
-      <!-- 🔙 Bouton de retour -->
-    
-<div class="mt-4 d-flex justify-content-end">
-  <button mat-flat-button color="warn" (click)="close()">
-    <mat-icon>close</mat-icon>
-    {{ 'orderDetails.close' | translate }}
-  </button>
-</div>
 
     </mat-card-content>
   </mat-card>

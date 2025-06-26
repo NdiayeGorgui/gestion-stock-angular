@@ -1,10 +1,17 @@
 <div class="container mt-4" style="max-width: 860px; margin-left: auto; margin-right: auto;">
   <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <strong>{{ 'newShipping.title' | translate }}</strong>
-      </mat-card-title>
-    </mat-card-header>
+   <mat-card-header>
+  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <mat-card-title>
+      <strong>{{ 'newShipping.title' | translate }}</strong>
+    </mat-card-title>
+     <button mat-flat-button color="primary" (click)="newShip()" [disabled]="ship.shippingStatus === 'SHIPPED'">
+          <mat-icon matSuffix>balance</mat-icon>
+          {{ 'newShipping.button' | translate }}
+        </button>
+  </div>
+</mat-card-header>
+
     <mat-divider></mat-divider>
 
     <!-- 🧾 Détails de la commande -->
@@ -14,7 +21,7 @@
           <b>{{ 'orderDetails.orderId' | translate }} :</b> {{ ship.orderId }}
         </li>
         <li class="list-group-item">
-          <b>{{ 'paymentDetails.paymentIdEvent' | translate }} :</b> {{ ship.paymentIdEvent }}
+          <b>{{ 'orderDetails.paymentId' | translate }} :</b> {{ ship.paymentId }}
         </li>
         <li class="list-group-item">
           <b>{{ 'orderDetails.customerName' | translate }} :</b> {{ ship.customerName }}
@@ -87,14 +94,6 @@
         </table>
       </div>
 
-
-
-      <div class="text-center mt-4">
-        <button mat-flat-button color="primary" (click)="newShip()" [disabled]="ship.shippingStatus === 'SHIPPED'">
-          <mat-icon matSuffix>balance</mat-icon>
-          {{ 'newShipping.button' | translate }}
-        </button>
-      </div>
     </mat-card-content>
   </mat-card>
 </div>

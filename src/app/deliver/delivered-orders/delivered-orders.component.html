@@ -45,7 +45,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ 'orderDetails.amount' | translate }}
             </th>
-            <td mat-cell *matCellDef="let element"> {{ element.amount }} </td>
+            <td mat-cell *matCellDef="let element"> {{ element.amount | number:'1.2-2'}} </td>
           </ng-container>
 
           <!-- Date -->

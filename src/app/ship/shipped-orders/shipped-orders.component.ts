@@ -18,7 +18,7 @@ export class ShippedOrdersComponent implements OnInit{
    public ships:any;
      ship: ShipResponseDto = {
               orderId: '',
-              paymentIdEvent: '',
+              paymentId: '',
               customerName: '',
               customerMail: '',
               amount: 0,

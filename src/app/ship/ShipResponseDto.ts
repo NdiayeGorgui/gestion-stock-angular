@@ -1,9 +1,8 @@
 import { ProductItemResponseDto } from "../payment/ProductItemResponseDto";
 
 export interface ShipResponseDto {
-
-  paymentIdEvent: string;
-  orderId: string;
+ orderId: string;
+  paymentId: string;
   customerName: string;
   customerMail: string;
   amount: number;
