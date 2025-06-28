@@ -611,6 +611,15 @@
      "confirm_update": "Do you want to update this customer?",
     "update_success": "Customer updated successfully!",
     "update_error": "Error while updating customer, please try again."
+  },
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "User Details Overview",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "roles": "Roles",
+    "updateBtn": "Update My Profile"
   }
  
 }
