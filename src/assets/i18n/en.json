@@ -5,6 +5,11 @@
         "NOTIFICATIONS": "Enable Notifications",
         "LANGUAGE": "Language",
         "FONT_SIZE": "Font Size",
+        "FONT_SIZE_OPTIONS": {
+            "small": "Small",
+            "medium": "Medium",
+            "large": "Large"
+            },
         "RESET": "Reset to Default"
     },
     "APP": {

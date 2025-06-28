@@ -5,6 +5,11 @@
         "NOTIFICATIONS": "Activer les notifications",
         "LANGUAGE": "Langue",
         "FONT_SIZE": "Taille de la police",
+        "FONT_SIZE_OPTIONS": {
+            "small": "Petit",
+            "medium": "Moyen",
+            "large": "Grand"
+            },
         "RESET": "Réinitialiser par défaut"
     },
     "APP": {
@@ -611,13 +616,12 @@
     "update_error": "Erreur lors de la modification du client, veuillez réessayer."
   },
   "profile": {
-    "title": "My Profile",
-    "subtitle": "User Details Overview",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "email": "Email",
-    "roles": "Roles",
-    "updateBtn": "Update My Profile"
+    "title": "Mon Profil",
+    "subtitle": "Aperçu des informations utilisateur",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "email": "Courriel",
+    "roles": "Rôles",
+    "updateBtn": "Mettre à jour mon profil"
   }
-
 }

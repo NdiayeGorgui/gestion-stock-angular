@@ -29,10 +29,11 @@
         <mat-label>{{ 'SETTINGS.FONT_SIZE' | translate }}</mat-label>
         <mat-select [(value)]="fontSize" (selectionChange)="applyFontSize()">
           <mat-option *ngFor="let size of fontSizes" [value]="size">
-            {{ size | titlecase }}
+            {{ ('SETTINGS.FONT_SIZE_OPTIONS.' + size) | translate }}
           </mat-option>
         </mat-select>
       </mat-form-field>
+
 
       <button mat-raised-button color="warn" (click)="reset()">
         {{ 'SETTINGS.RESET' | translate }}
