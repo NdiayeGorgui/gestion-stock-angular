@@ -18,6 +18,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrl: './completed-order.component.css'
 })
 export class CompletedOrderComponent implements OnInit {
+  public isLoading = true;
+
 
   public createdOrders: any[] = [];
   public dataSource: MatTableDataSource<any>;
@@ -72,9 +74,13 @@ console.log('✔️ Received orders:', this.createdOrders);
           order.totalDiscount?.toString().includes(lowercaseFilter)
         );
       };
+      this.isLoading = false;
+
     },
     error: (err) => {
       console.error('Error fetching created orders:', err);
+      this.isLoading = false;
+
     }
   });
 }

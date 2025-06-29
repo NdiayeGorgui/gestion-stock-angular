@@ -5,8 +5,13 @@
     </mat-card-header>
 
     <mat-divider></mat-divider>
+     <!-- 🔄 Spinner pendant le chargement -->
+   <div *ngIf="isLoading" class="spinner-container">
+      <mat-spinner color="primary" diameter="50"></mat-spinner>
+   </div>
 
-    <mat-card-content>
+
+    <mat-card-content  *ngIf="!isLoading">
       <!-- Barre de recherche -->
       <div class="delivery-toolbar">
         <mat-form-field appearance="outline" class="search-field">
@@ -68,13 +73,19 @@
             <th mat-header-cell *matHeaderCellDef class="centered-column"> {{ 'deliveries.action' | translate }} </th>
             <td mat-cell *matCellDef="let element" class="centered-column">
               <button mat-icon-button color="accent" (click)="deliverOrder(element.orderId)">
-                <mat-icon>local_shipping</mat-icon>
+                <mat-icon>hail</mat-icon> 
               </button>
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center;">
+              {{ 'createdOrders.noOrdersFound' | translate }}
+            </td>
+          </tr>
+
         </table>
       </div>
 

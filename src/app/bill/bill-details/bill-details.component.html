@@ -1,15 +1,25 @@
 <div class="container mt-4" style="max-width: 860px; margin-left: auto; margin-right: auto;">
   <mat-card>
-   <mat-card-header>
+<mat-card-header>
   <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
     <mat-card-title>
       <strong>{{ 'billDetails.title' | translate }}</strong>
     </mat-card-title>
-    <button mat-icon-button color="warn" (click)="close()" aria-label="Close">
-      <mat-icon>close</mat-icon>
-    </button>
+
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <!-- 🖨️ Bouton Imprimer -->
+      <button mat-icon-button color="primary" (click)="printBill(bill.orderId)" aria-label="Print">
+        <mat-icon>print</mat-icon>
+      </button>
+
+      <!-- ❌ Bouton Fermer -->
+      <button mat-icon-button color="warn" (click)="close()" aria-label="Close">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
   </div>
 </mat-card-header>
+
 
     <mat-divider></mat-divider>
 

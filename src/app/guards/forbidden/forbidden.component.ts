@@ -8,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class ForbiddenComponent {
 
+    isLoading = true;
+
+  ngOnInit(): void {
+    // Simuler un chargement (1s par exemple)
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
+  }
 }

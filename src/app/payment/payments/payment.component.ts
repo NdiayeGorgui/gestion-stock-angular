@@ -16,6 +16,8 @@ import { PaymentResponseDto } from '../PaymentResponseDto';
   styleUrl: './payment.component.css'
 })
 export class PaymentComponent implements OnInit {
+  public isLoading = true;
+
   public payments: any;
   payment: PaymentResponseDto = {
     paymentIdEvent: '',
@@ -57,9 +59,16 @@ export class PaymentComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.payments);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
+
 
       },
-      error: err => console.log(err)
+       error:err=>{
+           console.log(err);
+           this.isLoading = false;
+
+         }
+      
     });
   }
 

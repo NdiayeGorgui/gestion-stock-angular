@@ -38,6 +38,7 @@
     "customers": {
         "title": "Liste des clients",
         "search": "Rechercher",
+         "noCustomersFound": "Aucun client trouvé",
         "new": "Nouveau client",
         "name": "Nom",
         "address": "Adresse",
@@ -75,7 +76,7 @@
         },
         "name": {
             "label": "Nom du client",
-            "idEvent": "Customer IdEvent",
+            "idEvent": "Id du client",
             "error": {
                 "required": "Le nom est requis."
             }
@@ -177,6 +178,7 @@
     "PRODUCTS": {
         "TITLE": "Liste des produits",
         "SEARCH": "Rechercher",
+         "noProductsFound": "Aucun produit trouvé",
         "NEW": "Nouveau produit",
         "NAME": "Nom",
         "CATEGORY": "Catégorie",
@@ -253,6 +255,7 @@
     "billList": {
         "title": "Liste des factures",
         "search": "Rechercher",
+         "noBillsFound": "Aucune facture trouvée",
         "customerName": "Client",
         "productName": "Produit",
         "quantity": "Quantité",
@@ -317,9 +320,15 @@
     "payments": {
         "title": "Liste des paiements",
         "search": "Rechercher",
-        "orderId": "Id Commande",
+         "noPaymentsFound": "Aucun paiement trouvé",
+        "orderId": "ID Commande",
         "customer": "Client",
         "paymentMode": "Mode de paiement",
+        "paymentModes": {
+            "CASH": "Espèces",
+            "CHECK": "Chèque",
+            "TRANSFERT": "Virement"
+        },
         "amount": "Montant",
         "date": "Date",
         "status": "Statut",
@@ -355,7 +364,15 @@
         "bestSellingProducts": "Produits les plus vendus",
         "topCustomers": "Top 10 des clients",
         "remainingQuantities": "Produits avec quantités restantes",
-        "createdDate": "Date de création"
+        "createdDate": "Date de création",
+        "TOTAL_PRODUCTS": "Produits Totaux",
+        "CATEGORIES": "Catégories",
+        "ORDERS": "Commandes",
+        "SUPPLIERS": "Fournisseurs",
+        "NEW_PRODUCTS": "Nouveaux Produits",
+        "NEW_CATEGORIES": "Nouvelles Catégories",
+        "NEW_CUSTOMERS": "Nouveaux Clients",
+        "NEW_ORDERS": "Nouvelles Commandes"
     },
     "newOrder": {
         "title": "Nouvelle commande",
@@ -440,7 +457,8 @@
         "payment": "Paiement",
         "details": "Détails",
         "cancel": "Annuler",
-        "paginator": "Sélectionner une page de commandes créées"
+        "paginator": "Sélectionner une page de commandes créées",
+        "noOrdersFound": "Aucune commande trouvée"
     },
     "completedOrders": {
         "title": "Commandes complétées",
@@ -454,7 +472,8 @@
         "date": "Date",
         "status": "Statut",
         "details": "Détails",
-        "paginator": "Sélectionner une page de commandes"
+        "paginator": "Sélectionner une page de commandes",
+         "noOrdersFound": "Aucune commande trouvée"
     },
     "canceledOrders": {
         "title": "Commandes annulées",
@@ -468,7 +487,8 @@
         "date": "Date",
         "status": "Statut",
         "details": "Détails",
-        "paginator": "Sélectionner une page de commandes"
+        "paginator": "Sélectionner une page de commandes",
+         "noOrdersFound": "Aucune commande trouvée"
     },
     "orderStatus": {
         "COMPLETED": "Completée",
@@ -623,5 +643,11 @@
     "email": "Courriel",
     "roles": "Rôles",
     "updateBtn": "Mettre à jour mon profil"
+  },
+   "ERROR": {
+    "403": {
+      "TITLE": "403 - Interdit",
+      "MESSAGE": "Vous n'avez pas les autorisations nécessaires pour accéder à cette page."
+    }
   }
 }

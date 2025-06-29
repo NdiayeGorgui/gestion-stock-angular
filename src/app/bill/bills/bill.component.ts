@@ -17,6 +17,8 @@ import { ProductItemResponseDto } from '../../payment/ProductItemResponseDto';
 })
 export class BillComponent implements OnInit {
 
+  public isLoading = true;
+
    bill: BillResponseDto = {
           orderId: '',
           customerName: '',
@@ -69,9 +71,11 @@ export class BillComponent implements OnInit {
           this.dataSource.sort = this.sort;
 
           console.log('✅ Liste des factures chargée :', this.bills);
+          this.isLoading = false;
         },
         error: err => {
           console.error('❌ Erreur lors du chargement des factures :', err);
+          this.isLoading = false;
         }
       });
     }

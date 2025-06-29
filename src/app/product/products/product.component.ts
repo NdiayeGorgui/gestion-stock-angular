@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from '../../services/authentication.service';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 import { TranslateService } from '@ngx-translate/core';
+import { ProductDto } from './ProductDto';
 
 @Component({
   selector: 'app-product',
@@ -22,8 +23,10 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProductComponent implements OnInit/*, AfterViewInit*/ {
 
   //products:Products[]=[];
-  public products: any;
-  public dataSource: any;
+public products: ProductDto[] = [];
+dataSource = new MatTableDataSource<ProductDto>([]);
+public isLoading = true;
+
   idProduct!: number;
   isAdmin = false;
 
@@ -47,9 +50,11 @@ export class ProductComponent implements OnInit/*, AfterViewInit*/ {
         this.dataSource = new MatTableDataSource(this.products)
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
       },
       error: err => {
         console.log(err);
+        this.isLoading = false;
       }
 
     });

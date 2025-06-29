@@ -6,7 +6,13 @@
 
     <mat-divider></mat-divider>
 
-    <mat-card-content>
+      <!-- 🔄 Spinner pendant le chargement -->
+   <div *ngIf="isLoading" class="spinner-container">
+      <mat-spinner color="primary" diameter="50"></mat-spinner>
+   </div>
+
+
+    <mat-card-content  *ngIf="!isLoading">
       <!-- Barre de recherche -->
       <div class="bill-toolbar">
         <mat-form-field appearance="outline" class="search-field">
@@ -85,6 +91,12 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center;">
+              {{ 'billList.noBillsFound' | translate }}
+            </td>
+          </tr>
+
         </table>
       </div>
 

@@ -7,6 +7,7 @@ export interface OrderResponseDto {
   amount: number;
   totalTax: number;
   totalDiscount: number;
+  createdDate: string;
 
   items: ProductItemResponseDto[]; 
 }

@@ -14,6 +14,8 @@ import { ShipResponseDto } from '../ShipResponseDto';
   styleUrl: './shipped-orders.component.css'
 })
 export class ShippedOrdersComponent implements OnInit{
+  public isLoading = true;
+
 
    public ships:any;
      ship: ShipResponseDto = {
@@ -57,9 +59,13 @@ export class ShippedOrdersComponent implements OnInit{
            this.dataSource=new MatTableDataSource(this.ships)
            this.dataSource.paginator=this.paginator;
            this.dataSource.sort=this.sort;
+           this.isLoading = false;
+
          },
          error:err=>{
            console.log(err);
+           this.isLoading = false;
+
          }
    
        });

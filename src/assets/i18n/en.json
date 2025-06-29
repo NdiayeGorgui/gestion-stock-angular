@@ -38,6 +38,7 @@
     "customers": {
         "title": "Customers",
         "search": "Search",
+         "noCustomersFound": "No customers found",
         "new": "New Customer",
         "name": "Name",
         "address": "Address",
@@ -180,6 +181,7 @@
         "NEW": "New Product",
         "NAME": "Name",
         "CATEGORY": "Category",
+         "noProductsFound": "No products found",
         "QUANTITY": "Quantity",
         "PRICE": "Price",
         "STATUS": "Status",
@@ -262,6 +264,7 @@
         "billingDate": "Date",
         "status": "Status",
         "details": "Details",
+        "noBillsFound": "No bills found",
         "statusValues": {
             "CREATED": "Created",
             "COMPLETED": "Completed",
@@ -319,7 +322,13 @@
         "search": "Search",
         "orderId": "order Id",
         "customer": "Customer",
+         "noPaymentsFound": "No payments found",
         "paymentMode": "Payment Mode",
+        "paymentModes": {
+            "CASH": "Cash",
+            "CHECK": "Check",
+            "TRANSFERT": "Transfert"
+        },
         "amount": "Amount",
         "date": "Date",
         "status": "Status",
@@ -355,7 +364,15 @@
         "bestSellingProducts": "Best-selling products",
         "topCustomers": "Top 10 customers",
         "remainingQuantities": "Products with remaining quantities",
-        "createdDate": "Created date"
+        "createdDate": "Created date",
+        "TOTAL_PRODUCTS": "Total Products",
+        "CATEGORIES": "Categories",
+        "ORDERS": "Orders",
+        "SUPPLIERS": "Suppliers",
+        "NEW_PRODUCTS": "New Products",
+        "NEW_CATEGORIES": "New Categories",
+        "NEW_CUSTOMERS": "New Customers",
+        "NEW_ORDERS": "New Orders"
     },
     "newOrder": {
         "title": "New Order",
@@ -440,7 +457,8 @@
         "payment": "Payment",
         "details": "Details",
         "cancel": "Cancel",
-        "paginator": "Select page of created orders"
+        "paginator": "Select page of created orders",
+        "noOrdersFound": "No orders found"
     },
     "completedOrders": {
         "title": "Completed Orders",
@@ -454,7 +472,8 @@
         "date": "Date",
         "status": "Status",
         "details": "Details",
-        "paginator": "Select page of orders"
+        "paginator": "Select page of orders",
+        "noOrdersFound": "No orders found"
     },
     "canceledOrders": {
         "title": "Canceled Orders",
@@ -468,7 +487,8 @@
         "date": "Date",
         "status": "Status",
         "details": "Details",
-        "paginator": "Select page of orders"
+        "paginator": "Select page of orders",
+        "noOrdersFound": "No orders found"
     },
     "orderStatus": {
         "COMPLETED": "Completed",
@@ -625,6 +645,12 @@
     "email": "Email",
     "roles": "Roles",
     "updateBtn": "Update My Profile"
+  },
+  "ERROR": {
+    "403": {
+      "TITLE": "403 - Forbidden",
+      "MESSAGE": "You do not have the necessary permissions for this page."
+    }
   }
  
 }

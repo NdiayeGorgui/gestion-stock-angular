@@ -6,7 +6,7 @@
       <strong>{{ 'newShipping.title' | translate }}</strong>
     </mat-card-title>
      <button mat-flat-button color="primary" (click)="newShip()" [disabled]="ship.shippingStatus === 'SHIPPED'">
-          <mat-icon matSuffix>balance</mat-icon>
+          <mat-icon matSuffix>local_shipping</mat-icon>
           {{ 'newShipping.button' | translate }}
         </button>
          <button mat-icon-button color="warn" (click)="close()" aria-label="Close">

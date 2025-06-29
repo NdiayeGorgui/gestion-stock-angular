@@ -56,4 +56,18 @@ export class BillDetailsComponent implements OnInit {
     this.router.navigate(['/admin/bill']);
   }
 
+  printBill(orderRef: string): void {
+    this.stockService.getBillByIdPdf(orderRef).subscribe({
+      next: (pdfBlob: Blob) => {
+        const blobUrl = URL.createObjectURL(pdfBlob);
+        window.open(blobUrl, '_blank'); // Ouvre dans un nouvel onglet
+      },
+      error: (err) => {
+        console.error('❌ Erreur lors de la récupération de la facture :', err);
+      }
+    });
+  }
+
+
+
 }

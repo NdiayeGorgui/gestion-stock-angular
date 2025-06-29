@@ -6,7 +6,13 @@
 
     <mat-divider></mat-divider>
 
-    <mat-card-content>
+    <!-- 🔄 Spinner pendant le chargement -->
+    <div *ngIf="isLoading" class="spinner-container">
+      <mat-spinner color="primary" diameter="50"></mat-spinner>
+    </div>
+
+    <!-- ✅ Contenu principal une fois chargé -->
+    <mat-card-content *ngIf="!isLoading">
       <!-- Barre de recherche + bouton "Nouveau Produit" -->
       <div class="product-toolbar">
         <mat-form-field appearance="outline" class="search-field">
@@ -52,14 +58,12 @@
           </ng-container>
 
           <!-- Status Column -->
-          <!-- Status Column -->
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PRODUCTS.STATUS' | translate }}</th>
             <td mat-cell *matCellDef="let element">
               {{ 'orderStatus.' + element.status | translate }}
             </td>
           </ng-container>
-
 
           <!-- Quantity Status Column -->
           <ng-container matColumnDef="qtyStatus">
@@ -99,6 +103,12 @@
           <!-- Rows -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center;">
+              {{ 'PRODUCTS.noProductsFound' | translate }}
+            </td>
+          </tr>
+
         </table>
       </div>
 

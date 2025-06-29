@@ -13,6 +13,7 @@ export const environment = {
     backendOrderCreatedHost:"http://localhost:8888/order-service/api/v1/orders/customer",
     backendBillHost:"http://localhost:8888/billing-service/api/v1/bills",
     backendBillExportHost:"http://localhost:8888/billing-service/api/v1/bills/export",
+    backendBillHostPdf:"http://localhost:8888/billing-service/api/v1/bills/pdf",
     backendDeliveredCommandtHost:"http://localhost:8888/delivered-command-service/api/v1/delivers",
     backendDeliveredQuerytHost:"http://localhost:8888/delivered-query-service/api/v1/delivers",
     backendShippingtHost:"http://localhost:8888/shipping-service/api/v1/ships",

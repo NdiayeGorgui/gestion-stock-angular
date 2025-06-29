@@ -15,6 +15,7 @@ import { DeliveredResponseDto } from '../DeliveredResponseDto';
 })
 export class DeliveredOrdersComponent implements OnInit {
 
+  public isLoading = true;
   public delivers: any;
 
  ship: DeliveredResponseDto = {
@@ -56,9 +57,13 @@ export class DeliveredOrdersComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.delivers)
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
+
       },
       error: err => {
         console.log(err);
+        this.isLoading = false;
+
       }
 
     });

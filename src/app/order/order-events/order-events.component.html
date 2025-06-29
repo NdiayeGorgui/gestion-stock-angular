@@ -5,8 +5,13 @@
     </mat-card-header>
 
     <mat-divider></mat-divider>
+      <!-- 🔄 Spinner pendant le chargement -->
+   <div *ngIf="isLoading" class="spinner-container">
+      <mat-spinner color="primary" diameter="50"></mat-spinner>
+   </div>
 
-    <mat-card-content>
+
+    <mat-card-content  *ngIf="!isLoading">
       <!-- Barre de recherche -->
       <div class="order-events-toolbar">
         <mat-form-field appearance="outline" class="search-field">
@@ -63,6 +68,12 @@
           <!-- Rows -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center;">
+              {{ 'createdOrders.noOrdersFound' | translate }}
+            </td>
+          </tr>
+
         </table>
       </div>
 

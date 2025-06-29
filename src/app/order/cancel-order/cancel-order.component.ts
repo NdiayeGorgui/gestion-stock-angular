@@ -15,6 +15,8 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './cancel-order.component.css'
 })
 export class CancelOrderComponent implements OnInit {
+  public isLoading = true;
+
   public createdOrders: any[] = [];
   public dataSource: MatTableDataSource<any>;
   public status = 'CANCELED';
@@ -66,11 +68,16 @@ console.log('✔️ Received orders:', this.createdOrders);
           order.amount?.toString().includes(lowercaseFilter) ||
           order.totalTax?.toString().includes(lowercaseFilter) ||
           order.totalDiscount?.toString().includes(lowercaseFilter)
+          
         );
       };
+      this.isLoading = false;
+
     },
     error: (err) => {
       console.error('Error fetching created orders:', err);
+      this.isLoading = false;
+
     }
   });
 }

@@ -121,3 +121,10 @@
 .stat-card:hover {
   transform: translateY(-2px);
 }
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* ajuste la hauteur selon le besoin */
+}

@@ -26,6 +26,7 @@ export class OrderDetailsComponent implements OnInit {
     amount: 0,
     totalTax: 0,
     totalDiscount: 0,
+    createdDate:'',
     items: []  // ✅ Nécessaire pour éviter erreur sur table
   };
    public status = 'CREATED';

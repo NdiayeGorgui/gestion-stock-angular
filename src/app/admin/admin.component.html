@@ -142,10 +142,10 @@
         <mat-icon>shopping_cart</mat-icon> {{ 'APP.CREATE_ORDERS' | translate }}
       </button>
       <button mat-button class="drawer-item" routerLink="/admin/shipped-orders" (click)="closeDrawerIfMobile(drawer)">
-        <mat-icon>hail</mat-icon> {{ 'APP.SHIP_ORDERS' | translate }}
+       <mat-icon>local_shipping</mat-icon>  {{ 'APP.SHIP_ORDERS' | translate }}
       </button>
       <button mat-button class="drawer-item" routerLink="/admin/delivered-orders" (click)="closeDrawerIfMobile(drawer)">
-        <mat-icon>local_shipping</mat-icon> {{ 'APP.DELIVER_ORDERS' | translate }}
+       <mat-icon>hail</mat-icon> {{ 'APP.DELIVER_ORDERS' | translate }}
       </button>
       <button mat-button class="drawer-item" routerLink="/admin/bill" (click)="closeDrawerIfMobile(drawer)">
         <mat-icon>money</mat-icon> {{ 'APP.VIEW_BILLS' | translate }}

@@ -5,7 +5,13 @@
       <mat-card-title>{{ 'dashboard.title' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-card-content>
+
+     <!-- 🔄 Spinner pendant le chargement -->
+   <div *ngIf="isLoading" class="spinner-container">
+      <mat-spinner color="primary" diameter="50"></mat-spinner>
+   </div>
+
+    <mat-card-content  *ngIf="!isLoading">
 
       <!-- 🔹 En-tête : Titre + zone de recherche -->
       <div class="dashboard-header">

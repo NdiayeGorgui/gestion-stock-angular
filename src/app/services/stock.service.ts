@@ -10,9 +10,6 @@ import { OrderEvent } from '../order/orders/orderEvent';
 import { Payment } from '../payment/payment';
 import { Bill } from '../bill/bill';
 import { ProductItem } from '../order/productItem';
-import { AmountDto } from '../payment/create-payment/amountDto';
-import { Deliverd } from '../deliver/Delivered';
-import { Ship } from '../ship/Ship';
 import { OrderEventSourcing } from '../order/OrderEventSourcing';
 import { ProductStatDTO } from '../order/ProductStatDTO';
 import { CustomerDto } from '../order/customerDto';
@@ -23,6 +20,7 @@ import { PaymentResponseDto } from '../payment/PaymentResponseDto';
 import { BillResponseDto } from '../bill/BillResponseDto';
 import { ShipResponseDto } from '../ship/ShipResponseDto';
 import { DeliveredResponseDto } from '../deliver/DeliveredResponseDto';
+import { ProductDto } from '../product/products/ProductDto';
 
 
 @Injectable({
@@ -47,8 +45,8 @@ export class StockService {
     return this.httpClient.get<CustomerExistsResponse>(`${environment.backendCustomerExtistHost}/${email}`);
   }
 
-  getCustomersList(): Observable<Customers[]> {
-    return this.httpClient.get<(Customers[])>(`${environment.backendCustomerHost}`);
+  getCustomersList(): Observable<CustomerDto[]> {
+    return this.httpClient.get<(CustomerDto[])>(`${environment.backendCustomerHost}`);
   }
 
   getCustomersOrderList(): Observable<Customers[]> {
@@ -79,8 +77,8 @@ export class StockService {
     return this.httpClient.get<Products>(`${environment.backendOrderProductsHost}/${id}`);
   }
 
-  getProductsList(): Observable<Products[]> {
-    return this.httpClient.get<(Products[])>(`${environment.backendProductHost}`);
+  getProductsList(): Observable<ProductDto[]> {
+    return this.httpClient.get<(ProductDto[])>(`${environment.backendProductHost}`);
   }
 
   getProductsOrderList(): Observable<Products[]> {
@@ -178,6 +176,13 @@ getCreatedOrdersById(status: string, orderId: string): Observable<OrderResponseD
 
     return this.httpClient.get<BillResponseDto>(`${environment.backendBillHost}/${orderId}`);
   }
+
+getBillByIdPdf(orderId: string): Observable<Blob> {
+  return this.httpClient.get(`${environment.backendBillHostPdf}/${orderId}`, {
+    responseType: 'blob'
+  });
+}
+
 
   getDeliveredQueryList(): Observable<DeliveredResponseDto[]> {
     return this.httpClient.get<(DeliveredResponseDto[])>(`${environment.backendDeliveredQuerytHost}`);

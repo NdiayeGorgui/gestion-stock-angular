@@ -12,6 +12,7 @@ import { MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import { MatDividerModule} from '@angular/material/divider';
 import { MatSidenavModule} from '@angular/material/sidenav';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule} from '@angular/material/sort';
 import { MatInputModule} from '@angular/material/input';
@@ -179,6 +180,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatAutocompleteModule,
     MatOptionModule,
     MatSlideToggleModule,
+    MatProgressSpinnerModule,
 
     TranslateModule.forRoot({
       loader: {

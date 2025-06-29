@@ -24,6 +24,8 @@ import { NotificationService } from '../../services/NotificationService';
   styleUrl: './order.component.css'
 })
 export class OrderComponent implements OnInit {
+  public isLoading = true;
+
 public createdOrders: any[] = [];
   public dataSource: MatTableDataSource<any>;
   public status = 'CREATED';
@@ -82,9 +84,13 @@ console.log('✔️ Received orders:', this.createdOrders);
           order.totalDiscount?.toString().includes(lowercaseFilter)
         );
       };
+      this.isLoading = false;
+
     },
     error: (err) => {
       console.error('Error fetching created orders:', err);
+      this.isLoading = false;
+
     }
   });
 }

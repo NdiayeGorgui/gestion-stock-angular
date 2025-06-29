@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StockService } from '../../services/stock.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { OrderEventDto } from '../OrderEventDTo';
 
 @Component({
   selector: 'app-order-events',
@@ -13,8 +14,11 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './order-events.component.css'
 })
 export class OrderEventsComponent implements OnInit {
-  public orderEvents: any;
-  public dataSource: any;
+  public isLoading = true;
+
+ public orderEvents: OrderEventDto[] = [];
+dataSource = new MatTableDataSource<OrderEventDto>([]);
+
   //customerIdEvent!:string;
 
   public displayedColumns = ["orderId", "customerId", "status", "details", "eventTimeStamp"]
@@ -33,9 +37,13 @@ export class OrderEventsComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.orderEvents)
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
+
       },
       error: err => {
         console.log(err);
+        this.isLoading = false;
+
       }
 
     });

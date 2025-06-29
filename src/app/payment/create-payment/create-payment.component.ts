@@ -31,6 +31,7 @@ order: OrderResponseDto = {
   amount: 0,
   totalTax: 0,
   totalDiscount: 0,
+  createdDate:'',
   items: []
 };
 
@@ -45,9 +46,7 @@ order: OrderResponseDto = {
   payment: Payment = new Payment();
   responseType: any;
 
-  public modes: Array<IModePayment> = [{ id: 1, name: 'CASH' },
-  { id: 2, name: 'CHECK' },
-  { id: 3, name: 'TRANSFERT' }];
+ public modes: Array<{ id: number, name: string, label: string }> = [];
 
   constructor(private snackBar: MatSnackBar,
      private dialog: MatDialog,
@@ -77,6 +76,17 @@ ngOnInit() {
       console.error(err);
     }
   });
+
+  //charger dynamiquement la traduction
+ this.modes = [
+      { id: 1, name: 'CASH', label: '' },
+      { id: 2, name: 'CHECK', label: '' },
+      { id: 3, name: 'TRANSFERT', label: '' }
+    ].map(mode => ({
+      ...mode,
+      label: this.translate.instant('payments.paymentModes.' + mode.name)
+    }));
+  
 }
 
 
@@ -136,6 +146,7 @@ newPayment() {
           amount: data.amount,
           totalTax: data.totalTax,
           totalDiscount: data.totalDiscount,
+          createdDate:data.createdDate,
           items:data.items
          
         };

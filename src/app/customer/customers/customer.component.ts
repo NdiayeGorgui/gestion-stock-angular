@@ -9,6 +9,7 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dial
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnakBarComponent } from '../../shared/snak-bar/snak-bar.component';
 import { TranslateService } from '@ngx-translate/core';
+import { CustomerDto } from '../../order/customerDto';
 
 @Component({
   selector: 'app-customer',
@@ -20,8 +21,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class CustomerComponent implements OnInit {
 
   //products:Products[]=[];
-  public customers: any;
-  public dataSource: any;
+public customers: CustomerDto[] = [];
+dataSource = new MatTableDataSource<CustomerDto>([]);
+public isLoading = true;
   //customerIdEvent!:string;
 
   public displayedColumns = ["name", "phone", "email", "address", "status", "action"]
@@ -40,9 +42,11 @@ export class CustomerComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.customers)
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+         this.isLoading = false;
       },
       error: err => {
         console.log(err);
+         this.isLoading = false;
       }
 
     });
@@ -119,8 +123,6 @@ deleteCustomer(id: string) {
   getCustomer(customerIdEvent: string) {
     this.router.navigate(['/admin/customer-details', customerIdEvent]);
   }
-   close() {
-  this.router.navigate(['/admin/customer']);
-   }
+
 
 }

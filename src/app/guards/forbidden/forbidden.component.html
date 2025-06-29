@@ -1,4 +1,25 @@
-<div class="forbidden-container">
-  <h1 class="forbidden-title">403 - Forbidden</h1>
-  <p class="forbidden-message">You do not have the necessary permissions for this page.</p>
+<div class="container mt-4">
+  <mat-card>
+
+    <!-- 🔄 Spinner pendant le chargement -->
+    <div *ngIf="isLoading" class="spinner-container">
+      <mat-spinner color="warn" diameter="50"></mat-spinner>
+    </div>
+
+    <!-- ❌ Message interdit -->
+    <div class="forbidden-container" *ngIf="!isLoading">
+      <mat-card-header>
+        <mat-card-title>
+          <h1 class="forbidden-title">{{ 'ERROR.403.TITLE' | translate }}</h1>
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-divider></mat-divider>
+
+      <mat-card-content>
+        <p class="forbidden-message">{{ 'ERROR.403.MESSAGE' | translate }}</p>
+      </mat-card-content>
+    </div>
+
+  </mat-card>
 </div>

@@ -4,8 +4,13 @@
       <mat-card-title>{{ 'completedOrders.title' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
+     <!-- 🔄 Spinner pendant le chargement -->
+   <div *ngIf="isLoading" class="spinner-container">
+      <mat-spinner color="primary" diameter="50"></mat-spinner>
+   </div>
 
-    <mat-card-content>
+
+    <mat-card-content  *ngIf="!isLoading">
 
       <!-- 🔍 Barre de recherche -->
       <div class="order-actions">
@@ -68,19 +73,22 @@
             </td>
           </ng-container>
 
-         
+
           <!-- En-têtes / lignes -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center;">
+              {{ 'createdOrders.noOrdersFound' | translate }}
+            </td>
+          </tr>
+
 
         </table>
       </div>
 
       <!-- 📄 Pagination -->
-      <mat-paginator
-        [pageSizeOptions]="[10, 20, 40]"
-        showFirstLastButtons
-        aria-label="Select page of created orders">
+      <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons aria-label="Select page of created orders">
       </mat-paginator>
 
     </mat-card-content>
