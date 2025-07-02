@@ -1,19 +1,19 @@
-<div class="container">
+<div class="container mt-4">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>{{ 'createdOrders.title' | translate }}</mat-card-title>
+      <mat-card-title><strong>{{ 'createdOrders.title' | translate }}</strong></mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
-     <!-- 🔄 Spinner pendant le chargement -->
-   <div *ngIf="isLoading" class="spinner-container">
+
+    <!-- 🔄 Spinner pendant le chargement -->
+    <div *ngIf="isLoading" class="spinner-container">
       <mat-spinner color="primary" diameter="50"></mat-spinner>
-   </div>
+    </div>
 
-
-    <mat-card-content  *ngIf="!isLoading">
+    <mat-card-content>
 
       <!-- 🔍 Barre de recherche -->
-      <div class="order-actions">
+      <div class="order-actions" [style.display]="isLoading ? 'none' : 'flex'">
         <mat-form-field appearance="outline" class="search-field">
           <mat-label>
             <mat-icon matSuffix>search</mat-icon>
@@ -24,7 +24,7 @@
       </div>
 
       <!-- 📋 Table des commandes -->
-      <div class="table-container">
+      <div class="table-container" [style.display]="isLoading ? 'none' : 'block'">
         <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
           <!-- Num commande -->
@@ -97,11 +97,10 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           <tr class="mat-row" *matNoDataRow>
-  <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center;">
-    {{ 'createdOrders.noOrdersFound' | translate }}
-  </td>
-</tr>
-
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center;">
+              {{ 'createdOrders.noOrdersFound' | translate }}
+            </td>
+          </tr>
 
         </table>
       </div>
@@ -110,7 +109,8 @@
       <mat-paginator
         [pageSizeOptions]="[10, 20, 40]"
         showFirstLastButtons
-        aria-label="Select page of created orders">
+        aria-label="Select page of created orders"
+        [style.display]="isLoading ? 'none' : 'block'">
       </mat-paginator>
 
     </mat-card-content>

@@ -20,7 +20,7 @@ interface StatsResponse {
 })
 export class DashboardComponent implements OnInit {
 
-public isLoading = true;
+  public isLoading = true;
 
 
   filteredProducts: any[] = []; // données filtrées à afficher
@@ -37,10 +37,23 @@ public isLoading = true;
   stats: any[] = [];
 
   colorScheme: Color = {
-    domain: ['#FF5733', '#33FF57', '#3357FF', '#F3FF33', '#FF33F6'],
-    name: 'Custom Colors',
+    domain: [
+      '#FF5733', // rouge-orange
+      '#33FF57', // vert fluo
+      '#3357FF', // bleu
+      '#F3FF33', // jaune
+      '#FF33F6', // rose
+      '#33FFF5', // turquoise
+      '#FF8F33', // orange clair
+      '#8D33FF', // violet
+      '#33FFBD', // vert d’eau
+      '#FF3333', // rouge vif
+      '#33A1FF', // bleu ciel
+      '#A833FF'  // violet foncé
+    ],
+    name: 'customScheme',
     selectable: true,
-    group: ScaleType.Time
+    group: ScaleType.Ordinal
   };
   barChartWidth!: number;
 
@@ -74,7 +87,7 @@ public isLoading = true;
     this.stockService.getCustomersList().subscribe({
       next: data => {
         this.customers = data;
-       this.isLoading = false;
+        this.isLoading = false;
 
       },
       error: err => {
@@ -170,9 +183,10 @@ public isLoading = true;
         {
           icon: 'category',
           title: this.translate.instant('dashboard.CATEGORIES'),
-          value: this.countNewCategories(res.productsData),
+          value: this.countAllCategories(res.productsData), // ✅ Correction ici
           color: '#f44336'
         },
+
         {
           icon: 'shopping_cart',
           title: this.translate.instant('dashboard.ORDERS'),
@@ -211,17 +225,22 @@ public isLoading = true;
         }
 
       ];
-     this.isLoading = false;
+      this.isLoading = false;
 
     });
   }
-  
+
 
 
   isToday(date: string): boolean {
     const today = new Date().toISOString().slice(0, 10);
     return date?.slice(0, 10) === today;
   }
+  countAllCategories(products: any[]): number {
+    const uniqueCategories = new Set(products.map(p => p.category));
+    return uniqueCategories.size;
+  }
+
 
   countNewProducts(products: any[]): number {
     return products.filter(p => this.isInLast7Days(p.createdDate)).length;
@@ -236,8 +255,8 @@ public isLoading = true;
     return customers.filter(c => this.isInLast7Days(c.createdDate)).length;
   }
   countNewOrders(orders: any[]): number {
-  return orders.filter(o => this.isInLast7Days(o.createdDate)).length;
-}
+    return orders.filter(o => this.isInLast7Days(o.createdDate)).length;
+  }
 
 
   isInLast7Days(dateStr: string): boolean {

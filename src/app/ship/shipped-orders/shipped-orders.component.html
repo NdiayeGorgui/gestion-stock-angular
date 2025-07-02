@@ -5,15 +5,16 @@
     </mat-card-header>
 
     <mat-divider></mat-divider>
+
     <!-- 🔄 Spinner pendant le chargement -->
-   <div *ngIf="isLoading" class="spinner-container">
+    <div *ngIf="isLoading" class="spinner-container">
       <mat-spinner color="primary" diameter="50"></mat-spinner>
-   </div>
+    </div>
 
+    <mat-card-content>
 
-    <mat-card-content  *ngIf="!isLoading">
-      <!-- Barre de recherche -->
-      <div class="shipping-toolbar">
+      <!-- 🔎 Barre de recherche (masquée visuellement si chargement) -->
+      <div class="shipping-toolbar" [style.display]="isLoading ? 'none' : 'flex'">
         <mat-form-field appearance="outline" class="search-field">
           <mat-label>
             <mat-icon matSuffix>search</mat-icon>
@@ -23,8 +24,8 @@
         </mat-form-field>
       </div>
 
-      <!-- Tableau des livraisons -->
-      <div class="table-container">
+      <!-- 📄 Tableau (masqué visuellement si chargement) -->
+      <div class="table-container" [style.display]="isLoading ? 'none' : 'block'">
         <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
           <!-- Order Id -->
@@ -50,7 +51,8 @@
             </th>
             <td mat-cell *matCellDef="let element"> {{ element.customerMail }} </td>
           </ng-container>
-          <!-- amount -->
+
+          <!-- Amount -->
           <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ 'orderDetails.amount' | translate }}
@@ -90,6 +92,7 @@
             </td>
           </ng-container>
 
+          <!-- Rendu des lignes -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           <tr class="mat-row" *matNoDataRow>
@@ -101,10 +104,14 @@
         </table>
       </div>
 
-      <!-- Pagination -->
-      <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons
-        aria-label="Shipping pagination">
+      <!-- 📄 Pagination (masquée visuellement pendant le chargement) -->
+      <mat-paginator
+        [pageSizeOptions]="[10, 20, 40]"
+        showFirstLastButtons
+        aria-label="Shipping pagination"
+        [style.display]="isLoading ? 'none' : 'block'">
       </mat-paginator>
+
     </mat-card-content>
   </mat-card>
 </div>

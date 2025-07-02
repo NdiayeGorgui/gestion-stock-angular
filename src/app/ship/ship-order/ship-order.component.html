@@ -1,19 +1,26 @@
 <div class="container mt-4" style="max-width: 860px; margin-left: auto; margin-right: auto;">
   <mat-card>
-   <mat-card-header>
-  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-    <mat-card-title>
-      <strong>{{ 'newShipping.title' | translate }}</strong>
-    </mat-card-title>
-     <button mat-flat-button color="primary" (click)="newShip()" [disabled]="ship.shippingStatus === 'SHIPPED'">
+    <mat-card-header>
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <mat-card-title>
+          <strong>
+            {{
+            ship.shippingStatus === 'SHIPPED'
+            ? ('newShipping.shippedTitle' | translate)
+            : ('newShipping.title' | translate)
+            }}
+          </strong>
+        </mat-card-title>
+
+        <button mat-flat-button color="primary" (click)="newShip()" [disabled]="ship.shippingStatus === 'SHIPPED'">
           <mat-icon matSuffix>local_shipping</mat-icon>
           {{ 'newShipping.button' | translate }}
         </button>
-         <button mat-icon-button color="warn" (click)="close()" aria-label="Close">
+        <button mat-icon-button color="warn" (click)="close()" aria-label="Close">
           <mat-icon>close</mat-icon>
         </button>
-  </div>
-</mat-card-header>
+      </div>
+    </mat-card-header>
 
     <mat-divider></mat-divider>
 

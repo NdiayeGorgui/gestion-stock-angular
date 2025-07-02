@@ -5,15 +5,16 @@
     </mat-card-header>
 
     <mat-divider></mat-divider>
-     <!-- 🔄 Spinner pendant le chargement -->
-   <div *ngIf="isLoading" class="spinner-container">
+
+    <!-- 🔄 Spinner pendant le chargement -->
+    <div *ngIf="isLoading" class="spinner-container">
       <mat-spinner color="primary" diameter="50"></mat-spinner>
-   </div>
+    </div>
 
+    <mat-card-content>
 
-    <mat-card-content  *ngIf="!isLoading">
-      <!-- Barre de recherche -->
-      <div class="delivery-toolbar">
+      <!-- 🔎 Barre de recherche -->
+      <div class="delivery-toolbar" [style.display]="isLoading ? 'none' : 'flex'">
         <mat-form-field appearance="outline" class="search-field">
           <mat-label>
             <mat-icon matSuffix>search</mat-icon>
@@ -23,61 +24,73 @@
         </mat-form-field>
       </div>
 
-      <!-- Tableau des livraisons -->
-      <div class="table-container">
+      <!-- 📄 Tableau -->
+      <div class="table-container" [style.display]="isLoading ? 'none' : 'block'">
         <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
           <!-- Order ID -->
           <ng-container matColumnDef="orderId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'deliveries.orderId' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'deliveries.orderId' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.orderId }} </td>
           </ng-container>
-          
 
           <!-- Customer Name -->
           <ng-container matColumnDef="customerName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'deliveries.customerName' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'deliveries.customerName' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.customerName }} </td>
           </ng-container>
 
           <!-- Email -->
           <ng-container matColumnDef="customerMail">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'deliveries.email' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'deliveries.email' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.customerMail }} </td>
           </ng-container>
-            <!-- amount -->
+
+          <!-- Amount -->
           <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ 'orderDetails.amount' | translate }}
             </th>
-            <td mat-cell *matCellDef="let element"> {{ element.amount | number:'1.2-2'}} </td>
+            <td mat-cell *matCellDef="let element"> {{ element.amount | number:'1.2-2' }} </td>
           </ng-container>
 
           <!-- Date -->
           <ng-container matColumnDef="timeStamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'deliveries.date' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'deliveries.date' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.timeStamp | date:'dd/MM/yyyy' }} </td>
           </ng-container>
 
           <!-- Status -->
           <ng-container matColumnDef="deliveryStatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'deliveries.status' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'deliveries.status' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
               {{ ('deliveries.statuses.' + element.deliveryStatus) | translate }}
             </td>
-
           </ng-container>
 
           <!-- Action -->
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef class="centered-column"> {{ 'deliveries.action' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef class="centered-column">
+              {{ 'deliveries.action' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element" class="centered-column">
               <button mat-icon-button color="accent" (click)="deliverOrder(element.orderId)">
-                <mat-icon>hail</mat-icon> 
+                <mat-icon>hail</mat-icon>
               </button>
             </td>
           </ng-container>
 
+          <!-- Rendu des lignes -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           <tr class="mat-row" *matNoDataRow>
@@ -85,12 +98,14 @@
               {{ 'createdOrders.noOrdersFound' | translate }}
             </td>
           </tr>
-
         </table>
       </div>
 
-      <!-- Pagination (non traduite) -->
-      <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons></mat-paginator>
+      <!-- 📄 Pagination (masquée visuellement pendant le chargement) -->
+      <mat-paginator [pageSizeOptions]="[10, 20, 40]"
+                     showFirstLastButtons
+                     [style.display]="isLoading ? 'none' : 'block'">
+      </mat-paginator>
     </mat-card-content>
   </mat-card>
 </div>

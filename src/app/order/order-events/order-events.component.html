@@ -5,15 +5,16 @@
     </mat-card-header>
 
     <mat-divider></mat-divider>
-      <!-- 🔄 Spinner pendant le chargement -->
-   <div *ngIf="isLoading" class="spinner-container">
-      <mat-spinner color="primary" diameter="50"></mat-spinner>
-   </div>
 
+    <mat-card-content>
 
-    <mat-card-content  *ngIf="!isLoading">
-      <!-- Barre de recherche -->
-      <div class="order-events-toolbar">
+      <!-- 🔄 Spinner visible uniquement pendant le chargement -->
+      <div *ngIf="isLoading" class="spinner-container">
+        <mat-spinner color="primary" diameter="50"></mat-spinner>
+      </div>
+
+      <!-- 🔍 Barre de recherche -->
+      <div class="order-actions" [style.display]="isLoading ? 'none' : 'flex'">
         <mat-form-field appearance="outline" class="search-field">
           <mat-label>
             <mat-icon matSuffix>search</mat-icon>
@@ -23,49 +24,57 @@
         </mat-form-field>
       </div>
 
-      <!-- Tableau -->
-      <div class="table-container">
+      <!-- 📦 Tableau des événements -->
+      <div class="table-container" [style.display]="isLoading ? 'none' : 'block'">
         <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
           <!-- Order ID -->
           <ng-container matColumnDef="orderId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'orderEvents.orderId' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'orderEvents.orderId' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.orderId }} </td>
           </ng-container>
 
           <!-- Customer ID -->
           <ng-container matColumnDef="customerId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'orderEvents.customerId' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'orderEvents.customerId' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.customerId }} </td>
           </ng-container>
 
-          <!-- Status -->
+          <!-- Statut -->
           <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'orderEvents.statusLabel' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'orderEvents.statusLabel' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
               {{ 'orderEvents.status.' + element.status | translate }}
             </td>
           </ng-container>
 
-          <!-- Details -->
+          <!-- Détails -->
           <ng-container matColumnDef="details">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'orderEvents.detailsLabel' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'orderEvents.detailsLabel' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
               {{ 'orderEvents.details.' + element.status | translate }}
             </td>
           </ng-container>
 
-
           <!-- Date -->
           <ng-container matColumnDef="eventTimeStamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'orderEvents.eventTimeStampLabel' | translate }}
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'orderEvents.eventTimeStampLabel' | translate }}
             </th>
             <td mat-cell *matCellDef="let element">
               {{ element.eventTimeStamp | date:'dd/MM/yyyy' }}
             </td>
           </ng-container>
 
-          <!-- Rows -->
+          <!-- En-têtes et lignes -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           <tr class="mat-row" *matNoDataRow>
@@ -73,13 +82,16 @@
               {{ 'createdOrders.noOrdersFound' | translate }}
             </td>
           </tr>
-
         </table>
       </div>
 
-      <!-- Pagination -->
-      <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons aria-label="Order events pagination">
+      <!-- 📄 Pagination -->
+      <mat-paginator [pageSizeOptions]="[10, 20, 40]"
+                     showFirstLastButtons
+                     aria-label="Order events pagination"
+                     [style.display]="isLoading ? 'none' : 'block'">
       </mat-paginator>
+
     </mat-card-content>
   </mat-card>
 </div>

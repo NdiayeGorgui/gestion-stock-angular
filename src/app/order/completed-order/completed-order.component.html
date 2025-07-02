@@ -1,19 +1,20 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>{{ 'completedOrders.title' | translate }}</mat-card-title>
+      <mat-card-title><strong>{{ 'completedOrders.title' | translate }}</strong></mat-card-title>
     </mat-card-header>
+
     <mat-divider></mat-divider>
-     <!-- 🔄 Spinner pendant le chargement -->
-   <div *ngIf="isLoading" class="spinner-container">
+
+    <!-- 🔄 Spinner pendant le chargement -->
+    <div *ngIf="isLoading" class="spinner-container">
       <mat-spinner color="primary" diameter="50"></mat-spinner>
-   </div>
+    </div>
 
-
-    <mat-card-content  *ngIf="!isLoading">
+    <mat-card-content>
 
       <!-- 🔍 Barre de recherche -->
-      <div class="order-actions">
+      <div class="order-actions" [style.display]="isLoading ? 'none' : 'flex'">
         <mat-form-field appearance="outline" class="search-field">
           <mat-label>
             <mat-icon matSuffix>search</mat-icon>
@@ -24,7 +25,7 @@
       </div>
 
       <!-- 📋 Table des commandes -->
-      <div class="table-container">
+      <div class="table-container" [style.display]="isLoading ? 'none' : 'block'">
         <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
           <!-- Num commande -->
@@ -73,8 +74,7 @@
             </td>
           </ng-container>
 
-
-          <!-- En-têtes / lignes -->
+          <!-- Lignes et état vide -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           <tr class="mat-row" *matNoDataRow>
@@ -83,12 +83,15 @@
             </td>
           </tr>
 
-
         </table>
       </div>
 
       <!-- 📄 Pagination -->
-      <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons aria-label="Select page of created orders">
+      <mat-paginator
+        [pageSizeOptions]="[10, 20, 40]"
+        showFirstLastButtons
+        aria-label="Pagination for completed orders"
+        [style.display]="isLoading ? 'none' : 'block'">
       </mat-paginator>
 
     </mat-card-content>

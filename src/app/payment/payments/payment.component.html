@@ -1,19 +1,20 @@
-<div class="container">
+<div class="container mt-4">
   <mat-card>
     <mat-card-header>
       <mat-card-title><strong>{{ 'payments.title' | translate }}</strong></mat-card-title>
     </mat-card-header>
 
     <mat-divider></mat-divider>
-     <!-- 🔄 Spinner pendant le chargement -->
-   <div *ngIf="isLoading" class="spinner-container">
+
+    <!-- 🔄 Spinner pendant le chargement -->
+    <div *ngIf="isLoading" class="spinner-container">
       <mat-spinner color="primary" diameter="50"></mat-spinner>
-   </div>
+    </div>
 
+    <mat-card-content>
 
-    <mat-card-content  *ngIf="!isLoading">
-      <!-- Barre de recherche -->
-      <div class="payment-toolbar">
+      <!-- 🔍 Barre de recherche (cachée visuellement pendant le chargement) -->
+      <div class="payment-toolbar" [style.display]="isLoading ? 'none' : 'flex'">
         <mat-form-field appearance="outline" class="search-field">
           <mat-label>
             <mat-icon matSuffix>search</mat-icon>
@@ -23,20 +24,27 @@
         </mat-form-field>
       </div>
 
-      <!-- Table des paiements -->
-      <div class="table-container">
+      <!-- 📄 Tableau des paiements -->
+      <div class="table-container" [style.display]="isLoading ? 'none' : 'block'">
         <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
+          <!-- Order ID -->
           <ng-container matColumnDef="orderId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'payments.orderId' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'payments.orderId' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.orderId }} </td>
           </ng-container>
 
+          <!-- Customer -->
           <ng-container matColumnDef="customerId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'payments.customer' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'payments.customer' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element"> {{ element.customerName }} </td>
           </ng-container>
 
+          <!-- Payment Mode -->
           <ng-container matColumnDef="paymentMode">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ 'payments.paymentMode' | translate }}
@@ -46,28 +54,41 @@
             </td>
           </ng-container>
 
-
-
+          <!-- Amount -->
           <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'payments.amount' | translate }} </th>
-            <td mat-cell *matCellDef="let element"> {{ element.amount | number:'0.2-2' }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'payments.amount' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.amount | number:'0.2-2' }}
+            </td>
           </ng-container>
 
+          <!-- Date -->
           <ng-container matColumnDef="timeStamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'payments.date' | translate }} </th>
-            <td mat-cell *matCellDef="let element"> {{ element.timeStamp | date:'dd/MM/yyyy' }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'payments.date' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.timeStamp | date:'dd/MM/yyyy' }}
+            </td>
           </ng-container>
 
+          <!-- Status -->
           <ng-container matColumnDef="paymentStatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'payments.status' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'payments.status' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
               {{ ('payments.paymentStatusValues.' + element.paymentStatus) | translate }}
             </td>
           </ng-container>
 
-
+          <!-- Détails -->
           <ng-container matColumnDef="details">
-            <th mat-header-cell *matHeaderCellDef> {{ 'payments.details' | translate }} </th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ 'payments.details' | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
               <button (click)="getPayment(element.orderId)" mat-icon-button color="accent">
                 <mat-icon>info</mat-icon>
@@ -75,6 +96,7 @@
             </td>
           </ng-container>
 
+          <!-- Rendu -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           <tr class="mat-row" *matNoDataRow>
@@ -86,9 +108,14 @@
         </table>
       </div>
 
-      <!-- Pagination -->
-      <mat-paginator [pageSizeOptions]="[10, 20, 40]" showFirstLastButtons aria-label="Payment pagination">
+      <!-- 📄 Pagination (visible uniquement si isLoading est faux) -->
+      <mat-paginator
+        [pageSizeOptions]="[10, 20, 40]"
+        showFirstLastButtons
+        aria-label="Payment pagination"
+        [style.display]="isLoading ? 'none' : 'block'">
       </mat-paginator>
+
     </mat-card-content>
   </mat-card>
 </div>

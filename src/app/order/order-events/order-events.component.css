@@ -14,10 +14,10 @@ mat-divider {
     margin-bottom: 20px;
   }
 
-  .order-events-toolbar {
+.order-actions {
+  margin-top: 24px;
   display: flex;
   flex-wrap: wrap;
-  margin: 24px 0;
   gap: 16px;
   align-items: center;
 }

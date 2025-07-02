@@ -217,9 +217,10 @@
         "eventTimeStamp": "Date de création",
         "status": "Statut",
         "deliverBtn": "Livrer la commande",
+        "deliveredTitle": "Commande livrée",
         "statusValues": {
             "DELIVERING": "En cours de livraison",
-            "DELIVERED": "Livrée"
+            "DELIVERED": "Livré"
         },
         "confirm_delivery": "Voulez-vous confirmer la livraison de cette commande ?",
         "delivery_success": "Commande livrée avec succès !",
@@ -235,7 +236,7 @@
         "status": "Statut",
         "action": "Expédier",
         "statusValues": {
-            "SHIPPED": "Expédiée",
+            "SHIPPED": "Expédié",
             "SHIPPING": "En cours d'expédition"
         }
     },
@@ -248,6 +249,7 @@
         "eventTimeStamp": "Date de création",
         "status": "Statut",
         "button": "Expédier la commande",
+        "shippedTitle": "Commande expédiée",
         "confirm_shipment": "Voulez-vous confirmer l'expédition de cette commande ?",
         "ship_success": "Commande expédiée avec succès !",
         "ship_error": "Erreur lors de l'expédition de la commande, veuillez réessayer !"
@@ -266,9 +268,9 @@
         "status": "Statut",
         "details": "Détails",
         "statusValues": {
-            "CREATED": "Créée",
-            "COMPLETED": "Complétée",
-            "CANCELED": "Annulée"
+            "CREATED": "Créé",
+            "COMPLETED": "Complété",
+            "CANCELED": "Annulé"
         }
     },
     "billDetails": {
@@ -288,9 +290,9 @@
         "status": "Statut",
         "close": "Fermer",
         "statusValues": {
-            "CREATED": "Créée",
-            "COMPLETED": "Complétée",
-            "CANCELED": "Annulée"
+            "CREATED": "Créé",
+            "COMPLETED": "Complété",
+            "CANCELED": "Annulé"
         }
     },
     "orderEvents": {
@@ -303,11 +305,11 @@
         "customerId": "ID Client",
         "eventTimeStamp": "Date de création",
         "status": {
-            "CREATED": "Créée",
-            "CONFIRMED": "Confirmée",
-            "SHIPPED": "Expédiée",
-            "DELIVERED": "Livrée",
-            "CANCELED": "Annulée"
+            "CREATED": "Créé",
+            "CONFIRMED": "Confirmé",
+            "SHIPPED": "Expédié",
+            "DELIVERED": "Livré",
+            "CANCELED": "Annulé"
         },
         "details": {
             "CREATED": "Commande créée",
@@ -491,12 +493,12 @@
          "noOrdersFound": "Aucune commande trouvée"
     },
     "orderStatus": {
-        "COMPLETED": "Completée",
-        "CANCELED": "Annulée",
-        "CREATED": "Créée",
+        "COMPLETED": "Completé",
+        "CANCELED": "Annulé",
+        "CREATED": "Créé",
         "PENDING": "En attente",
         "DELIVERING": "En cours de livraison",
-        "DELIVERED": "Livrée"
+        "DELIVERED": "Livré"
     },
     "orderDetails": {
         "title": "Détails de la commande",

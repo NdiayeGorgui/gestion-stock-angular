@@ -35,23 +35,29 @@ public isLoading = true;
       private activatedRoute: ActivatedRoute,private translate: TranslateService) {
   }
 
-  public getCustomers() {
-    this.stockService.getCustomersList().subscribe({
-      next: data => {
-        this.customers = data;
-        this.dataSource = new MatTableDataSource(this.customers)
+public getCustomers() {
+  this.isLoading = true;
+
+  this.stockService.getCustomersList().subscribe({
+    next: data => {
+      this.customers = data;
+      this.dataSource = new MatTableDataSource(this.customers);
+
+      // Associer le paginator et le tri après un petit délai pour s'assurer que ViewChild est prêt
+      setTimeout(() => {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-         this.isLoading = false;
-      },
-      error: err => {
-        console.log(err);
-         this.isLoading = false;
-      }
+      });
 
-    });
+      this.isLoading = false;
+    },
+    error: err => {
+      console.log(err);
+      this.isLoading = false;
+    }
+  });
+}
 
-  }
   ngOnInit(): void {
 
     this.getCustomers();
@@ -123,6 +129,5 @@ deleteCustomer(id: string) {
   getCustomer(customerIdEvent: string) {
     this.router.navigate(['/admin/customer-details', customerIdEvent]);
   }
-
 
 }

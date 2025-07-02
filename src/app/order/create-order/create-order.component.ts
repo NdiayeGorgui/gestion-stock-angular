@@ -123,16 +123,36 @@ export class CreateOrderComponent implements OnInit {
     if (this.selectedProduct && this.itemQty > 0) {
       const price = Number(this.selectedProduct.price);
       const qty = Number(this.itemQty);
-      const total = qty * price;
+      const totalHT = qty * price;
 
-      this.price = total;
-      this.tax = total * 0.2;
-      this.discount = this.getDiscount(qty, price);
-      this.amount = this.price + this.tax - this.discount;
+      // Calcul de la remise
+      let discount = 0;
+      if (totalHT >= 200) {
+        discount = totalHT * 0.01;
+      } else if (totalHT >= 100) {
+        discount = totalHT * 0.005;
+      }
+
+      // Calcul de la taxe sur le montant après remise
+      const taxable = totalHT - discount;
+      const tax = taxable * 0.2;
+
+      // Calcul du montant total TTC
+      const amount = taxable + tax;
+
+      // Mise à jour des variables
+      this.price = totalHT;
+      this.discount = discount;
+      this.tax = tax;
+      this.amount = amount;
     } else {
-      this.price = this.tax = this.discount = this.amount = 0;
+      this.price = 0;
+      this.tax = 0;
+      this.discount = 0;
+      this.amount = 0;
     }
   }
+
 
   addProductToOrder() {
     if (!this.selectedProduct) return;
@@ -378,44 +398,44 @@ export class CreateOrderComponent implements OnInit {
     this.router.navigate(['/admin/order']);
   }
 
-onQtyChangeInCart(index: number) {
-  const item = this.orderItems[index];
+  onQtyChangeInCart(index: number) {
+    const item = this.orderItems[index];
 
-  // 🔒 Sécurité : vérifier la quantité
-  if (item.qty <= 0) {
-    this.snackBar.openFromComponent(SnakBarComponent, {
-      data: {
-        message: this.translate.instant('order.qty_min_error'),
-        type: 'error'
-      },
-      duration: 3000,
-    });
-    item.qty = 1;
-  } else if (item.qty > item.qtyAvailable) {
-    this.snackBar.openFromComponent(SnakBarComponent, {
-      data: {
-        message: this.translate.instant('order.qty_stock_error', { qty: item.qtyAvailable }),
-        type: 'error'
-      },
-      duration: 3000,
-    });
-    item.qty = item.qtyAvailable;
+    // 🔒 Sécurité : vérifier la quantité
+    if (item.qty <= 0) {
+      this.snackBar.openFromComponent(SnakBarComponent, {
+        data: {
+          message: this.translate.instant('order.qty_min_error'),
+          type: 'error'
+        },
+        duration: 3000,
+      });
+      item.qty = 1;
+    } else if (item.qty > item.qtyAvailable) {
+      this.snackBar.openFromComponent(SnakBarComponent, {
+        data: {
+          message: this.translate.instant('order.qty_stock_error', { qty: item.qtyAvailable }),
+          type: 'error'
+        },
+        duration: 3000,
+      });
+      item.qty = item.qtyAvailable;
+    }
+
+    // ✅ Mise à jour ligne produit selon la logique back
+    item.price = item.unitPrice; // prix unitaire (brut)
+    const totalBrut = item.price * item.qty;
+
+    item.discount = this.getDiscount(item.qty, item.unitPrice);
+
+    const net = totalBrut - item.discount;
+    item.tax = Math.round(net * 0.2 * 100) / 100;
+
+    item.amount = Math.round((net + item.tax) * 100) / 100;
+
+    // 🔄 Recalcul global
+    this.calculateTotals();
   }
-
-  // ✅ Mise à jour ligne produit selon la logique back
-  item.price = item.unitPrice; // prix unitaire (brut)
-  const totalBrut = item.price * item.qty;
-
-  item.discount = this.getDiscount(item.qty, item.unitPrice);
-
-  const net = totalBrut - item.discount;
-  item.tax = Math.round(net * 0.2 * 100) / 100;
-
-  item.amount = Math.round((net + item.tax) * 100) / 100;
-
-  // 🔄 Recalcul global
-  this.calculateTotals();
-}
 
 
 

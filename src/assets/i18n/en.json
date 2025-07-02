@@ -217,6 +217,7 @@
         "eventTimeStamp": "Created Date",
         "status": "Status",
         "deliverBtn": "Deliver Order",
+        "deliveredTitle": "Order delivered",
         "statusValues": {
             "DELIVERED": "Delivered",
             "DELIVERING": "Delivering"
@@ -248,6 +249,7 @@
         "eventTimeStamp": "Created Date",
         "status": "Status",
         "button": "Ship Order",
+        "shippedTitle": "Order Shipped",
         "confirm_shipment": "Do you want to confirm shipment of this order?",
         "ship_success": "Order shipped successfully!",
         "ship_error": "Error while shipping order, please try again!"
