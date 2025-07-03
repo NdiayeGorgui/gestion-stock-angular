@@ -205,7 +205,7 @@
         "action": "Livrer",
         "statuses": {
             "DELIVERED": "Livré",
-            "DELIVERING": "En cours de livraison"
+            "DELIVERING": "En attente"
         }
     },
     "newDeliver": {
@@ -237,7 +237,7 @@
         "action": "Expédier",
         "statusValues": {
             "SHIPPED": "Expédié",
-            "SHIPPING": "En cours d'expédition"
+            "SHIPPING": "En attente"
         }
     },
     "newShipping": {
@@ -502,6 +502,7 @@
     },
     "orderDetails": {
         "title": "Détails de la commande",
+        "createdDate": "Date de création",
         "customerId": "ID Client",
         "customerName": "Nom du client",
         "customerPhone": "Téléphone du client",

@@ -44,7 +44,7 @@ export class OrderCanceledDetailsComponent {
     return;
   }
 
-  this.stockService.getCreatedOrdersById(this.status,this.orderId).subscribe({
+  this.stockService.getOneOrderById(this.orderId).subscribe({
     next: (data) => {
       this.order = data;
       this.dataSource.data = data.items;

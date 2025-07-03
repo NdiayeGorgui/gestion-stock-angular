@@ -34,6 +34,9 @@
         <li class="list-group-item">
           <b>{{ 'orderDetails.totalDiscount' | translate }} :</b> {{ order.totalDiscount | number:'1.2-2' }}
         </li>
+         <li class="list-group-item">
+          <b>{{ 'orderDetails.createdDate' | translate }} :</b> {{ order.createdDate | date:'dd/MM/yyyy HH:mm'}}
+        </li>
       </ul>
 
       <!-- 📦 Tableau des articles -->

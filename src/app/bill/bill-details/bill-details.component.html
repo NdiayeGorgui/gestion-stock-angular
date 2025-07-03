@@ -48,7 +48,10 @@
           <b>{{ 'orderDetails.status' | translate }} :</b>
           {{ ('billDetails.statusValues.' + bill.billStatus) | translate }}
         </li>
-
+        
+         <li class="list-group-item">
+          <b>{{ 'billDetails.date' | translate }} :</b> {{ bill.billingDate| date:'dd/MM/yyyy HH:mm'}}
+        </li>
       </ul>
 
       <!-- 📦 Tableau des articles -->

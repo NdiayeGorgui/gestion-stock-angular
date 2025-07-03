@@ -205,7 +205,7 @@
         "action": "Deliver Order",
         "statuses": {
             "DELIVERED": "Delivered",
-            "DELIVERING": "Delivering"
+            "DELIVERING": "Pending"
         }
     },
     "newDeliver": {
@@ -237,7 +237,7 @@
         "action": "Ship Order",
         "statusValues": {
             "SHIPPED": "Shipped",
-            "SHIPPING": "Shipping"
+            "SHIPPING": "Pending"
         }
     },
     "newShipping": {
@@ -502,6 +502,7 @@
     },
     "orderDetails": {
         "title": "Order Details",
+        "createdDate": "Created Date",
         "customerId": "Customer ID",
         "customerName": "Customer Name",
         "customerPhone": "Customer Phone",

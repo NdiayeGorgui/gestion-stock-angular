@@ -122,7 +122,9 @@ export class StockService {
 getCreatedOrdersById(status: string, orderId: string): Observable<OrderResponseDto> {
   return this.httpClient.get<OrderResponseDto>(`${environment.backendOrderStatusHost}/${status}/id/${orderId}`);
 }
-
+getOneOrderById(orderId: string): Observable<OrderResponseDto> {
+  return this.httpClient.get<OrderResponseDto>(`${environment.backendOrderHost}/${orderId}`);
+}
   getCreatedOrdersByCustomer(customerIdEvent: string, status: string): Observable<ProductItem[]> {
     return this.httpClient.get<(ProductItem[])>(`${environment.backendOrderCreatedHost}/${customerIdEvent}/${status}`)
   }
