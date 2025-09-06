@@ -262,4 +262,13 @@ getBillByIdPdf(orderId: string): Observable<Blob> {
 
     return this.httpClient.put(`${environment.backendNotificationHost}/${id}`,null);
   }
+
+  getAgentStreamingResponse(query: string): Observable<any> {
+  return this.httpClient.get(`http://localhost:8866/api/v1/chat?query=${encodeURIComponent(query)}`, {
+    responseType: 'text',
+    observe: 'events',
+    reportProgress: true
+  });
+}
+
 }

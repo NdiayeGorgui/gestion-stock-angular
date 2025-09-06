@@ -15,9 +15,19 @@
         style="max-height: 400px; overflow-y: auto; padding: 1rem; background-color: #f8f9fa; border-radius: 8px;"
       >
         <div *ngFor="let message of messages" class="mb-2">
-          <div [ngClass]="{ 'text-end': message.from === 'user', 'text-start': message.from === 'bot' }">
-            <span class="badge bg-primary" *ngIf="message.from === 'user'">{{ 'chatbot.user' | translate }}</span>
-            <span class="badge bg-secondary" *ngIf="message.from === 'bot'">{{ 'chatbot.bot' | translate }}</span>
+          <div
+            [ngClass]="{
+              'text-end': message.from === 'user',
+              'text-start': message.from === 'bot'
+            }"
+          >
+            <span class="badge bg-primary" *ngIf="message.from === 'user'">
+              {{ 'chatbot.user' | translate }}
+            </span>
+            <span class="badge bg-secondary" *ngIf="message.from === 'bot'">
+              {{ 'chatbot.bot' | translate }}
+            </span>
+
             <div
               class="mt-1 p-2 rounded"
               [ngClass]="{
@@ -25,7 +35,15 @@
                 'bg-light border': message.from === 'bot'
               }"
             >
-              {{ message.text }}
+              <!-- ✅ Texte brut pour l'utilisateur -->
+              <ng-container *ngIf="message.from === 'user'">
+                {{ message.text }}
+              </ng-container>
+
+              <!-- ✅ Markdown pour les réponses du bot -->
+              <ng-container *ngIf="message.from === 'bot'">
+                <markdown [data]="message.text"></markdown>
+              </ng-container>
             </div>
           </div>
         </div>
@@ -44,13 +62,32 @@
           />
         </mat-form-field>
 
+        <!-- Envoyer -->
         <button mat-icon-button color="primary" type="submit" [disabled]="!userMessage">
           <mat-icon>send</mat-icon>
         </button>
 
-        <button mat-icon-button color="accent" type="button" (click)="startVoiceInput()" [disabled]="isListening">
+        <!-- Microphone -->
+        <button
+          mat-icon-button
+          color="accent"
+          type="button"
+          (click)="startVoiceInput()"
+          [disabled]="isListening"
+        >
           <mat-icon *ngIf="!isListening">mic</mat-icon>
           <mat-icon *ngIf="isListening">mic_off</mat-icon>
+        </button>
+
+        <!-- Stop voice output -->
+        <button
+          mat-icon-button
+          color="warn"
+          type="button"
+          (click)="stopSpeaking()"
+          [disabled]="!isSpeaking"
+        >
+          <mat-icon>volume_off</mat-icon>
         </button>
       </form>
     </mat-card-content>

@@ -78,7 +78,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NotificationDialogComponent } from './shared/notification-dialog/notification-dialog.component';
 import { OrderCanceledDetailsComponent } from './order/order-canceled-details/order-canceled-details.component'
-
+import { MarkdownModule } from 'ngx-markdown';
 
 export function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -181,6 +181,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatOptionModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
+     MarkdownModule.forRoot(),
 
     TranslateModule.forRoot({
       loader: {
