@@ -306,14 +306,21 @@ export class DashboardComponent implements OnInit {
 
   searchTerm: string = '';
 
-  applyFilter() {
-    const term = this.searchTerm.toLowerCase();
-    const latest = this.getTop10LatestProducts(this.products);
+applyFilter() {
+  const term = this.searchTerm.toLowerCase().trim();
 
-    this.filteredProducts = latest.filter(product =>
-      product.name.toLowerCase().includes(term) ||
-      product.category.toLowerCase().includes(term)
-    );
+  if (!term) {
+    // si filtre vide → remettre les 10 derniers produits
+    this.filteredProducts = this.getTop10LatestProducts(this.products);
+    return;
   }
+
+  const latest = this.getTop10LatestProducts(this.products);
+  this.filteredProducts = latest.filter(product =>
+    product.name.toLowerCase().includes(term) ||
+    product.category.toLowerCase().includes(term)
+  );
+}
+
 
 }

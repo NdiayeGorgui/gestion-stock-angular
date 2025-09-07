@@ -6,12 +6,12 @@
     </mat-card-header>
     <mat-divider></mat-divider>
 
-     <!-- 🔄 Spinner pendant le chargement -->
-   <div *ngIf="isLoading" class="spinner-container">
+    <!-- 🔄 Spinner pendant le chargement -->
+    <div *ngIf="isLoading" class="spinner-container">
       <mat-spinner color="primary" diameter="50"></mat-spinner>
-   </div>
+    </div>
 
-    <mat-card-content  *ngIf="!isLoading">
+    <mat-card-content *ngIf="!isLoading">
 
       <!-- 🔹 En-tête : Titre + zone de recherche -->
       <div class="dashboard-header">
@@ -21,9 +21,11 @@
           <mat-label>{{ 'dashboard.searchLabel' | translate }}</mat-label>
           <input matInput [placeholder]="'dashboard.searchPlaceholder'  | translate" [(ngModel)]="searchTerm"
             (ngModelChange)="applyFilter()" />
-          <button *ngIf="searchTerm" matSuffix mat-icon-button aria-label="Clear" (click)="searchTerm=''">
+          <button *ngIf="searchTerm" matSuffix mat-icon-button aria-label="Clear"
+            (click)="searchTerm=''; applyFilter()">
             <mat-icon>close</mat-icon>
           </button>
+
         </mat-form-field>
       </div>
 
