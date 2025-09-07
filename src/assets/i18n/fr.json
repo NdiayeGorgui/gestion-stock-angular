@@ -604,7 +604,7 @@
         "bot": "Bot",
         "label": "Votre message",
         "placeholder": "Écrivez ici...",
-        "thinking": "Entrain de réfléchir"
+        "thinking": "En réflexion"
     },
     "NOTIF": {
         "LOW_STOCK": "Produit {{product}} est faible en stock!",

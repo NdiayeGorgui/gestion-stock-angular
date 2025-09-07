@@ -48,15 +48,14 @@
           </div>
         </div>
 
-        <!-- ✅ Spinner pendant le "thinking" -->
-        <div *ngIf="isLoading" class="spinner-container">
-          <mat-progress-spinner
-            mode="indeterminate"
-            diameter="40"
-            color="primary">
-          </mat-progress-spinner>
-          <div class="mt-2">
+        <!-- ✅ Effet "Bot typing ..." -->
+        <div *ngIf="isLoading" class="mb-2 text-start">
+          <span class="badge bg-secondary">
             {{ 'chatbot.thinking' | translate }}
+          </span>
+
+          <div class="mt-1 p-2 rounded bg-light border typing-indicator">
+            <span></span><span></span><span></span>
           </div>
         </div>
       </div>
