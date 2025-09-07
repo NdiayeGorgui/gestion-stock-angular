@@ -603,7 +603,8 @@
         "user": "Moi",
         "bot": "Bot",
         "label": "Votre message",
-        "placeholder": "Écrivez ici..."
+        "placeholder": "Écrivez ici...",
+        "thinking": "Entrain de réfléchir"
     },
     "NOTIF": {
         "LOW_STOCK": "Produit {{product}} est faible en stock!",

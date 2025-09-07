@@ -19,6 +19,7 @@ export class ChatBotComponent {
   isListening: boolean = false;
   isSpeaking: boolean = false;
   isVoiceMode: boolean = false;
+  isLoading = false;
 
   recognition: any;
 
@@ -47,42 +48,46 @@ export class ChatBotComponent {
     }
   }
 
-  sendMessage() {
-    const text = this.userMessage.trim();
-    if (!text) return;
+ sendMessage() {
+  const text = this.userMessage.trim();
+  if (!text) return;
 
-    this.messages.push({ from: 'user', text });
-    this.userMessage = '';
+  this.messages.push({ from: 'user', text });
+  this.userMessage = '';
+  this.isLoading = true; // ✅ démarrer le spinner
 
-    const botMessage: ChatMessage = {
-      from: 'bot',
-      text: ''
-    };
+  const botMessage: ChatMessage = {
+    from: 'bot',
+    text: ''
+  };
+  this.messages.push(botMessage);
 
-    this.messages.push(botMessage);
+  let completeResponse = '';
 
-    let completeResponse = '';
-
-    this.stockService.getAgentStreamingResponse(text).subscribe({
-      next: (event) => {
-        if (event.type === HttpEventType.DownloadProgress) {
-          const chunk = (event as HttpDownloadProgressEvent).partialText || '';
-          completeResponse = chunk;
-          botMessage.text = chunk;
-        }
-      },
-      complete: () => {
-        // ✅ Ne parler que si la requête vient du micro
-        if (this.isVoiceMode && completeResponse.trim()) {
-          this.speak(completeResponse);
-        }
-        this.isVoiceMode = false; // reset après usage
-      },
-      error: () => {
-        botMessage.text = "⚠️ Erreur lors de l'appel au serveur.";
+  this.stockService.getAgentStreamingResponse(text).subscribe({
+    next: (event) => {
+      if (event.type === HttpEventType.DownloadProgress) {
+        const chunk = (event as HttpDownloadProgressEvent).partialText || '';
+        completeResponse = chunk;
+        botMessage.text = chunk;
       }
-    });
-  }
+    },
+    complete: () => {
+      // ✅ arrêter le spinner seulement à la fin
+      this.isLoading = false;
+
+      if (this.isVoiceMode && completeResponse.trim()) {
+        this.speak(completeResponse);
+      }
+      this.isVoiceMode = false; // reset après usage
+    },
+    error: () => {
+      this.isLoading = false; // ✅ aussi en cas d'erreur
+      botMessage.text = "⚠️ Erreur lors de l'appel au serveur.";
+    }
+  });
+}
+
 
   startVoiceInput() {
     if (this.recognition) {

@@ -18,3 +18,13 @@ mat-icon[color="accent"] {
 mat-icon[color="accent"].listening {
   color: red !important;
 }
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* ✅ centre horizontalement */
+  justify-content: center; /* ✅ centre verticalement si hauteur fixée */
+  margin-top: 1rem; /* ou utilise height pour centrage vertical complet */
+  min-height: 120px; /* facultatif, pour garder un peu d'espace */
+  text-align: center;
+}

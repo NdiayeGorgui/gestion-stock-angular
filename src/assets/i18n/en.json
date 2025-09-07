@@ -604,7 +604,8 @@
         "user": "Me",
         "bot": "Bot",
         "label": "Your message",
-        "placeholder": "Write here..."
+        "placeholder": "Write here...",
+        "thinking": "Thinking"
     },
     "NOTIF": {
         "LOW_STOCK": "Product {{product}} is low on stock!",
